@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 public class Assets {
 
     private final AssetDescriptor<Texture> pixelTextureAsset = new AssetDescriptor<>("images/pixel.png", Texture.class);
+    private final AssetDescriptor<Texture> pathGradientTextureAsset = new AssetDescriptor<>("images/path-gradient.png", Texture.class);
     private final AssetDescriptor<TextureAtlas> atlasAsset = new AssetDescriptor<>("images/sprites.atlas", TextureAtlas.class);
     private final AssetDescriptor<BitmapFont> pixelFont16Asset = new AssetDescriptor<>("fonts/chevyray-column-16.fnt", BitmapFont.class);
 
@@ -24,6 +25,7 @@ public class Assets {
 
     public Texture debugTexture;
     public Texture pixel;
+    public Texture pathGradientTexture;
 
     public TextureRegion whitePixel;
     public TextureRegion whiteCircle;
@@ -40,6 +42,7 @@ public class Assets {
         mgr = new AssetManager();
         mgr.load(atlasAsset);
         mgr.load(pixelTextureAsset);
+        mgr.load(pathGradientTextureAsset);
         mgr.load(pixelFont16Asset);
 
         mgr.load("audio/music.mp3", Music.class);
@@ -59,7 +62,9 @@ public class Assets {
         music = mgr.get("audio/music.mp3", Music.class);
 
         pixel = mgr.get(pixelTextureAsset);
+        pathGradientTexture = mgr.get(pathGradientTextureAsset);
         debugTexture = mgr.get("images/badlogic.jpg", Texture.class);
+
         font = mgr.get(pixelFont16Asset);
 
         atlas = mgr.get(atlasAsset);

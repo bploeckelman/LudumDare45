@@ -11,8 +11,8 @@ public abstract class GameObject {
     public Vector2 pos = new Vector2();
 
     protected GameScreen screen;
-    private Vector2 size;
-    private TextureRegion image;
+    protected Vector2 size;
+    protected TextureRegion image;
 
     public GameObject(GameScreen screen, TextureRegion image) {
         this.screen = screen;

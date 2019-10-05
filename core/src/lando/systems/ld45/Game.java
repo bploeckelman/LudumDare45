@@ -72,4 +72,9 @@ public class Game extends ApplicationAdapter {
 	public void setScreen(BaseScreen screen) {
 		this.currentScreen = screen;
 	}
+
+	public BaseScreen getScreen() {
+		return currentScreen;
+	}
+
 }
