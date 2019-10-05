@@ -7,6 +7,7 @@
 
 	<extend-configuration-property name="gdx.reflect.include" value="lando.systems.ld45.ui.typinglabel.TypingGlyph" />
 	<extend-configuration-property name="gdx.reflect.include" value="lando.systems.ld45.ui.typinglabel.effects" />
+	<extend-configuration-property name="gdx.reflect.include" value="lando.systems.ld45.particles" />
 
 	<inherits name='Game' />
 	<entry-point class='lando.systems.ld45.client.HtmlLauncher' />
