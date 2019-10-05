@@ -29,6 +29,8 @@ public class CollisionManager {
             b.dtLeft = dt;
         }
         boolean collisionHappened = true;
+
+        collisionLoop:
         while (collisionHappened){
             collisionHappened = false;
             for (Ball b : screen.balls){
@@ -37,6 +39,59 @@ public class CollisionManager {
                 tempStart1.set(b.bounds.x, b.bounds.y);
                 tempEnd1.set(b.bounds.x + b.vel.x * dt, b.bounds.y + b.vel.y * dt);
                 frameEndPos.set(tempEnd1);
+
+                // first pass to move them all away
+                for (int i = 0; i < screen.balls.size; i ++){
+                    Ball otherBall = screen.balls.get(i);
+                    if (b == otherBall) continue;
+                    tempStart2.set(otherBall.bounds.x, otherBall.bounds.y);
+                    float overlapDist = tempStart1.dst(tempStart2) - (b.bounds.radius + otherBall.bounds.radius);
+                    if (overlapDist <= 0){
+                        overlapDist -= .1f;
+                        normal.set(tempStart2).sub(tempStart1).nor();
+                        b.bounds.x = tempStart1.x + (overlapDist/2f) * normal.x;
+                        b.bounds.y = tempStart1.y + (overlapDist/2f) * normal.y;
+
+                        otherBall.bounds.x = tempStart2.x - (overlapDist/2f) * normal.x;
+                        otherBall.bounds.y = tempStart2.y - (overlapDist/2f) * normal.y;
+                        collisionHappened = true;
+                        continue collisionLoop;
+                    }
+                }
+
+                // Bounce balls
+                for (int i = 0; i < screen.balls.size; i++){
+                    Ball otherBall = screen.balls.get(i);
+                    if (otherBall == b) continue;
+                    tempStart2.set(otherBall.bounds.x, otherBall.bounds.y);
+                    Float time = Utils.intersectCircleCircle(tempStart1, tempStart2, b.vel, otherBall.vel, b.bounds.radius, otherBall.bounds.radius, dt);
+                    if (time != null){
+                        if (time == 0f){
+                            // no op? this shouldn't happen
+                        } else if (time <= 1f){
+                            collisionHappened = true;
+                            frameEndPos.set(tempStart1.x + b.vel.x * dt * time, tempStart1.y + b.vel.y * dt * time);
+                            tempStart2.set(tempStart2.x + otherBall.vel.x * dt * time, tempStart2.y + otherBall.vel.y * dt * time);
+                            b.bounds.x = frameEndPos.x;
+                            b.bounds.y = frameEndPos.y;
+                            otherBall.bounds.x = tempStart2.x;
+                            otherBall.bounds.y = tempStart2.y;
+
+                            float mass1 = b.bounds.radius * b.bounds.radius;
+                            float mass2 = otherBall.bounds.radius * otherBall.bounds.radius;
+                            float dist = frameEndPos.dst(tempStart2);
+                            float nx = (tempStart2.x - frameEndPos.x) / dist;
+                            float ny = (tempStart2.y - frameEndPos.y) / dist;
+                            float p = 2 * (b.vel.x * nx + b.vel.y * ny - otherBall.vel.x * nx - otherBall.vel.y * ny) / (mass1 + mass2);
+
+                            b.vel.set(b.vel.x - p * mass2 * nx, b.vel.y - p * mass2 * ny);
+                            otherBall.vel.set(otherBall.vel.x + p * mass1 * nx, otherBall.vel.y + p * mass1 * ny);
+                            b.dtLeft -= time * dt;
+                            otherBall.dtLeft -= time * dt;
+                            continue collisionLoop;
+                        }
+                    }
+                }
 
                 // Collide Boundary
                 for (Segment2D segment : screen.boundary.segments){
@@ -58,6 +113,8 @@ public class CollisionManager {
                         }
                     }
                 }
+
+
 
                 b.bounds.x = frameEndPos.x;
                 b.bounds.y = frameEndPos.y;
