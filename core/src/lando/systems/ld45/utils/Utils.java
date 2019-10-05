@@ -1,9 +1,12 @@
 package lando.systems.ld45.utils;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 public class Utils {
@@ -36,6 +39,14 @@ public class Utils {
             default: throw new GdxRuntimeException("Something went wrong when converting from HSV to RGB. Input was " + hue + ", " + saturation + ", " + value);
         }
         return outColor;
+    }
+
+    static Array<String> colorKeysCache;
+    public static Color getRandomColor() {
+        if (colorKeysCache == null) {
+            colorKeysCache = Colors.getColors().keys().toArray();
+        }
+        return Colors.getColors().get(colorKeysCache.get(MathUtils.random(0, colorKeysCache.size - 1)));
     }
 
     static Vector2 s = new Vector2();

@@ -2,6 +2,7 @@ package lando.systems.ld45.effects.trail;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -18,7 +19,7 @@ public class TrailHandler {
     private Trail trail;
     private TrailResolver simplifier = new TrailResolver();
     private Pool<Vector2> vec2Pool = Pools.get(Vector2.class, 100);
-    private Array<Vector2> simplified;
+    public Array<Vector2> simplified;
     private FixedList<Vector2> inputPoints;
     private Vector2 lastPointSampled = new Vector2();
     private Color color;

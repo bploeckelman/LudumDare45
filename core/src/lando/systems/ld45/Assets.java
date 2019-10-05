@@ -1,16 +1,19 @@
 package lando.systems.ld45;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 
 public class Assets {
 
     private final AssetDescriptor<Texture> pixelTextureAsset = new AssetDescriptor<>("images/pixel.png", Texture.class);
     private final AssetDescriptor<Texture> pathGradientTextureAsset = new AssetDescriptor<>("images/path-gradient.png", Texture.class);
+    private final AssetDescriptor<Texture> laserTextureAsset = new AssetDescriptor<>("images/laser.png", Texture.class);
     private final AssetDescriptor<TextureAtlas> atlasAsset = new AssetDescriptor<>("images/sprites.atlas", TextureAtlas.class);
     private final AssetDescriptor<BitmapFont> pixelFont16Asset = new AssetDescriptor<>("fonts/chevyray-column-16.fnt", BitmapFont.class);
 
@@ -25,12 +28,15 @@ public class Assets {
 
     public Texture debugTexture;
     public Texture pixel;
+    public Texture ballTrailTexture;
     public Texture pathGradientTexture;
 
     public TextureRegion whitePixel;
     public TextureRegion whiteCircle;
 
     public TextureRegion bumper;
+
+    public ShaderProgram ballTrailShader;
 
     public boolean initialized;
 
@@ -45,6 +51,7 @@ public class Assets {
         mgr.load(atlasAsset);
         mgr.load(pixelTextureAsset);
         mgr.load(pathGradientTextureAsset);
+        mgr.load(laserTextureAsset);
         mgr.load(pixelFont16Asset);
 
         mgr.load("audio/music.mp3", Music.class);
@@ -65,6 +72,7 @@ public class Assets {
 
         pixel = mgr.get(pixelTextureAsset);
         pathGradientTexture = mgr.get(pathGradientTextureAsset);
+        ballTrailTexture = mgr.get(laserTextureAsset);
         debugTexture = mgr.get("images/badlogic.jpg", Texture.class);
 
         font = mgr.get(pixelFont16Asset);
@@ -75,6 +83,25 @@ public class Assets {
 
         bumper = atlas.findRegion("peg-c");
 
+        ballTrailShader = loadShader("shaders/standardMesh.vert", "shaders/ballTrailMesh.frag");
+
         return 1;
     }
+
+    private static ShaderProgram loadShader(String vertSourcePath, String fragSourcePath) {
+        ShaderProgram.pedantic = false;
+        ShaderProgram shaderProgram = new ShaderProgram(
+                Gdx.files.internal(vertSourcePath),
+                Gdx.files.internal(fragSourcePath));
+
+        if (!shaderProgram.isCompiled()) {
+            Gdx.app.error("LoadShader", "compilation failed:\n" + shaderProgram.getLog());
+            throw new GdxRuntimeException("LoadShader: compilation failed:\n" + shaderProgram.getLog());
+        } else if (Config.shaderDebug){
+            Gdx.app.debug("LoadShader", "ShaderProgram compilation log: " + shaderProgram.getLog());
+        }
+
+        return shaderProgram;
+    }
+
 }

@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer20;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import lando.systems.ld45.Assets;
 import lando.systems.ld45.Game;
 
 public class PathTriStrip {
@@ -33,20 +32,22 @@ public class PathTriStrip {
     private Mesh mesh;
     private ShaderProgram shader;
     private Game game;
+    private Color color;
     float accum;
 
-    public PathTriStrip(Game game, Array<Vector2> input) {
+    public PathTriStrip(Game game, Color color) {
         this.accum = 0;
         this.game = game;
-//        this.shader = game.assets.pathShader;
+        this.shader = game.assets.ballTrailShader;
         mesh = new Mesh(false, MAX_VERTS, 0,
                         new VertexAttribute(VertexAttributes.Usage.Position, POSITION_COMPONENTS, "a_position"),
                         new VertexAttribute(VertexAttributes.Usage.TextureCoordinates, TEXTURE_COMPONENTS, "a_texCoord0"),
                         new VertexAttribute(VertexAttributes.Usage.ColorUnpacked, COLOR_COMPONENTS, "a_color"));
 
         gl20 = new ImmediateModeRenderer20(false, true, 1);
-        generate(input, Side.top);
-        generate(input, Side.bottom);
+        this.color = color;
+//        generate(input, Side.top);
+//        generate(input, Side.bottom);
 //        generateMesh(input);
     }
 
@@ -82,11 +83,10 @@ public class PathTriStrip {
 
     Color tempColor = new Color();
     private void generateMesh(Vector2[] points) {
-
-        for (int i = 0; i < points.length; i++){
+        for (int i = 0; i < points.length - 1; i++){
             float interp = (i) / (float)(points.length);
 
-            int nextIndex = (i+1) % points.length;
+            int nextIndex = (i+1);// % points.length;
             Vector2 firstPoint = points[i];
             Vector2 nextPoint = points[nextIndex];
             // normalized direction
@@ -95,11 +95,13 @@ public class PathTriStrip {
             // perpendicularized
             perp.set(-perp.y, perp.x);
 
-            // extrude by thickness
-            perp.scl(thickness / 2f);
+            // scale thickness to taper the tail of the trail
+            float thick = thickness * (1f - (i / (float) points.length));
 
-            // TODO: set color here
-            tempColor = Color.WHITE;
+            // extrude by thickness
+            perp.scl(thick / 2f);
+
+            tempColor = color;
 
             // first vertex
             verts[index++] = firstPoint.x + perp.x;
@@ -121,8 +123,7 @@ public class PathTriStrip {
             verts[index++] = tempColor.b;
             verts[index++] = tempColor.a;
 
-            // TODO: set color here
-            tempColor = Color.WHITE;
+            tempColor = color;
 
             //third
             verts[index++] = nextPoint.x + perp.x;
@@ -151,7 +152,7 @@ public class PathTriStrip {
         mesh.setVertices(verts);
         int vertexCount = index/NUM_COMPONENTS;
         shader.begin();
-//        assets.laserTex.bind(0);
+        game.assets.ballTrailTexture.bind(0);
         shader.setUniformMatrix("u_projTrans", game.getScreen().worldCamera.combined);
         shader.setUniformi("u_texture", 0);
         shader.setUniformf("u_time", accum);

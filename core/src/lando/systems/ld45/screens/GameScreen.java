@@ -2,6 +2,7 @@ package lando.systems.ld45.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
@@ -58,6 +59,10 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void render(SpriteBatch batch) {
+        Gdx.gl.glEnable(GL20.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        assets.ballTrailTexture.bind();
+        balls.forEach(Ball::renderTrail);
 
         balls.forEach(ball -> ball.trail.render(worldCamera));
         batch.setProjectionMatrix(worldCamera.combined);
