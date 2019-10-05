@@ -8,10 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld45.Game;
 import lando.systems.ld45.collision.CollisionManager;
-import lando.systems.ld45.objects.Ball;
-import lando.systems.ld45.objects.Bumper;
-import lando.systems.ld45.objects.Boundary;
-import lando.systems.ld45.objects.GameObject;
+import lando.systems.ld45.objects.*;
 
 public class GameScreen extends BaseScreen {
 
@@ -26,9 +23,19 @@ public class GameScreen extends BaseScreen {
     public GameScreen(Game game) {
         super(game);
 
+        int x = 150;
+        for (int g = 0; g < 3; g++) {
+            for (int l = 0; l < 4; l++) {
+                GameObject item = addObject(Bumper.getBumper(this, g));
+                item.pos.x = x;
+                item.pos.y = 200;
 
-        while (gameObjects.size < 10) {
-            addObject(new Bumper(this, MathUtils.random(20, 40)));
+                item = addObject(Peg.getPeg(this, l, g));
+                item.pos.x = x;
+                item.pos.y = 300;
+
+                x += 50;
+            }
         }
 
         for (int i  = 0; i < 10; i++) {
@@ -39,8 +46,9 @@ public class GameScreen extends BaseScreen {
         this.boundary = new Boundary(this);
     }
 
-    public void addObject(GameObject gameObject) {
+    public GameObject addObject(GameObject gameObject) {
         gameObjects.add(gameObject);
+        return gameObject;
     }
 
     @Override

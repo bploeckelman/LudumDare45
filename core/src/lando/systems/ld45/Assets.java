@@ -34,7 +34,10 @@ public class Assets {
     public TextureRegion whitePixel;
     public TextureRegion whiteCircle;
 
-    public TextureRegion bumper;
+    public TextureRegion[] bumpers;
+
+    public TextureRegion[][] pegs;
+    public TextureRegion[][] spinners;
 
     public ShaderProgram ballTrailShader;
 
@@ -81,7 +84,32 @@ public class Assets {
         whitePixel = atlas.findRegion("white-pixel");
         whiteCircle = atlas.findRegion("white-circle");
 
-        bumper = atlas.findRegion("peg-c");
+        bumpers = new TextureRegion[] {
+                atlas.findRegion("bumper-a"),
+                atlas.findRegion("bumper-b"),
+                atlas.findRegion("bumper-c")
+        };
+
+        pegs = new TextureRegion[][] {
+            new TextureRegion[]{
+                atlas.findRegion("peg-a-1"),
+                atlas.findRegion("peg-b-1"),
+                atlas.findRegion("peg-c-1"),
+                atlas.findRegion("peg-d-1")
+            },
+            new TextureRegion[] {
+                atlas.findRegion("peg-a-2"),
+                atlas.findRegion("peg-b-2"),
+                atlas.findRegion("peg-c-2"),
+                atlas.findRegion("peg-d-2")
+            },
+             new TextureRegion[] {
+                atlas.findRegion("peg-a-3"),
+                atlas.findRegion("peg-b-3"),
+                atlas.findRegion("peg-c-3"),
+                atlas.findRegion("peg-d-3")
+            }
+        };
 
         ballTrailShader = loadShader("shaders/standardMesh.vert", "shaders/ballTrailMesh.frag");
 

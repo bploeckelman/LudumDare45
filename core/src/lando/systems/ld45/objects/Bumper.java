@@ -9,27 +9,20 @@ import lando.systems.ld45.screens.GameScreen;
 public class Bumper extends GameObject {
 
     private float bumperSize;
-    private float hitTime = 1;
 
-    private float currentHitTime = 0;
     private float currentBumperSize = 0;
-    private float rotation = 0;
 
-    public Bumper(GameScreen screen) {
-        this(screen, 10);
+    public static Bumper getBumper(GameScreen screen, int gfxPack) {
+        return new Bumper(screen, gfxPack, 32);
     }
 
-    public Bumper(GameScreen screen, float size) {
-        super(screen, screen.assets.bumper, size, size);
+    public Bumper(GameScreen screen, int gfxPack, float size) {
+        super(screen, screen.assets.bumpers[gfxPack], size, size);
 
         this.bumperSize = this.currentBumperSize = size;
 
         pos.x = MathUtils.random(10, Config.gameWidth - 20);
         pos.y = MathUtils.random(10, Config.gameHeight - 20);
-    }
-
-    public void hit() {
-        currentHitTime = hitTime;
     }
 
     @Override
@@ -39,17 +32,23 @@ public class Bumper extends GameObject {
             hit();
         }
 
+        super.update(dt);
+
         if (currentHitTime > 0) {
-            currentHitTime -= dt;
-            size.x = size. y = currentBumperSize = bumperSize * (1 + Interpolation.bounceIn.apply(currentHitTime / hitTime));
-            rotation += 180 * dt;
+            if (currentBumperSize > (hitTime / 2)) {
+                currentBumperSize = bumperSize + (bumperSize * Interpolation.bounceIn.apply(currentHitTime / hitTime / 2));
+            } else {
+                currentBumperSize = bumperSize * (1 + Interpolation.bounceOut.apply(currentHitTime / hitTime));
+            }
+        } else {
+            currentBumperSize = bumperSize;
         }
+        size.x = size. y = currentBumperSize;
     }
 
     @Override
     public void render(SpriteBatch batch) {
         float half = currentBumperSize / 2;
-        batch.draw(image, pos.x - half, pos.y - half, half, half,
-                currentBumperSize, currentBumperSize, 1, 1, rotation);
+        batch.draw(image, pos.x - half, pos.y - half, currentBumperSize, currentBumperSize);
     }
 }

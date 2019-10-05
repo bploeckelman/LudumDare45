@@ -1,6 +1,5 @@
 package lando.systems.ld45.objects;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -10,9 +9,13 @@ public abstract class GameObject {
 
     public Vector2 pos = new Vector2();
 
-    protected GameScreen screen;
     protected Vector2 size;
     protected TextureRegion image;
+
+    protected float hitTime = 1;
+    protected float currentHitTime = 0;
+
+    protected GameScreen screen;
 
     public GameObject(GameScreen screen, TextureRegion image) {
         this(screen, image, image.getRegionWidth(), image.getRegionHeight());
@@ -26,9 +29,18 @@ public abstract class GameObject {
     }
 
     public void update(float dt) {
+        if (currentHitTime > 0) {
+            currentHitTime -= dt;
+        } else {
+            currentHitTime = 0;
+        }
     }
 
     public void render(SpriteBatch batch) {
         batch.draw(image, pos.x - size.x / 2, pos.y - size.y / 2, size.x, size.y);
+    }
+
+    public void hit() {
+        currentHitTime = hitTime;
     }
 }
