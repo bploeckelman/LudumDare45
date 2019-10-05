@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer20;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
@@ -54,7 +55,7 @@ public class Trail {
                     gl20.begin(cam.combined, GL20.GL_TRIANGLE_STRIP);
                 }
 
-                float alpha = 0.5f * (1f - (i / (float) tristrip.size));
+                float alpha = MathUtils.clamp(0.5f * (1f - (i / (float) tristrip.size)), 0f, 1f);
                 Color color = colors.get(i);
                 Vector2 vertex = tristrip.get(i);
                 Vector2 texCoord = texcoord.get(i);

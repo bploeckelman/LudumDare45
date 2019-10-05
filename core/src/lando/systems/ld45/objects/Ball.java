@@ -18,29 +18,24 @@ public class Ball {
     public TrailHandler trail;
     public TextureRegion keyframe;
     public GameScreen screen;
+    public float dtLeft;
 
     public Ball(GameScreen screen, float radius) {
         this.screen = screen;
-        this.bounds.set(Config.gameWidth / 2f, Config.gameHeight / 2f, radius);
+        this.bounds.set(Config.gameWidth / 2f + MathUtils.random(-50f, 50f), Config.gameHeight / 2f + MathUtils.random(-50f, 50f), radius);
         this.pos.set(bounds.x, bounds.y);
-        this.trail = new TrailHandler(Color.WHITE, 300, screen.assets);
+        this.trail = new TrailHandler(Color.WHITE, 30, screen.assets);
         this.vel.set(MathUtils.random(-200f, 200f),
                      MathUtils.random(-200f, 200f));
         this.keyframe = screen.assets.whiteCircle;
+        this.dtLeft = 0;
     }
 
     public void update(float dt) {
-        bounds.x += vel.x * dt;
-        bounds.y += vel.y * dt;
-
-        if (bounds.x < bounds.radius || bounds.x > screen.worldCamera.viewportWidth  - bounds.radius) {
-            screen.particle.addCloudParticles(bounds.x, bounds.y, 1f);
-            vel.x *= -1;
-        }
-        if (bounds.y < bounds.radius || bounds.y > screen.worldCamera.viewportHeight - bounds.radius) {
-            screen.particle.addCloudParticles(bounds.x, bounds.y, 1f);
-            vel.y *= -1;
-        }
+        vel.y -= Config.gravity*dt;
+        vel.scl(.999f);
+//        bounds.x += vel.x * dt;
+//        bounds.y += vel.y * dt;
 
         pos.set(bounds.x, bounds.y);
 
