@@ -30,6 +30,8 @@ public class Assets {
     public TextureRegion whitePixel;
     public TextureRegion whiteCircle;
 
+    public TextureRegion bumper;
+
     public boolean initialized;
 
     public Assets() {
@@ -70,6 +72,8 @@ public class Assets {
         atlas = mgr.get(atlasAsset);
         whitePixel = atlas.findRegion("white-pixel");
         whiteCircle = atlas.findRegion("white-circle");
+
+        bumper = atlas.findRegion("peg-c");
 
         return 1;
     }

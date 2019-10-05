@@ -3,9 +3,11 @@ package lando.systems.ld45.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld45.Game;
 import lando.systems.ld45.objects.Ball;
+import lando.systems.ld45.objects.Bumper;
 import lando.systems.ld45.objects.GameObject;
 
 public class GameScreen extends BaseScreen {
@@ -17,6 +19,10 @@ public class GameScreen extends BaseScreen {
         super(game);
 
         balls.add(new Ball(this, 10f));
+
+        while (gameObjects.size < 10) {
+            addObject(new Bumper(this, MathUtils.random(20, 40)));
+        }
     }
 
     public void addObject(GameObject gameObject) {
