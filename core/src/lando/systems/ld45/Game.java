@@ -12,22 +12,21 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.compression.lzma.Base;
 import lando.systems.ld45.accessors.*;
 import lando.systems.ld45.audio.AudioManager;
+import lando.systems.ld45.screens.BaseScreen;
+import lando.systems.ld45.screens.TitleScreen;
 
 public class Game extends ApplicationAdapter {
 	public AudioManager audio;
 	public Assets assets;
 	public TweenManager tween;
 
-	SpriteBatch batch;
-	Texture img;
+	BaseScreen currentScreen;
 	
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
-
 		if (tween == null) {
 			tween = new TweenManager();
 			Tween.setWaypointsLimit(4);
@@ -46,25 +45,29 @@ public class Game extends ApplicationAdapter {
 		if (audio == null) {
 			audio = new AudioManager(true, this);
 		}
+
+		setScreen(new TitleScreen(this));
 	}
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		float dt = Math.min(Gdx.graphics.getDeltaTime(), 1f / 30f);
 		audio.update(dt);
 		tween.update(dt);
 
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+		currentScreen.update(dt);
+
+		currentScreen.render(assets.batch);
 	}
 	
 	@Override
 	public void dispose () {
-		batch.dispose();
-		img.dispose();
+	}
+
+	public void setScreen(BaseScreen screen) {
+		this.currentScreen = screen;
 	}
 }

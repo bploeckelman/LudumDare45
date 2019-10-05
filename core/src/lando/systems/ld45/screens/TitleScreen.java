@@ -1,0 +1,40 @@
+package lando.systems.ld45.screens;
+
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import lando.systems.ld45.Game;
+
+public class TitleScreen extends BaseScreen {
+
+    public Vector2 pos;
+    public Vector2 vel;
+
+    public TitleScreen(Game game) {
+        super(game);
+        pos = new Vector2(worldCamera.viewportWidth/2f, worldCamera.viewportHeight/2f);
+        float speed = MathUtils.random(100, 200);
+        float dir = MathUtils.random(360);
+        vel = new Vector2(MathUtils.cosDeg(dir) * speed, MathUtils.sinDeg(dir) * speed);
+    }
+
+    @Override
+    public void update(float dt) {
+        pos.x += vel.x * dt;
+        pos.y += vel.y * dt;
+
+        if (pos.x < 20 || pos.x > worldCamera.viewportWidth - 20) vel.x *= -1;
+        if (pos.y < 20 || pos.y > worldCamera.viewportHeight - 20) vel.y *= -1;
+    }
+
+    @Override
+    public void render(SpriteBatch batch) {
+        batch.begin();
+        batch.setProjectionMatrix(worldCamera.combined);
+
+        batch.draw(assets.debugTexture, worldCamera.viewportWidth/2f - 50, worldCamera.viewportHeight/2f - 50, 100, 100);
+        batch.draw(assets.whiteCircle, pos.x - 20, pos.y - 20, 40, 40);
+
+        batch.end();
+    }
+}
