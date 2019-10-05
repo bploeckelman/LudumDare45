@@ -29,6 +29,6 @@ public abstract class GameObject {
     }
 
     public void render(SpriteBatch batch) {
-        batch.draw(image, pos.x, pos.y, size.x, size.y);
+        batch.draw(image, pos.x - size.x / 2, pos.y - size.y / 2, size.x, size.y);
     }
 }
