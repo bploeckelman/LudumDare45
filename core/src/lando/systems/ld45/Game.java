@@ -14,8 +14,10 @@ import lando.systems.ld45.accessors.*;
 import lando.systems.ld45.audio.AudioManager;
 import lando.systems.ld45.screens.BaseScreen;
 import lando.systems.ld45.screens.TitleScreen;
+import particles.ParticleManager;
 
 public class Game extends ApplicationAdapter {
+	public ParticleManager particle;
 	public AudioManager audio;
 	public Assets assets;
 	public TweenManager tween;
@@ -43,6 +45,10 @@ public class Game extends ApplicationAdapter {
 			audio = new AudioManager(false, this);
 		}
 
+		if (particle == null) {
+			particle = new ParticleManager(assets);
+		}
+
 		setScreen(new TitleScreen(this));
 	}
 
@@ -54,7 +60,6 @@ public class Game extends ApplicationAdapter {
 		float dt = Math.min(Gdx.graphics.getDeltaTime(), 1f / 30f);
 		audio.update(dt);
 		tween.update(dt);
-
 		currentScreen.update(dt);
 
 		currentScreen.render(assets.batch);

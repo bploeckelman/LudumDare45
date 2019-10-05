@@ -9,6 +9,7 @@ import lando.systems.ld45.Game;
 import lando.systems.ld45.objects.Ball;
 import lando.systems.ld45.objects.Bumper;
 import lando.systems.ld45.objects.GameObject;
+import particles.ParticleManager;
 
 public class GameScreen extends BaseScreen {
 
@@ -37,15 +38,17 @@ public class GameScreen extends BaseScreen {
 
         balls.forEach(ball -> ball.update(dt));
         gameObjects.forEach(x -> x.update(dt));
+        particle.update(dt);
     }
 
     @Override
     public void render(SpriteBatch batch) {
-        balls.forEach(ball -> ball.trail.render(worldCamera));
 
+        balls.forEach(ball -> ball.trail.render(worldCamera));
         batch.setProjectionMatrix(worldCamera.combined);
         batch.begin();
         {
+            particle.render(batch);
             balls.forEach(ball -> ball.render(batch));
             gameObjects.forEach(x -> x.render(batch));
         }

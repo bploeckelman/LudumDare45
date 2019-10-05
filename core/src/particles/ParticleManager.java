@@ -93,11 +93,11 @@ public class ParticleManager {
             float vx = MathUtils.random(-30f, 30f);
             float vy = MathUtils.random(0, 50f);
             GenericParticle part = particlePool.obtain();
-            part.init(assets.whitePixel, 30, 100, 30, 100,
+            part.init(assets.whitePixel, 10, 50, 10, 50,
                     x, y, vx, vy, 0, 0,
                     1f, GenericParticle.OriginType.CENTER, 0, 0,
                     1, 1, 1, 1,
-                    1, 1, 1, .2f,
+                    1, 1, 1, 0f,
                     0, 0, ttl
             );
             activeParticles.add(part);

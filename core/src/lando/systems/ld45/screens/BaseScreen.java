@@ -7,12 +7,14 @@ import lando.systems.ld45.Assets;
 import lando.systems.ld45.Config;
 import lando.systems.ld45.Game;
 import lando.systems.ld45.audio.AudioManager;
+import particles.ParticleManager;
 
 public abstract class BaseScreen extends InputAdapter {
     public final Game game;
     public final Assets assets;
     public final AudioManager audio;
     public final SpriteBatch batch;
+    public final ParticleManager particle;
 
     public OrthographicCamera worldCamera;
     public OrthographicCamera hudCamera;
@@ -22,6 +24,7 @@ public abstract class BaseScreen extends InputAdapter {
         this.assets = game.assets;
         this.audio = game.audio;
         this.batch = game.assets.batch;
+        this.particle = game.particle;
 
         this.worldCamera = new OrthographicCamera();
         this.worldCamera.setToOrtho(false, Config.gameWidth, Config.gameHeight);

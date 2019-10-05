@@ -33,8 +33,14 @@ public class Ball {
         bounds.x += vel.x * dt;
         bounds.y += vel.y * dt;
 
-        if (bounds.x < bounds.radius || bounds.x > screen.worldCamera.viewportWidth  - bounds.radius) vel.x *= -1;
-        if (bounds.y < bounds.radius || bounds.y > screen.worldCamera.viewportHeight - bounds.radius) vel.y *= -1;
+        if (bounds.x < bounds.radius || bounds.x > screen.worldCamera.viewportWidth  - bounds.radius) {
+            screen.particle.addCloudParticles(bounds.x, bounds.y, 1f);
+            vel.x *= -1;
+        }
+        if (bounds.y < bounds.radius || bounds.y > screen.worldCamera.viewportHeight - bounds.radius) {
+            screen.particle.addCloudParticles(bounds.x, bounds.y, 1f);
+            vel.y *= -1;
+        }
 
         pos.set(bounds.x, bounds.y);
 
