@@ -1,8 +1,10 @@
 package lando.systems.ld45.particles;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
@@ -38,13 +40,19 @@ public class ParticleManager {
         for (int i = activeForegroundParticles.size -1; i >=0; i--){
             GenericParticle part = activeForegroundParticles.get(i);
             part.update(dt);
-            if (part.pos.epsilonEquals(part.tar)) {
+            if (part.tar == new Vector2(0f, 0f)) {
+                if (part.pos.epsilonEquals(part.tar)) {
+                    activeForegroundParticles.removeIndex(i);
+                    particlePool.free(part);
+                } else {
+                    float interp = 1f - (part.ttl / part.totalTtl);
+                    part.pos.set(MathUtils.lerp(part.startPos.x, part.tar.x, interp),
+                            MathUtils.lerp(part.startPos.y, part.tar.y, interp));
+                }
+            }
+            else if (part.ttl <= 0 && activeForegroundParticles.size > 0) {
                 activeForegroundParticles.removeIndex(i);
                 particlePool.free(part);
-            } else {
-                float interp = 1f - (part.ttl / part.totalTtl);
-                part.pos.set(MathUtils.lerp(part.startPos.x, part.tar.x, interp),
-                             MathUtils.lerp(part.startPos.y, part.tar.y, interp));
             }
         }
 
@@ -70,8 +78,8 @@ public class ParticleManager {
     public void addCloudParticles (float x, float y, float ttl) {
         int sparks = 5;
         for (int i = 0; i < sparks; i++){
-            float vx = MathUtils.random(-30f, 30f);
-            float vy = MathUtils.random(0, 50f);
+            float vx = MathUtils.random(-1f, 1f);
+            float vy = MathUtils.random(0, 1f);
             GenericParticle part = particlePool.obtain();
             part.init(assets.whitePixel, 10, 50, 10, 50,
                     x, y, vx, vy, 0, 0,
@@ -94,7 +102,7 @@ public class ParticleManager {
             float speed = MathUtils.random(80);
             float vx = MathUtils.cosDeg(angle) * speed;
             float vy = MathUtils.sinDeg(angle) * speed;
-            float startSize = MathUtils.random(1f, 2f);
+            float startSize = MathUtils.random(1f, 5f);
             float endSize = 1f;
             float randomcolorFade = MathUtils.random(-.2f, .2f);
             part.init(assets.whiteCircle, startSize, endSize, startSize, endSize,
