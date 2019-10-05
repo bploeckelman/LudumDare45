@@ -20,6 +20,8 @@ public class GameScreen extends BaseScreen {
     private CollisionManager collisionManager;
     public Boundary boundary;
 
+    private GameHud hud = new GameHud();
+
     public GameScreen(Game game) {
         super(game);
 
@@ -50,6 +52,8 @@ public class GameScreen extends BaseScreen {
         balls.forEach(ball -> ball.update(dt));
         gameObjects.forEach(x -> x.update(dt));
         particle.update(dt);
+
+        hud.update(dt);
     }
 
     @Override
@@ -65,6 +69,10 @@ public class GameScreen extends BaseScreen {
             gameObjects.forEach(x -> x.render(batch));
             particle.renderForegroundParticles(batch);
         }
+
+        batch.setProjectionMatrix(hudCamera.combined);
+        hud.render(batch);
+
         batch.end();
     }
 }
