@@ -1,12 +1,8 @@
-package particles;
+package lando.systems.ld45.particles;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
@@ -18,7 +14,6 @@ import lando.systems.ld45.utils.Utils;
 public class ParticleManager {
 
     public Assets assets;
-    private final Array<GenericParticle> activeParticles = new Array<>(false, 256);
     private final Array<GenericParticle> activeBackgroundParticles = new Array<>(false, 100);
     private final Array<GenericParticle> activeForegroundParticles = new Array<>(false, 256);
     private final Array<GenericParticle> activeTextParticles = new Array<>(false, 1000);
@@ -36,15 +31,6 @@ public class ParticleManager {
             part.update(dt);
             if (part.ttl <= 0) {
                 activeBackgroundParticles.removeIndex(i);
-                particlePool.free(part);
-            }
-        }
-
-        for (int i = activeParticles.size -1; i >=0; i--){
-            GenericParticle part = activeParticles.get(i);
-            part.update(dt);
-            if (part.ttl <= 0) {
-                activeParticles.removeIndex(i);
                 particlePool.free(part);
             }
         }
@@ -72,12 +58,6 @@ public class ParticleManager {
         }
     }
 
-    public void render(SpriteBatch batch) {
-        for (int i = 0; i < activeParticles.size; i++) {
-            activeParticles.get(i).render(batch);
-        }
-    }
-
     public void renderBackgroundParticles(SpriteBatch batch) {
         activeBackgroundParticles.forEach(particle -> particle.render(batch));
     }
@@ -100,7 +80,7 @@ public class ParticleManager {
                     1, 1, 1, 0f,
                     0, 0, ttl
             );
-            activeParticles.add(part);
+            activeForegroundParticles.add(part);
         }
     }
 
@@ -124,7 +104,7 @@ public class ParticleManager {
                     .5f, .5f, .5f, .2f,
                     0, 0, 3f
             );
-            activeParticles.add(part);
+            activeForegroundParticles.add(part);
         }
     }
 }

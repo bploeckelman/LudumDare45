@@ -7,7 +7,7 @@ import lando.systems.ld45.Assets;
 import lando.systems.ld45.Config;
 import lando.systems.ld45.Game;
 import lando.systems.ld45.audio.AudioManager;
-import particles.ParticleManager;
+import lando.systems.ld45.particles.ParticleManager;
 
 public abstract class BaseScreen extends InputAdapter {
     public final Game game;

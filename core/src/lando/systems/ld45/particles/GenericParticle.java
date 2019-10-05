@@ -1,4 +1,4 @@
-package particles;
+package lando.systems.ld45.particles;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

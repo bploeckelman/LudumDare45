@@ -12,9 +12,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import lando.systems.ld45.accessors.*;
 import lando.systems.ld45.audio.AudioManager;
+import lando.systems.ld45.particles.ParticleManager;
 import lando.systems.ld45.screens.BaseScreen;
 import lando.systems.ld45.screens.TitleScreen;
-import particles.ParticleManager;
 
 public class Game extends ApplicationAdapter {
 	public ParticleManager particle;
