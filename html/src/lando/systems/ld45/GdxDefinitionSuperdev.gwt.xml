@@ -4,7 +4,12 @@
 	<inherits name='com.badlogic.gdx.backends.gdx_backends_gwt' />
 
     <inherits name='lando.systems.ld45.GdxDefinition' />
-    
+	<inherits name='aurelienribon.tweenengine' />
+	<inherits name='regexodus' />
+
+	<extend-configuration-property name="gdx.reflect.include" value="lando.systems.ld45.ui.typinglabel.TypingGlyph" />
+	<extend-configuration-property name="gdx.reflect.include" value="lando.systems.ld45.ui.typinglabel.effects" />
+
     <collapse-all-properties />
     
 	<add-linker name="xsiframe"/>	

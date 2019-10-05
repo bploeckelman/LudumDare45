@@ -4,22 +4,21 @@ import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class Assets {
 
     private final AssetDescriptor<Texture> pixelTextureAsset = new AssetDescriptor<>("images/pixel.png", Texture.class);
     private final AssetDescriptor<TextureAtlas> atlasAsset = new AssetDescriptor<>("images/sprites.atlas", TextureAtlas.class);
+    private final AssetDescriptor<BitmapFont> pixelFont16Asset = new AssetDescriptor<>("fonts/chevyray-column-16.fnt", BitmapFont.class);
 
 
     public Music music;
 
     public SpriteBatch batch;
     public GlyphLayout layout;
+    public BitmapFont font;
     public AssetManager mgr;
     public TextureAtlas atlas;
 
@@ -41,6 +40,7 @@ public class Assets {
         mgr = new AssetManager();
         mgr.load(atlasAsset);
         mgr.load(pixelTextureAsset);
+        mgr.load(pixelFont16Asset);
 
         mgr.load("audio/music.mp3", Music.class);
 
@@ -60,6 +60,7 @@ public class Assets {
 
         pixel = mgr.get(pixelTextureAsset);
         debugTexture = mgr.get("images/badlogic.jpg", Texture.class);
+        font = mgr.get(pixelFont16Asset);
 
         atlas = mgr.get(atlasAsset);
         whitePixel = atlas.findRegion("white-pixel");
