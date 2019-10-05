@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pools;
 import lando.systems.ld45.Assets;
+import lando.systems.ld45.objects.Ball;
 import lando.systems.ld45.utils.Utils;
 
 
@@ -115,4 +116,49 @@ public class ParticleManager {
             activeForegroundParticles.add(part);
         }
     }
+
+    public void addBallColisionParticle(Ball ball1, Ball ball2) {
+        float ballVelocityScale = 10f;
+        int numParticles = 30;
+        for (int i = 0; i < numParticles / 2; i++){
+            GenericParticle part;
+
+            part = particlePool.obtain();
+            part.init(assets.whitePixel,
+                    1f, 5f,
+                    1f, 5f,
+                    ball1.bounds.x + MathUtils.random(-ball1.bounds.radius, ball1.bounds.radius),
+                    ball1.bounds.y + MathUtils.random(-ball1.bounds.radius, ball1.bounds.radius),
+                    MathUtils.random(-5f * ball1.bounds.radius, 5f * ball1.bounds.radius),
+                    MathUtils.random(-5f * ball1.bounds.radius, 5f * ball1.bounds.radius),
+                    ballVelocityScale * ball1.vel.x,
+                    ballVelocityScale * ball1.vel.y, 0,
+                    GenericParticle.OriginType.CENTER,
+                    0, 0,
+                    ball1.color.r, ball1.color.g, ball1.color.b, 0.5f,
+                    ball1.color.r, ball1.color.g, ball1.color.b, 0.0f,
+                    0, 1000f,
+                    MathUtils.random(1f,2f));
+            activeForegroundParticles.add(part);
+
+            part = particlePool.obtain();
+            part.init(assets.whitePixel,
+                    1f, 5f,
+                    1f, 5f,
+                    ball2.bounds.x + MathUtils.random(-ball2.bounds.radius, ball2.bounds.radius),
+                    ball2.bounds.y + MathUtils.random(-ball2.bounds.radius, ball2.bounds.radius),
+                    MathUtils.random(-5f * ball2.bounds.radius, 5f * ball2.bounds.radius),
+                    MathUtils.random(-5f * ball2.bounds.radius, 5f * ball2.bounds.radius),
+                    ballVelocityScale * ball2.vel.x,
+                    ballVelocityScale * ball2.vel.y, 0,
+                    GenericParticle.OriginType.CENTER,
+                    0, 0,
+                    ball2.color.r, ball2.color.g, ball2.color.b, 0.5f,
+                    ball2.color.r, ball2.color.g, ball2.color.b, 0.0f,
+                    0, 1000f,
+                    MathUtils.random(1f,2f));
+            activeForegroundParticles.add(part);
+        }
+    }
+
 }

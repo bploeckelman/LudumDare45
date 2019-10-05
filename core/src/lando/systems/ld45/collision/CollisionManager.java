@@ -70,6 +70,7 @@ public class CollisionManager {
                             // no op? this shouldn't happen
                         } else if (time <= 1f){
                             collisionHappened = true;
+                            screen.particle.addBallColisionParticle(otherBall, b);
                             frameEndPos.set(tempStart1.x + b.vel.x * dt * time, tempStart1.y + b.vel.y * dt * time);
                             tempStart2.set(tempStart2.x + otherBall.vel.x * dt * time, tempStart2.y + otherBall.vel.y * dt * time);
                             b.bounds.x = frameEndPos.x;
