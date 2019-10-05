@@ -45,9 +45,9 @@ public class GameScreen extends BaseScreen {
             }
         }
 
-        for (int i  = 0; i < 10; i++) {
+        for (int i  = 0; i < 100; i++) {
             balls.add(new Ball(this, MathUtils.random(10f, 15f)));
-            balls.add(new Ball(this, MathUtils.random(3f, 5f)));
+            balls.add(new Ball(this, MathUtils.random(7f, 8f)));
         }
         this.collisionManager = new CollisionManager(this);
         this.boundary = new Boundary(this);
@@ -66,6 +66,13 @@ public class GameScreen extends BaseScreen {
 
         collisionManager.solve(dt);
         balls.forEach(ball -> ball.update(dt));
+        for (int i = balls.size -1; i >= 0; i--){
+            Ball b = balls.get(i);
+            b.update(dt);
+            if (b.bounds.y < - b.bounds.radius){
+                balls.removeIndex(i);
+            }
+        }
         gameObjects.forEach(x -> x.update(dt));
         particle.update(dt);
 
