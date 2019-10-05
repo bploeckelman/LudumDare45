@@ -7,16 +7,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.compression.lzma.Base;
 import lando.systems.ld45.accessors.*;
 import lando.systems.ld45.audio.AudioManager;
 import lando.systems.ld45.screens.BaseScreen;
-import lando.systems.ld45.screens.GameScreen;
 import lando.systems.ld45.screens.TitleScreen;
 
 public class Game extends ApplicationAdapter {
@@ -47,8 +43,7 @@ public class Game extends ApplicationAdapter {
 			audio = new AudioManager(false, this);
 		}
 
-		// setScreen(new TitleScreen(this));
-		setScreen(new GameScreen(this));
+		setScreen(new TitleScreen(this));
 	}
 
 	@Override
