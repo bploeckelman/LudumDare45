@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.compression.lzma.Base;
 import lando.systems.ld45.accessors.*;
 import lando.systems.ld45.audio.AudioManager;
 import lando.systems.ld45.screens.BaseScreen;
+import lando.systems.ld45.screens.GameScreen;
 import lando.systems.ld45.screens.TitleScreen;
 
 public class Game extends ApplicationAdapter {
@@ -46,7 +47,8 @@ public class Game extends ApplicationAdapter {
 			audio = new AudioManager(false, this);
 		}
 
-		setScreen(new TitleScreen(this));
+		// setScreen(new TitleScreen(this));
+		setScreen(new GameScreen(this));
 	}
 
 	@Override
