@@ -34,6 +34,13 @@ public class GameScreen extends BaseScreen {
                 item.pos.x = x;
                 item.pos.y = 300;
 
+
+                Spinner spinner = Spinner.getSpinner(this, l, g);
+                spinner.left = (l % 2) == 0;
+                item = addObject(spinner);
+                item.pos.x = x;
+                item.pos.y = 400;
+
                 x += 50;
             }
         }

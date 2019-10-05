@@ -2,6 +2,7 @@ package lando.systems.ld45.objects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld45.screens.GameScreen;
 
@@ -29,6 +30,11 @@ public abstract class GameObject {
     }
 
     public void update(float dt) {
+        // temp
+        if (MathUtils.random(100) < 2) {
+            hit();
+        }
+
         if (currentHitTime > 0) {
             currentHitTime -= dt;
         } else {

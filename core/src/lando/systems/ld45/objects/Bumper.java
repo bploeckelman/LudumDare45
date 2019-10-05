@@ -27,11 +27,6 @@ public class Bumper extends GameObject {
 
     @Override
     public void update(float dt) {
-        // temp
-        if (MathUtils.random(1000) < 3) {
-            hit();
-        }
-
         super.update(dt);
 
         if (currentHitTime > 0) {

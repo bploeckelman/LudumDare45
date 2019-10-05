@@ -111,6 +111,27 @@ public class Assets {
             }
         };
 
+        spinners = new TextureRegion[][] {
+                new TextureRegion[]{
+                        atlas.findRegion("spinner-a-1"),
+                        atlas.findRegion("spinner-b-1"),
+                        atlas.findRegion("spinner-c-1"),
+                        atlas.findRegion("spinner-d-1")
+                },
+                new TextureRegion[] {
+                        atlas.findRegion("spinner-a-2"),
+                        atlas.findRegion("spinner-b-2"),
+                        atlas.findRegion("spinner-c-2"),
+                        atlas.findRegion("spinner-d-2")
+                },
+                new TextureRegion[] {
+                        atlas.findRegion("spinner-a-3"),
+                        atlas.findRegion("spinner-b-3"),
+                        atlas.findRegion("spinner-c-3"),
+                        atlas.findRegion("spinner-d-3")
+                }
+        };
+
         ballTrailShader = loadShader("shaders/standardMesh.vert", "shaders/ballTrailMesh.frag");
 
         return 1;
