@@ -43,7 +43,7 @@ public class Game extends ApplicationAdapter {
 		}
 
 		if (audio == null) {
-			audio = new AudioManager(true, this);
+			audio = new AudioManager(false, this);
 		}
 
 		setScreen(new TitleScreen(this));
