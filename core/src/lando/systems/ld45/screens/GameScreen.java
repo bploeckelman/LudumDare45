@@ -13,7 +13,7 @@ public class GameScreen extends BaseScreen {
     public GameScreen(Game game) {
         super(game);
 
-        addObject(new Ball(assets.whiteCircle));
+        addObject(new Ball(this));
     }
 
     public void addObject(GameObject gameObject) {
