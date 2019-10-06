@@ -12,6 +12,8 @@ import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pools;
 import lando.systems.ld45.Assets;
 import lando.systems.ld45.objects.Ball;
+import lando.systems.ld45.utils.ArtPack;
+import lando.systems.ld45.utils.AssetType;
 import lando.systems.ld45.utils.Utils;
 
 
@@ -92,6 +94,27 @@ public class ParticleManager {
             );
             activeForegroundParticles.add(part);
         }
+    }
+
+    public void addBallTrailingParticle(Ball ball, ArtPack artPack) {
+        GenericParticle part = particlePool.obtain();
+        float angle = MathUtils.random(360);
+        float speed = MathUtils.random(20);
+        float vx = MathUtils.cosDeg(angle) * speed;
+        float vy = MathUtils.sinDeg(angle) * speed;
+        float size = MathUtils.random(10f, 20f);
+        float randomcolorFade = MathUtils.random(-.2f, .2f);
+        int keyFrame = MathUtils.random(0, 2);
+        TextureRegion particleStar = assets.assetMap.get(artPack).get(AssetType.particle_star).getKeyFrame(keyFrame);
+        Gdx.app.log("Ball Trailing Particle", "particle star " + particleStar.toString() + " - keyframe: " + keyFrame);
+        part.init(particleStar, size, size, size, size,
+                ball.pos.x, ball.pos.y, vx, vy, 0, 0,
+                0, GenericParticle.OriginType.CENTER, 0, 0,
+                ball.color.r + randomcolorFade, ball.color.g+randomcolorFade, ball.color.b+randomcolorFade, 1,
+                .5f, .5f, .5f, 0f,
+                0, angle, 3f
+        );
+        activeBackgroundParticles.add(part);
     }
 
     Color tempColor = new Color();

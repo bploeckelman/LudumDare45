@@ -101,7 +101,7 @@ public class Assets {
             assetMap.put(artPack, new ObjectMap<>());
             for (AssetType assetType : AssetType.values()) {
                 String assetName = assetType.fileName + "-" + artPack.name();
-                assetMap.get(artPack).put(assetType, new Animation<>(0.1f, atlas.findRegion(assetName)));
+                assetMap.get(artPack).put(assetType, new Animation<>(0.1f, atlas.findRegions(assetName)));
             }
         }
 

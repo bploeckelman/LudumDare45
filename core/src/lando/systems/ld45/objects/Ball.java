@@ -1,5 +1,6 @@
 package lando.systems.ld45.objects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -75,6 +76,12 @@ public class Ball {
         path.update(this, dt);
 
         keyframe = screen.assets.assetMap.get(screen.artPack).get(AssetType.ball).getKeyFrames()[0];
+        if (vel.len2() > MathUtils.random(100000)) {
+
+            Gdx.app.log("length", "length" + vel.len2());
+            screen.particle.addBallTrailingParticle(this, screen.artPack);
+
+        }
     }
 
     public void renderTrailMesh() {
