@@ -111,7 +111,7 @@ public class ParticleManager {
                 0, GenericParticle.OriginType.CENTER, 0, 0,
                 ball.color.r + randomcolorFade, ball.color.g+randomcolorFade, ball.color.b+randomcolorFade, 1,
                 .5f, .5f, .5f, 0f,
-                0, angle, 3f
+                0, angle, 1f
         );
         activeBackgroundParticles.add(part);
     }
