@@ -20,9 +20,7 @@ public class GameScreen extends BaseScreen {
     public Background background;
     public Array<GameObject> gameObjects = new Array<>();
     public Array<Ball> balls = new Array<>();
-    public ArtPack artPack = ArtPack.a;
 
-    public PlayerState player = new PlayerState();
     public Hopper hopper;
 
     private CollisionManager collisionManager;
@@ -90,7 +88,7 @@ public class GameScreen extends BaseScreen {
         for (int i = balls.size -1; i >= 0; i--){
             Ball b = balls.get(i);
             b.update(dt);
-            if (b.bounds.y < - (b.bounds.radius * 10)){
+            if (b.isOffscreen()) {
                 balls.removeIndex(i);
 
                 long points = 1;

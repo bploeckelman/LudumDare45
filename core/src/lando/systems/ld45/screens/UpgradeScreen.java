@@ -26,7 +26,7 @@ public class UpgradeScreen extends  BaseScreen {
         batch.setProjectionMatrix(worldCamera.combined);
 
         renderUIElements(batch);
-        
+
         batch.end();
     }
 }

@@ -16,11 +16,14 @@ import lando.systems.ld45.audio.AudioManager;
 import lando.systems.ld45.particles.ParticleManager;
 import lando.systems.ld45.screens.BaseScreen;
 import lando.systems.ld45.screens.TitleScreen;
+import lando.systems.ld45.state.PlayerState;
 
 public class Game extends ApplicationAdapter {
 
 	public Pool<Vector2> vector2Pool = Pools.get(Vector2.class);
 	public Pool<Color>   colorPool   = Pools.get(Color.class);
+
+	public PlayerState player = new PlayerState();
 
 	public ParticleManager particle;
 	public AudioManager audio;

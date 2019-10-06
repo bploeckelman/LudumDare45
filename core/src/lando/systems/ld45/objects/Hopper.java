@@ -33,7 +33,7 @@ public class Hopper {
 
     public void reset() {
         position = new Vector2(Config.gameWidth / 2, Config.gameHeight - 20);
-        availableBalls = screen.player.balls;
+        availableBalls = screen.game.player.balls;
     }
 
     public void update(float dt) {

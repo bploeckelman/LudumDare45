@@ -9,7 +9,9 @@ import lando.systems.ld45.Config;
 import lando.systems.ld45.Game;
 import lando.systems.ld45.audio.AudioManager;
 import lando.systems.ld45.particles.ParticleManager;
+import lando.systems.ld45.state.PlayerState;
 import lando.systems.ld45.ui.UIElement;
+import lando.systems.ld45.utils.ArtPack;
 
 public abstract class BaseScreen extends InputAdapter {
     public final Game game;
@@ -21,6 +23,10 @@ public abstract class BaseScreen extends InputAdapter {
     public OrthographicCamera worldCamera;
     public OrthographicCamera hudCamera;
 
+    public ArtPack artPack = ArtPack.a;
+
+    public PlayerState player;
+
     public Array<UIElement> uiElements = new Array<>();
 
     public BaseScreen(Game game) {
@@ -29,6 +35,7 @@ public abstract class BaseScreen extends InputAdapter {
         this.audio = game.audio;
         this.batch = game.assets.batch;
         this.particle = game.particle;
+        this.player = game.player;
 
         this.worldCamera = new OrthographicCamera();
         this.worldCamera.setToOrtho(false, Config.gameWidth, Config.gameHeight);

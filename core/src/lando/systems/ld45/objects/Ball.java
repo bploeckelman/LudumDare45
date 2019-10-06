@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld45.Config;
 import lando.systems.ld45.effects.BallPath;
+import lando.systems.ld45.screens.BaseScreen;
 import lando.systems.ld45.screens.GameScreen;
 import lando.systems.ld45.utils.AssetType;
 import lando.systems.ld45.utils.Utils;
@@ -22,17 +23,17 @@ public class Ball {
     public Vector2 pos = new Vector2();
     public Color color;
     public TextureRegion keyframe;
-    public GameScreen screen;
+    public BaseScreen screen;
     public float dtLeft;
 
     private BallPath path;
     private float accum;
 
-    public Ball(GameScreen screen, float radius) {
+    public Ball(BaseScreen screen, float radius) {
         this(screen, radius, Utils.getRandomHSVColor());
     }
 
-    public Ball(GameScreen screen, float radius, Color color) {
+    public Ball(BaseScreen screen, float radius, Color color) {
         // TODO: tweak Utils.getRandomColor() to exclude dumb colors
         if (color == Color.BLACK || color == Color.CLEAR) {
             color = Color.SALMON;
@@ -90,6 +91,10 @@ public class Ball {
         batch.setColor(color);
         batch.draw(keyframe, bounds.x - bounds.radius, bounds.y - bounds.radius, 2f * bounds.radius, 2f * bounds.radius);
         batch.setColor(Color.WHITE);
+    }
+
+    public boolean isOffscreen() {
+        return bounds.y < -bounds.radius * 10;
     }
 
 }

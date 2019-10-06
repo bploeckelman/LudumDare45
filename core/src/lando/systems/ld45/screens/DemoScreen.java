@@ -4,19 +4,22 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld45.Config;
 import lando.systems.ld45.Game;
+import lando.systems.ld45.objects.Ball;
 import lando.systems.ld45.ui.Button;
 
 public class DemoScreen extends BaseScreen {
 
-    private Vector2 position;
     private Button upgradeButton;
+
+    private Ball ball;
 
     private boolean showUpgrade = false;
 
     public DemoScreen(Game game) {
         super(game);
 
-        position = new Vector2(Config.gameWidth / 2, Config.initialBallY);
+        ball = new Ball(this, Config.ballRadius);
+        ball.initialize(Config.gameWidth / 2, Config.initialBallY, 0, -99);
 
         upgradeButton = new Button(assets.whitePixel, Config.gameWidth - 200, 50, 180, 50);
         upgradeButton.setText("UPGRADE");
@@ -28,23 +31,36 @@ public class DemoScreen extends BaseScreen {
     public void update(float dt) {
         super.update(dt);
 
-        if (position.y > -30) {
-            position.y -= Config.gravity * dt;
-        } else {
-            showUpgrade = true;
+        if (ball != null) {
+            ball.update(dt);
+            ball.bounds.y += (ball.vel.y*dt);
+
+            if (ball.isOffscreen()) {
+                long points = 1;
+                game.player.addScore(points);
+                particle.addPointsParticles(points, ball.bounds.x, 10f);
+                ball = null;
+                showUpgrade = true;
+            }
         }
+
+        particle.update(dt);
     }
 
     @Override
     public void render(SpriteBatch batch) {
         batch.begin();
 
-        batch.draw(assets.whiteCircle, position.x - Config.ballRadius, position.y - Config.ballRadius,
-                Config.ballRadius * 2, Config.ballRadius * 2);
+        particle.renderBackgroundParticles(batch);
+        if (ball != null) {
+            ball.render(batch);
+        }
 
         if (showUpgrade) {
             renderUIElements(batch);
         }
+
+        particle.renderForegroundParticles(batch);
         batch.end();
     }
 }
