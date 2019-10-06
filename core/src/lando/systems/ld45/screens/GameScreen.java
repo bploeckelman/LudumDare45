@@ -88,9 +88,14 @@ public class GameScreen extends BaseScreen {
             }
         }
 
-        projection.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-        projection = worldCamera.unproject(projection);
-        mousePosition.set(projection.x, projection.y);
+        if (editMode) {
+            projection.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+            projection = worldCamera.unproject(projection);
+            mousePosition.set(projection.x, projection.y);
+        } else {
+            mousePosition.set(0, 0);
+        }
+        
         gameObjects.forEach(x -> x.update(dt, mousePosition));
         particle.update(dt);
 
