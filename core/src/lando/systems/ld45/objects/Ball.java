@@ -13,7 +13,7 @@ import lando.systems.ld45.utils.Utils;
 
 public class Ball {
 
-    public static float MAXSPEED = 400f;
+    public static float MAXSPEED = 500f;
 
     public Circle bounds = new Circle();
     public Vector2 vel = new Vector2();

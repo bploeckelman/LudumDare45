@@ -4,9 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
+import lando.systems.ld45.collision.Segment2D;
 import lando.systems.ld45.screens.GameScreen;
 
 public abstract class GameObject {
@@ -22,6 +25,8 @@ public abstract class GameObject {
     protected float currentHitTime = 0;
 
     protected GameScreen screen;
+    public Circle circleBounds;
+    public Array<Segment2D> segmentBounds;
 
     private boolean isSelected = false;
     private Vector2 selectionOffset = new Vector2();
@@ -50,15 +55,11 @@ public abstract class GameObject {
         };
 
         // temp
-        if (MathUtils.random(100) < 2) {
-            hit();
-        }
+//        if (MathUtils.random(100) < 2) {
+//            hit();
+//        }
+        currentHitTime = Math.max(currentHitTime - dt, 0);
 
-        if (currentHitTime > 0) {
-            currentHitTime -= dt;
-        } else {
-            currentHitTime = 0;
-        }
     }
 
     public boolean checkSelected(Vector2 mousePosition) {

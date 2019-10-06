@@ -14,7 +14,7 @@ import lando.systems.ld45.objects.*;
 
 public class GameScreen extends BaseScreen {
 
-    private Array<GameObject> gameObjects = new Array<>();
+    public Array<GameObject> gameObjects = new Array<>();
     public Array<Ball> balls = new Array<>();
 
     private CollisionManager collisionManager;

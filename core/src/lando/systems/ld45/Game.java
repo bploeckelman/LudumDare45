@@ -4,6 +4,7 @@ import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenManager;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -64,6 +65,7 @@ public class Game extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		float dt = Math.min(Gdx.graphics.getDeltaTime(), 1f / 30f);
+		if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) dt *= 10f;
 		audio.update(dt);
 		tween.update(dt);
 		currentScreen.update(dt);

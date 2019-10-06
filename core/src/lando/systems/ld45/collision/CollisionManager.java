@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld45.objects.Ball;
+import lando.systems.ld45.objects.GameObject;
 import lando.systems.ld45.screens.GameScreen;
 import lando.systems.ld45.utils.Utils;
 
@@ -34,7 +35,7 @@ public class CollisionManager {
         boolean collisionHappened = true;
         int fuckInifiteLoops =0;
         collisionLoop:
-        while (collisionHappened){// && fuckInifiteLoops < 10000){
+        while (collisionHappened && fuckInifiteLoops < 100000){
             collisionHappened = false;
             fuckInifiteLoops++;
             for (Ball b : screen.balls){
@@ -56,16 +57,30 @@ public class CollisionManager {
                     if (overlapDist <= .1f){
                         overlapDist -= 1.2f;
                         overlapHappened = true;
-                        normal.set(tempStart2).sub(tempStart1).nor();
-                        b.bounds.x = tempStart1.x + (overlapDist/2f) * normal.x;
-                        b.bounds.y = tempStart1.y + (overlapDist/2f) * normal.y;
-
-                        otherBall.bounds.x = tempStart2.x - (overlapDist/2f) * normal.x;
-                        otherBall.bounds.y = tempStart2.y - (overlapDist/2f) * normal.y;
                         collisionHappened = true;
-                        Gdx.app.log("Collision", "RadiusCombined: " + (b.bounds.radius + otherBall.bounds.radius)+
-                                "  Overlap: " + overlapDist + " init: " + tempStart2.dst(tempStart1) +
-                                " final: " + tempStart1.set(b.bounds.x, b.bounds.y).dst(tempStart2.set(otherBall.bounds.x, otherBall.bounds.y)));
+
+                        normal.set(tempStart2).sub(tempStart1).nor();
+                        tempEnd1.set(tempStart1.x + (overlapDist/2f) * normal.x, tempStart1.y + (overlapDist/2f) * normal.y);
+
+                        // keep in bounds
+                        for (Segment2D segment : screen.boundary.segments) {
+                            float t = checkSegmentCollision(tempStart1, tempEnd1, segment.start, segment.end, nearest1, nearest2);
+                            if (t != Float.MAX_VALUE && t > 0 && t < 1) tempEnd1.set(tempStart1);
+                        }
+                        b.bounds.x = tempEnd1.x;
+                        b.bounds.y = tempEnd1.y;
+
+                        tempEnd2.set(tempStart2.x - (overlapDist/2f) * normal.x, tempStart2.y - (overlapDist/2f) * normal.y);
+                        for (Segment2D segment : screen.boundary.segments) {
+                            float t = checkSegmentCollision(tempStart2, tempEnd2, segment.start, segment.end, nearest1, nearest2);
+                            if (t != Float.MAX_VALUE && t > 0 && t < 1) tempEnd2.set(tempStart2);
+                        }
+                        otherBall.bounds.x = tempEnd2.x;
+                        otherBall.bounds.y = tempEnd2.y;
+
+//                        Gdx.app.log("Collision", "RadiusCombined: " + (b.bounds.radius + otherBall.bounds.radius)+
+//                                "  Overlap: " + overlapDist + " init: " + tempStart2.dst(tempStart1) +
+//                                " final: " + tempStart1.set(b.bounds.x, b.bounds.y).dst(tempStart2.set(otherBall.bounds.x, otherBall.bounds.y)));
                     }
                 }
                 if (overlapHappened) continue collisionLoop;
@@ -82,7 +97,8 @@ public class CollisionManager {
                     Float time = Utils.intersectCircleCircle(tempStart1, tempStart2, frameVel1, frameVel2, b.bounds.radius, otherBall.bounds.radius);
                     if (time != null){
                         if (time <= 0f){
-
+                            // No op, this shouldn't happen
+                            Gdx.app.log("collision", "ball was already inside other ball");
                         }
                         else if (time <= 1f){
                             collisionHappened = true;
@@ -110,17 +126,55 @@ public class CollisionManager {
                     }
                 }
 
+                // Bumpers
+                for (GameObject obj : screen.gameObjects){
+                    if (obj.circleBounds != null){
+                        tempStart1.set(b.bounds.x, b.bounds.y);
+                        tempEnd1.set(b.bounds.x + frameVel1.x, b.bounds.y + frameVel1.y);
+                        frameVel1.set(b.vel.x * b.dtLeft, b.vel.y * b.dtLeft);
+                        tempStart2.set(obj.circleBounds.x, obj.circleBounds.y);
+                        frameVel2.set(0,0);
+                        Float time = Utils.intersectCircleCircle(tempStart1, tempStart2, frameVel1, frameVel2, b.bounds.radius, obj.circleBounds.radius);
+                        if (time != null) {
+                            if (time <= 0f) {
+                                // No op, this shouldn't happen
+                                Gdx.app.log("collision", "ball was already inside other ball");
+                            } else if (time <= 1f) {
+                                collisionHappened = true;
+                                obj.hit();
+
+                                frameEndPos.set(tempStart1.x + frameVel1.x * (time * .99f), tempStart1.y + frameVel1.y * (time * .99f));
+                                tempStart2.set(tempStart2.x + frameVel2.x * (time * .99f), tempStart2.y + frameVel2.y * (time * .99f));
+                                b.bounds.x = frameEndPos.x;
+                                b.bounds.y = frameEndPos.y;
+
+                                float mass1 = b.bounds.radius;
+                                float mass2 = 10000;
+                                float dist = frameEndPos.dst(tempStart2);
+                                float nx = (tempStart2.x - frameEndPos.x) / dist;
+                                float ny = (tempStart2.y - frameEndPos.y) / dist;
+                                float p = 2 * (b.vel.x * nx + b.vel.y * ny - 0 * nx - 0 * ny) / (mass1 + mass2);
+
+                                b.vel.set(b.vel.x - p * mass2 * nx, b.vel.y - p * mass2 * ny);
+                                b.vel.scl(1.2f);
+                                b.dtLeft -= time * b.dtLeft;
+                            }
+                        }
+
+                    }
+                }
+
                 // Collide Boundary
                 for (Segment2D segment : screen.boundary.segments){
                     float t = checkSegmentCollision(tempStart1, tempEnd1, segment.start, segment.end, nearest1, nearest2);
                     if (t != Float.MAX_VALUE){
-                        if (t > 0 && t*dt <= b.dtLeft && nearest1.dst(nearest2) < b.bounds.radius){
+                        if (t > 0 && t*dt <= b.dtLeft && nearest1.dst(nearest2) < b.bounds.radius + .5f){
                             collided = true;
                             collisionHappened = true;
                             b.dtLeft -= t * dt;
                             frameEndPos.set(nearest1);
 
-                            float backupDist = (b.bounds.radius+.05f) - nearest1.dst(nearest2);
+                            float backupDist = (b.bounds.radius + .5f) - nearest1.dst(nearest2);
                             float moveVectorLength = b.vel.len();
                             float x = frameEndPos.x - backupDist * (b.vel.x / moveVectorLength);
                             float y = frameEndPos.y - backupDist * (b.vel.y / moveVectorLength);
