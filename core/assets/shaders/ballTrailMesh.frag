@@ -77,7 +77,7 @@ void main() {
     float lineEdge = .04;
     float centerLine = cubicPulse(.5, lineEdge, v_texCoords.y);
     vec4 lineColor = v_color;
-    lineColor.rgb = mix(v_color.rgb, vec3(.7), centerLine);
+//    lineColor.rgb = mix(v_color.rgb, vec3(.7), centerLine);
     // NOTE: this adds in the noise layer
 //    vec4 finalColor = texSample * lineColor + vec4(vec3(n1+n2+n3)*.6, 0);
     vec4 finalColor = texSample * lineColor;
