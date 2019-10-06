@@ -7,6 +7,7 @@ import lando.systems.ld45.Config;
 import lando.systems.ld45.objects.Ball;
 import lando.systems.ld45.objects.Bumper;
 import lando.systems.ld45.objects.GameObject;
+import lando.systems.ld45.objects.Spinner;
 import lando.systems.ld45.screens.GameScreen;
 import lando.systems.ld45.utils.Utils;
 
@@ -183,10 +184,16 @@ public class CollisionManager {
 
 
                                 b.vel.set(b.vel.x - p * mass2 * nx, b.vel.y - p * mass2 * ny);
-                                b.vel.scl(.9f);
+                                b.vel.scl(.8f);
                                 normal.set(frameEndPos).sub(tempStart2).nor();
                                 if (obj instanceof Bumper) {
                                     b.vel.add(normal.x * 4000 * dt, normal.y * 4000 * dt);
+                                }
+                                if (obj instanceof Spinner){
+                                    Spinner spin = (Spinner) obj;
+                                    normal.rotate90(spin.left ? 1 : -1);
+                                    b.vel.add(normal.x * 10000 * dt, normal.y * 10000 * dt);
+
                                 }
                                 b.dtLeft -= time * b.dtLeft;
                             }
