@@ -99,7 +99,7 @@ public class Assets {
         for (ArtPack artPack : ArtPack.values()) {
             assetMap.put(artPack, new ObjectMap<>());
             for (AssetType assetType : AssetType.values()) {
-                String assetName = assetType.name() + "-" + artPack.name();
+                String assetName = assetType.fileName + "-" + artPack.name();
                 assetMap.get(artPack).put(assetType, new Animation<>(0.1f, atlas.findRegion(assetName)));
             }
         }
