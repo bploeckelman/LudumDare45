@@ -3,30 +3,32 @@ package lando.systems.ld45.screens;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 
 public class GameHud {
     private GameScreen screen;
     private double time;
     private double totalTime;
-    private int score;
+    private float scoreValue;
 
     public GameHud(GameScreen gameScreen) {
         screen = gameScreen;
         time = System.currentTimeMillis();
-        score = 0;
+        this.scoreValue = 0f;
     }
 
     public void update(float dt) {
         totalTime = System.currentTimeMillis() - time;
-        score = (int) (totalTime / 100);
+        scoreValue = MathUtils.lerp(scoreValue, screen.player.score, 0.15f);
     }
 
     public void render(SpriteBatch batch) {
         float x = 6;
         float y = 26;
 
+        String scoreText = Integer.toString(MathUtils.round(scoreValue), 10);
         drawString(batch, "Score:", x, y, screen.assets.font);
-        drawString(batch, score+"", x + 130, y, screen.assets.font);
+        drawString(batch, scoreText, x + 130, y, screen.assets.font);
 
         x += screen.hudCamera.viewportWidth - 166;
 

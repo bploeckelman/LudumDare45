@@ -4,7 +4,11 @@ import java.math.BigInteger;
 
 public class PlayerState {
 
-    public BigInteger score = BigInteger.ZERO;
+    // Points used for buying shit
+    public long score = 0;
+
+    // For the credits screen, to show how many points you gathered overall
+    private long totalScore = 0;
 
     public int pegLevel = 0;
     public int pegs = 0;
@@ -16,6 +20,11 @@ public class PlayerState {
     public int balls = 5;
 
     public void addScore(long value) {
-        score.add(BigInteger.valueOf(value));
+        score += value;
+        totalScore += value;
+    }
+
+    public long getTotalScore() {
+        return totalScore;
     }
 }
