@@ -101,6 +101,11 @@ public abstract class GameObject {
             int fuckingInifiteLoops = 0;
             while(overlaping && fuckingInifiteLoops++ < 100){
                 overlaping = false;
+                if (!screen.boundary.buildArea.contains(tempPosition.x, tempPosition.y)){
+                    tempPosition.x = MathUtils.clamp(tempPosition.x, screen.boundary.buildArea.x, screen.boundary.buildArea.x+screen.boundary.buildArea.width);
+                    tempPosition.y = MathUtils.clamp(tempPosition.y, screen.boundary.buildArea.y, screen.boundary.buildArea.y+screen.boundary.buildArea.height);
+                    placementBounds.setPosition(tempPosition);
+                }
                 for (int i = 0; i < screen.gameObjects.size; i++){
                     GameObject obj = screen.gameObjects.get(i);
                     if (obj == this) continue;
@@ -111,6 +116,7 @@ public abstract class GameObject {
                         if (tempVector.epsilonEquals(Vector2.Zero)) tempVector.set(0,1);
                         tempVector.nor().scl(placementBounds.radius + obj.placementBounds.radius + 1f);
                         tempPosition.set(obj.placementBounds.x, obj.placementBounds.y).add(tempVector);
+                        placementBounds.setPosition(tempPosition);
                     }
                 }
             }
