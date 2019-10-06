@@ -15,12 +15,14 @@ import lando.systems.ld45.backgrounds.iBackground;
 import lando.systems.ld45.collision.CollisionManager;
 import lando.systems.ld45.objects.*;
 import lando.systems.ld45.state.PlayerState;
+import lando.systems.ld45.utils.ArtPack;
 
 public class GameScreen extends BaseScreen {
 
     public iBackground background;
     public Array<GameObject> gameObjects = new Array<>();
     public Array<Ball> balls = new Array<>();
+    public ArtPack artPack = ArtPack.a;
 
     public PlayerState player = new PlayerState();
     public Hopper hopper;

@@ -9,6 +9,11 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.ObjectMap;
+import lando.systems.ld45.utils.ArtPack;
+import lando.systems.ld45.utils.AssetType;
+
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 public class Assets {
 
@@ -35,16 +40,13 @@ public class Assets {
     public TextureRegion whitePixel;
     public TextureRegion whiteCircle;
 
-    public TextureRegion[] bumpers;
-
-    public TextureRegion[][] pegs;
-    public TextureRegion[][] spinners;
-
     public TextureRegion uiCursorHand;
     public NinePatch uiPanelNinepatch;
     public NinePatch uiPanelInsetNinepatch;
 
     public ObjectMap<Integer, Animation<TextureRegion>> fontPoints;
+
+    public ObjectMap<ArtPack, ObjectMap<AssetType, Animation<TextureRegion>>> assetMap;
 
     public ShaderProgram ballTrailShader;
     public ShaderProgram hexGridShader;
@@ -93,53 +95,14 @@ public class Assets {
         whitePixel = atlas.findRegion("white-pixel");
         whiteCircle = atlas.findRegion("white-circle");
 
-        bumpers = new TextureRegion[] {
-                atlas.findRegion("bumper-a"),
-                atlas.findRegion("bumper-b"),
-                atlas.findRegion("bumper-c")
-        };
-
-        pegs = new TextureRegion[][] {
-            new TextureRegion[]{
-                atlas.findRegion("peg-a-1"),
-                atlas.findRegion("peg-b-1"),
-                atlas.findRegion("peg-c-1"),
-                atlas.findRegion("peg-d-1")
-            },
-            new TextureRegion[] {
-                atlas.findRegion("peg-a-2"),
-                atlas.findRegion("peg-b-2"),
-                atlas.findRegion("peg-c-2"),
-                atlas.findRegion("peg-d-2")
-            },
-             new TextureRegion[] {
-                atlas.findRegion("peg-a-3"),
-                atlas.findRegion("peg-b-3"),
-                atlas.findRegion("peg-c-3"),
-                atlas.findRegion("peg-d-3")
+        assetMap = new ObjectMap<>();
+        for (ArtPack artPack : ArtPack.values()) {
+            assetMap.put(artPack, new ObjectMap<>());
+            for (AssetType assetType : AssetType.values()) {
+                String assetName = assetType.name() + "-" + artPack.name();
+                assetMap.get(artPack).put(assetType, new Animation<>(0.1f, atlas.findRegion(assetName)));
             }
-        };
-
-        spinners = new TextureRegion[][] {
-                new TextureRegion[]{
-                        atlas.findRegion("spinner-a-1"),
-                        atlas.findRegion("spinner-b-1"),
-                        atlas.findRegion("spinner-c-1"),
-                        atlas.findRegion("spinner-d-1")
-                },
-                new TextureRegion[] {
-                        atlas.findRegion("spinner-a-2"),
-                        atlas.findRegion("spinner-b-2"),
-                        atlas.findRegion("spinner-c-2"),
-                        atlas.findRegion("spinner-d-2")
-                },
-                new TextureRegion[] {
-                        atlas.findRegion("spinner-a-3"),
-                        atlas.findRegion("spinner-b-3"),
-                        atlas.findRegion("spinner-c-3"),
-                        atlas.findRegion("spinner-d-3")
-                }
-        };
+        }
 
         uiCursorHand = atlas.findRegion("ui-cursor-hand");
         uiPanelNinepatch = new NinePatch(atlas.findRegion("ui-panel-ninepatch"), 10, 10, 10, 10);

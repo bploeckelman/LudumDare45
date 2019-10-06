@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld45.Config;
 import lando.systems.ld45.effects.BallPath;
 import lando.systems.ld45.screens.GameScreen;
+import lando.systems.ld45.utils.AssetType;
 import lando.systems.ld45.utils.Utils;
 
 public class Ball {
@@ -39,7 +40,7 @@ public class Ball {
         this.bounds.set(0, 0, radius);
         this.screen = screen;
 
-        this.keyframe = screen.assets.whiteCircle;
+        this.keyframe = screen.assets.assetMap.get(screen.artPack).get(AssetType.ball).getKeyFrames()[0];
         this.dtLeft = 0;
 
         this.path = new BallPath(screen.game, color);
@@ -72,6 +73,8 @@ public class Ball {
 
         accum += dt;
         path.update(this, dt);
+
+        keyframe = screen.assets.assetMap.get(screen.artPack).get(AssetType.ball).getKeyFrames()[0];
     }
 
     public void renderTrailMesh() {

@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld45.screens.GameScreen;
+import lando.systems.ld45.utils.AssetType;
 
 public class Spinner extends GameObject {
 
@@ -19,13 +20,16 @@ public class Spinner extends GameObject {
     }
 
     public Spinner(GameScreen screen, int level, int gfxPack, float size) {
-        super(screen, screen.assets.spinners[gfxPack][level], size, size);
+        super(screen, screen.assets.assetMap.get(screen.artPack).get(AssetType.spinner).getKeyFrames()[0], size, size);
         setCircleBounds(-10, -10, size/2f);
     }
 
     @Override
     public void update(float dt, Vector2 mousePosition) {
         super.update(dt, mousePosition);
+
+        image = screen.assets.assetMap.get(screen.artPack).get(AssetType.spinner).getKeyFrames()[0];
+
         float dr = 30 * dt;
         if (currentHitTime > 0) {
             dr = 360*dt;

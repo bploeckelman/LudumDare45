@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld45.Config;
 import lando.systems.ld45.screens.GameScreen;
+import lando.systems.ld45.utils.AssetType;
 
 public class Bumper extends GameObject {
 
@@ -21,7 +22,7 @@ public class Bumper extends GameObject {
     }
 
     public Bumper(GameScreen screen, int gfxPack, float size) {
-        super(screen, screen.assets.bumpers[gfxPack], size, size);
+        super(screen, screen.assets.assetMap.get(screen.artPack).get(AssetType.bumper).getKeyFrames()[0], size, size);
 
         this.bumperSize = this.currentBumperSize = size;
 
@@ -33,6 +34,8 @@ public class Bumper extends GameObject {
     @Override
     public void update(float dt, Vector2 mousePosition) {
         super.update(dt, mousePosition);
+
+        image = screen.assets.assetMap.get(screen.artPack).get(AssetType.bumper).getKeyFrames()[0];
 
         if (currentHitTime > 0) {
             if (currentBumperSize > (hitTime / 2)) {
