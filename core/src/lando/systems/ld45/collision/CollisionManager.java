@@ -62,21 +62,23 @@ public class CollisionManager {
 
                         normal.set(tempStart2).sub(tempStart1).nor();
                         tempEnd1.set(tempStart1.x + (overlapDist/2f) * normal.x, tempStart1.y + (overlapDist/2f) * normal.y);
+                        tempEnd2.set(tempStart2.x - (overlapDist/2f) * normal.x, tempStart2.y - (overlapDist/2f) * normal.y);
 
                         // keep in bounds
                         for (Segment2D segment : screen.boundary.segments) {
+                            normal.set(segment.end).sub(segment.start).nor().rotate90(1);
                             float t = checkSegmentCollision(tempStart1, tempEnd1, segment.start, segment.end, nearest1, nearest2);
-                            if (t != Float.MAX_VALUE && t > 0 && t < 1) tempEnd1.set(tempStart1);
+                            if (t != Float.MAX_VALUE && nearest1.dst(nearest2) < b.bounds.radius + 2f){
+                                tempEnd1.set(tempStart1.sub(normal.x * b.bounds.radius, normal.y * b.bounds.radius));
+                            }
                             t = checkSegmentCollision(tempStart2, tempEnd2, segment.start, segment.end, nearest1, nearest2);
-                            if (t != Float.MAX_VALUE && t > 0 && t < 1) tempEnd2.set(tempStart2);
+                            if (t != Float.MAX_VALUE && nearest1.dst(nearest2) < otherBall.bounds.radius + 2f) {
+                                tempEnd2.set(tempStart2.sub(normal.x * otherBall.bounds.radius, normal.y * otherBall.bounds.radius));
+                            }
                         }
                         b.bounds.x = tempEnd1.x;
                         b.bounds.y = tempEnd1.y;
 
-                        tempEnd2.set(tempStart2.x - (overlapDist/2f) * normal.x, tempStart2.y - (overlapDist/2f) * normal.y);
-                        for (Segment2D segment : screen.boundary.segments) {
-
-                        }
                         otherBall.bounds.x = tempEnd2.x;
                         otherBall.bounds.y = tempEnd2.y;
 
@@ -98,6 +100,7 @@ public class CollisionManager {
                     frameVel2.set(otherBall.vel.x * otherBall.dtLeft, otherBall.vel.y * otherBall.dtLeft);
                     Float time = Utils.intersectCircleCircle(tempStart1, tempStart2, frameVel1, frameVel2, b.bounds.radius, otherBall.bounds.radius);
                     if (time != null){
+                        collisionHappened = true;
                         if (time <= 0f){
                             Gdx.app.log("collision", "ball was already inside a ball");
                             continue collisionLoop;
@@ -107,8 +110,22 @@ public class CollisionManager {
 
                             frameEndPos.set(tempStart1.x + frameVel1.x * (time*.99f), tempStart1.y + frameVel1.y * (time*.99f));
                             tempStart2.set(tempStart2.x + frameVel2.x * (time*.99f), tempStart2.y + frameVel2.y * (time*.99f));
-                            b.bounds.x = frameEndPos.x;
-                            b.bounds.y = frameEndPos.y;
+
+                            // keep in bounds
+                            for (Segment2D segment : screen.boundary.segments) {
+                                normal.set(segment.end).sub(segment.start).nor().rotate90(1);
+                                float t = checkSegmentCollision(tempStart1, tempEnd1, segment.start, segment.end, nearest1, nearest2);
+                                if (t != Float.MAX_VALUE && nearest1.dst(nearest2) < b.bounds.radius + 2f){
+                                    tempEnd1.set(tempStart1.sub(normal.x * b.bounds.radius, normal.y * b.bounds.radius));
+                                }
+                                t = checkSegmentCollision(tempStart2, tempEnd2, segment.start, segment.end, nearest1, nearest2);
+                                if (t != Float.MAX_VALUE && nearest1.dst(nearest2) < otherBall.bounds.radius + 2f) {
+                                    tempEnd2.set(tempStart2.sub(normal.x * b.bounds.radius, normal.y * b.bounds.radius));
+                                }
+                            }
+
+                            b.bounds.x = tempEnd1.x;
+                            b.bounds.y = tempEnd1.y;
                             otherBall.bounds.x = tempStart2.x;
                             otherBall.bounds.y = tempStart2.y;
 
@@ -184,24 +201,24 @@ public class CollisionManager {
                 for (Segment2D segment : screen.boundary.segments){
                     float t = checkSegmentCollision(tempStart1, tempEnd1, segment.start, segment.end, nearest1, nearest2);
                     if (t != Float.MAX_VALUE){
-                        if (t > 0 && t*dt <= b.dtLeft && nearest1.dst(nearest2) < b.bounds.radius + .5f){
+                        if (nearest1.dst(nearest2) < b.bounds.radius + 2f){
                             collided = true;
                             collisionHappened = true;
-                            b.dtLeft -= t * dt;
+                            b.dtLeft -= dt;
                             frameEndPos.set(nearest1);
+                            normal.set(segment.end).sub(segment.start).nor().rotate90(1);
 
-                            float backupDist = (b.bounds.radius + .5f) - nearest1.dst(nearest2);
-                            float moveVectorLength = b.vel.len();
-                            float x = frameEndPos.x - backupDist * (b.vel.x / moveVectorLength);
-                            float y = frameEndPos.y - backupDist * (b.vel.y / moveVectorLength);
+                            float backupDist = (b.bounds.radius + 2.1f) - nearest1.dst(nearest2);
+                            float x = frameEndPos.x - backupDist * (normal.x);
+                            float y = frameEndPos.y - backupDist * (normal.y);
                             frameEndPos.set(x, y);
                             if (nearest2.epsilonEquals(segment.start) || nearest2.epsilonEquals(segment.end)){
                                 normal.set(nearest2).sub(nearest1).nor();
                             } else {
-                                normal.set(segment.end).sub(segment.start).nor().rotate90(-1);
+                                normal.set(segment.end).sub(segment.start).nor().rotate90(1);
                             }
                             b.vel.set(Utils.reflectVector(incomingVector.set(b.vel), normal));
-                            b.vel.add(normal.x * 100 * dt, normal.y * 100 * dt);
+                            b.vel.add(-normal.x * 10 * dt, -normal.y * 10 * dt);
                         }
                     }
                 }
