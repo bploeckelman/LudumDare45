@@ -10,4 +10,14 @@ public enum ArtPack {
     ArtPack(String niceName) {
         this.niceName = niceName;
     }
+
+    public ArtPack getNext() {
+        switch (this) {
+            case a: return b;
+            case b: return c;
+            case c: return d;
+            case d:
+            default: return a;
+        }
+    }
 }

@@ -82,6 +82,9 @@ public class GameScreen extends BaseScreen {
             Gdx.app.exit();
         }
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
+            artPack = artPack.getNext();
+        }
 //        if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
 //            for (int i  = 0; i < 20; i++) {
 //                Ball ball = new Ball(this, MathUtils.random(3f, 10f));
