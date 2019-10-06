@@ -55,6 +55,11 @@ public class Ball {
         if (vel.len() > MAXSPEED){
             vel.nor().scl(MAXSPEED);
         }
+        if (vel.len() < 10){
+            if (vel.epsilonEquals(0,0)) vel.set(0, 1);
+            vel.nor().scl(10f);
+
+        }
 
         pos.set(bounds.x, bounds.y);
 

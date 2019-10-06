@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld45.objects.Ball;
+import lando.systems.ld45.objects.Bumper;
 import lando.systems.ld45.objects.GameObject;
 import lando.systems.ld45.screens.GameScreen;
 import lando.systems.ld45.utils.Utils;
@@ -66,14 +67,15 @@ public class CollisionManager {
                         for (Segment2D segment : screen.boundary.segments) {
                             float t = checkSegmentCollision(tempStart1, tempEnd1, segment.start, segment.end, nearest1, nearest2);
                             if (t != Float.MAX_VALUE && t > 0 && t < 1) tempEnd1.set(tempStart1);
+                            t = checkSegmentCollision(tempStart2, tempEnd2, segment.start, segment.end, nearest1, nearest2);
+                            if (t != Float.MAX_VALUE && t > 0 && t < 1) tempEnd2.set(tempStart2);
                         }
                         b.bounds.x = tempEnd1.x;
                         b.bounds.y = tempEnd1.y;
 
                         tempEnd2.set(tempStart2.x - (overlapDist/2f) * normal.x, tempStart2.y - (overlapDist/2f) * normal.y);
                         for (Segment2D segment : screen.boundary.segments) {
-                            float t = checkSegmentCollision(tempStart2, tempEnd2, segment.start, segment.end, nearest1, nearest2);
-                            if (t != Float.MAX_VALUE && t > 0 && t < 1) tempEnd2.set(tempStart2);
+
                         }
                         otherBall.bounds.x = tempEnd2.x;
                         otherBall.bounds.y = tempEnd2.y;
@@ -97,8 +99,8 @@ public class CollisionManager {
                     Float time = Utils.intersectCircleCircle(tempStart1, tempStart2, frameVel1, frameVel2, b.bounds.radius, otherBall.bounds.radius);
                     if (time != null){
                         if (time <= 0f){
-                            // No op, this shouldn't happen
-                            Gdx.app.log("collision", "ball was already inside other ball");
+                            Gdx.app.log("collision", "ball was already inside a ball");
+                            continue collisionLoop;
                         }
                         else if (time <= 1f){
                             collisionHappened = true;
@@ -130,17 +132,23 @@ public class CollisionManager {
                 for (GameObject obj : screen.gameObjects){
                     if (obj.circleBounds != null){
                         tempStart1.set(b.bounds.x, b.bounds.y);
-                        tempEnd1.set(b.bounds.x + frameVel1.x, b.bounds.y + frameVel1.y);
                         frameVel1.set(b.vel.x * b.dtLeft, b.vel.y * b.dtLeft);
+                        tempEnd1.set(b.bounds.x + frameVel1.x, b.bounds.y + frameVel1.y);
                         tempStart2.set(obj.circleBounds.x, obj.circleBounds.y);
                         frameVel2.set(0,0);
                         Float time = Utils.intersectCircleCircle(tempStart1, tempStart2, frameVel1, frameVel2, b.bounds.radius, obj.circleBounds.radius);
                         if (time != null) {
-                            if (time <= 0f) {
-                                // No op, this shouldn't happen
-                                Gdx.app.log("collision", "ball was already inside other ball");
+                            collisionHappened = true;
+                            if (time == 0f) {
+                                Gdx.app.log("collision", "ball was already inside a bumper");
+                                float overlapDist = tempStart1.dst(tempStart2) - (b.bounds.radius + obj.circleBounds.radius);
+                                overlapDist -= 1.2f;
+                                normal.set(tempStart2).sub(tempStart1).nor();
+                                tempEnd1.set(tempStart1.x + (overlapDist) * normal.x, tempStart1.y + (overlapDist) * normal.y);
+                                b.bounds.x = tempEnd1.x;
+                                b.bounds.y = tempEnd1.y;
+                                continue collisionLoop;
                             } else if (time <= 1f) {
-                                collisionHappened = true;
                                 obj.hit();
 
                                 frameEndPos.set(tempStart1.x + frameVel1.x * (time * .99f), tempStart1.y + frameVel1.y * (time * .99f));
@@ -155,8 +163,13 @@ public class CollisionManager {
                                 float ny = (tempStart2.y - frameEndPos.y) / dist;
                                 float p = 2 * (b.vel.x * nx + b.vel.y * ny - 0 * nx - 0 * ny) / (mass1 + mass2);
 
+
                                 b.vel.set(b.vel.x - p * mass2 * nx, b.vel.y - p * mass2 * ny);
-                                b.vel.scl(1.2f);
+
+                                normal.set(frameEndPos).sub(tempStart2);
+                                if (obj instanceof Bumper) {
+                                    b.vel.add(normal.x * 400 * dt, normal.y * 400 * dt);
+                                }
                                 b.dtLeft -= time * b.dtLeft;
                             }
                         }
@@ -165,6 +178,9 @@ public class CollisionManager {
                 }
 
                 // Collide Boundary
+                tempStart1.set(b.bounds.x, b.bounds.y);
+                frameVel1.set(b.vel.x * b.dtLeft, b.vel.y * b.dtLeft);
+                tempEnd1.set(b.bounds.x + frameVel1.x, b.bounds.y + frameVel1.y);
                 for (Segment2D segment : screen.boundary.segments){
                     float t = checkSegmentCollision(tempStart1, tempEnd1, segment.start, segment.end, nearest1, nearest2);
                     if (t != Float.MAX_VALUE){
@@ -185,6 +201,7 @@ public class CollisionManager {
                                 normal.set(segment.end).sub(segment.start).nor().rotate90(-1);
                             }
                             b.vel.set(Utils.reflectVector(incomingVector.set(b.vel), normal));
+                            b.vel.add(normal.x * 100 * dt, normal.y * 100 * dt);
                         }
                     }
                 }

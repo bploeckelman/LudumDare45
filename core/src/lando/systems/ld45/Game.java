@@ -66,6 +66,7 @@ public class Game extends ApplicationAdapter {
 
 		float dt = Math.min(Gdx.graphics.getDeltaTime(), 1f / 30f);
 		if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) dt *= 10f;
+		if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) dt /= 10f;
 		audio.update(dt);
 		tween.update(dt);
 		currentScreen.update(dt);

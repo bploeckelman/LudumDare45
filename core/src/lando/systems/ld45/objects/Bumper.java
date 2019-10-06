@@ -23,7 +23,7 @@ public class Bumper extends GameObject {
 
         this.bumperSize = this.currentBumperSize = size;
 
-        setPosition(MathUtils.random(10, Config.gameWidth - 20), MathUtils.random(10, Config.gameHeight - 20));
+        setPosition(MathUtils.random(10, Config.gameWidth - 20), MathUtils.random(10, Config.gameHeight - 200));
 
         circleBounds = new Circle(pos.x, pos.y, bumperSize/2f);
     }
