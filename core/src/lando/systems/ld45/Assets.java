@@ -40,6 +40,9 @@ public class Assets {
     public TextureRegion[][] pegs;
     public TextureRegion[][] spinners;
 
+    public NinePatch uiPanelNinepatch;
+    public NinePatch uiPanelInsetNinepatch;
+
     public ObjectMap<Integer, Animation<TextureRegion>> fontPoints;
 
     public ShaderProgram ballTrailShader;
@@ -136,6 +139,9 @@ public class Assets {
                         atlas.findRegion("spinner-d-3")
                 }
         };
+
+        uiPanelNinepatch = new NinePatch(atlas.findRegion("ui-panel-ninepatch"), 10, 10, 10, 10);
+        uiPanelInsetNinepatch = new NinePatch(atlas.findRegion("ui-panel-inset-ninepatch"), 6, 6, 6, 6);
 
         fontPoints = new ObjectMap<>();
         for (int i = 0; i <= 9; ++i) {

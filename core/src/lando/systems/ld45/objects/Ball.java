@@ -45,10 +45,14 @@ public class Ball {
         this.path = new BallPath(screen.game, color);
     }
 
+    public void initialize(float positionX, float positionY, float velocityX, float velocityY) {
+        bounds.set(positionX, positionY, bounds.radius);
+        pos.set(positionX,positionY);
+        vel.set(velocityX, velocityY);
+    }
+
     public void initialize(Vector2 position, Vector2 velocity) {
-        bounds.set(position.x, position.y, bounds.radius);
-        pos.set(position.x,position.y);
-        vel.set(velocity);
+        initialize(position.x, position.y, velocity.x, velocity.y);
     }
 
     public void update(float dt) {

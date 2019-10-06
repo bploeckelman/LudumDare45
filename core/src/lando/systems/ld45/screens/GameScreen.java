@@ -80,9 +80,13 @@ public class GameScreen extends BaseScreen {
             Gdx.app.exit();
         }
 
-//        if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
+//        if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
 //            for (int i  = 0; i < 20; i++) {
-//                balls.add(new Ball(this, MathUtils.random(3f, 8f)));
+//                Ball ball = new Ball(this, MathUtils.random(3f, 10f));
+//                ball.initialize(worldCamera.viewportWidth / 2f + MathUtils.random(-10f, 10f),
+//                                worldCamera.viewportHeight - 100f + MathUtils.random(-10f, 10f),
+//                                MathUtils.random(-100f, 100f), MathUtils.random(-5f, -50f));
+//                balls.add(ball);
 //            }
 //        }
 
