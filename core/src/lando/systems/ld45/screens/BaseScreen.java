@@ -23,7 +23,7 @@ public abstract class BaseScreen extends InputAdapter {
     public OrthographicCamera worldCamera;
     public OrthographicCamera hudCamera;
 
-    public ArtPack artPack = ArtPack.a;
+//    public ArtPack artPack = ArtPack.a;
 
     public PlayerState player;
 

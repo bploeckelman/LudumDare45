@@ -1,11 +1,13 @@
 package lando.systems.ld45.screens;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld45.Config;
 import lando.systems.ld45.Game;
 import lando.systems.ld45.objects.Ball;
 import lando.systems.ld45.ui.Button;
+
 
 public class DemoScreen extends BaseScreen {
 
@@ -19,6 +21,7 @@ public class DemoScreen extends BaseScreen {
         super(game);
 
         ball = new Ball(this, Config.ballRadius);
+        ball.color.set(Color.WHITE);
         ball.initialize(Config.gameWidth / 2, Config.initialBallY, 0, -99);
 
         upgradeButton = new Button(assets.whitePixel, Config.gameWidth - 200, 50, 180, 50);
@@ -53,6 +56,7 @@ public class DemoScreen extends BaseScreen {
 
         particle.renderBackgroundParticles(batch);
         if (ball != null) {
+            ball.keyframe = game.assets.whiteCircle;
             ball.render(batch);
         }
 

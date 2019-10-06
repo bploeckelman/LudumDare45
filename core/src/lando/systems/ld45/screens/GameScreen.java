@@ -185,13 +185,22 @@ public class GameScreen extends BaseScreen {
 //        Gdx.gl.glBlendFuncSeparate(GL20.GL_SRC_COLOR, GL20.GL_ONE, GL20.GL_SRC_ALPHA, GL20.GL_ZERO);
         assets.ballTrailShader.begin();
         {
-            if (artPack == ArtPack.a){
-                game.assets.crossHatchGradientTexture.bind(0);
-            }else {
-                Gdx.gl.glBlendFuncSeparate(GL20.GL_SRC_COLOR, GL20.GL_ONE, GL20.GL_SRC_ALPHA, GL20.GL_ZERO);
-
-                game.assets.ballTrailTexture.bind(0);
+            switch(game.artPack){
+                case a:
+                    game.assets.crossHatchGradientTexture.bind(0);
+                    break;
+                case b:
+                    game.assets.pixel.bind(0);
+                    break;
+                case c:
+                    game.assets.pixel.bind(0);
+                    break;
+                case d:
+                    Gdx.gl.glBlendFuncSeparate(GL20.GL_SRC_COLOR, GL20.GL_ONE, GL20.GL_SRC_ALPHA, GL20.GL_ZERO);
+                    game.assets.ballTrailTexture.bind(0);
+                    break;
             }
+
 
             assets.ballTrailShader.setUniformMatrix("u_projTrans", game.getScreen().worldCamera.combined);
             assets.ballTrailShader.setUniformi("u_texture", 0);

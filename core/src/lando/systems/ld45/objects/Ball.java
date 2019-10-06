@@ -41,7 +41,7 @@ public class Ball {
         }
 
         this.color = color;
-        if (screen.artPack == ArtPack.a){
+        if (screen.game.artPack == ArtPack.a){
             this.color = Color.BLACK;
         }
         this.bounds.set(0, 0, radius);
