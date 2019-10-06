@@ -24,9 +24,9 @@ public class TitleScreen extends BaseScreen {
 
     @Override
     public void update(float dt) {
-       label.update(dt);
+        label.update(dt);
 
-        if (Gdx.input.isTouched()) {
+        if (Gdx.input.justTouched()) {
             game.setScreen(new DemoScreen(game));
         }
     }
