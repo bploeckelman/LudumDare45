@@ -12,11 +12,11 @@ public class Boundary {
     public Boundary(GameScreen screen){
         this.screen = screen;
         segments = new Array<>();
-        segments.add(new Segment2D(0, 70, 0, screen.worldCamera.viewportHeight));
+        segments.add(new Segment2D(0, 90, 0, screen.worldCamera.viewportHeight));
         segments.add(new Segment2D(0, screen.worldCamera.viewportHeight, screen.worldCamera.viewportWidth, screen.worldCamera.viewportHeight));
-        segments.add(new Segment2D(screen.worldCamera.viewportWidth, screen.worldCamera.viewportHeight, screen.worldCamera.viewportWidth, 70));
-        segments.add(new Segment2D(screen.worldCamera.viewportWidth, 70, screen.worldCamera.viewportWidth/2f + 50, 20));
-        segments.add(new Segment2D(screen.worldCamera.viewportWidth/2f - 50, 20, 0, 70));
+        segments.add(new Segment2D(screen.worldCamera.viewportWidth, screen.worldCamera.viewportHeight, screen.worldCamera.viewportWidth, 90));
+        segments.add(new Segment2D(screen.worldCamera.viewportWidth, 90, screen.worldCamera.viewportWidth/2f + 50, 20));
+        segments.add(new Segment2D(screen.worldCamera.viewportWidth/2f - 50, 20, 0, 90));
     }
 
     public void render(SpriteBatch batch){

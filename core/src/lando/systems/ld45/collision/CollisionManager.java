@@ -3,6 +3,7 @@ package lando.systems.ld45.collision;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import lando.systems.ld45.Config;
 import lando.systems.ld45.objects.Ball;
 import lando.systems.ld45.objects.Bumper;
 import lando.systems.ld45.objects.GameObject;
@@ -182,10 +183,10 @@ public class CollisionManager {
 
 
                                 b.vel.set(b.vel.x - p * mass2 * nx, b.vel.y - p * mass2 * ny);
-
-                                normal.set(frameEndPos).sub(tempStart2);
+                                b.vel.scl(.9f);
+                                normal.set(frameEndPos).sub(tempStart2).nor();
                                 if (obj instanceof Bumper) {
-                                    b.vel.add(normal.x * 400 * dt, normal.y * 400 * dt);
+                                    b.vel.add(normal.x * 4000 * dt, normal.y * 4000 * dt);
                                 }
                                 b.dtLeft -= time * b.dtLeft;
                             }
@@ -212,13 +213,17 @@ public class CollisionManager {
                             float x = frameEndPos.x - backupDist * (normal.x);
                             float y = frameEndPos.y - backupDist * (normal.y);
                             frameEndPos.set(x, y);
+                            b.vel.scl(.9f);
                             if (nearest2.epsilonEquals(segment.start) || nearest2.epsilonEquals(segment.end)){
-                                normal.set(nearest2).sub(nearest1).nor();
+                                normal.set(nearest2).sub(frameEndPos).nor();
+                                b.vel.set(Utils.reflectVector(incomingVector.set(b.vel), normal));
                             } else {
                                 normal.set(segment.end).sub(segment.start).nor().rotate90(1);
+                                b.vel.set(Utils.reflectVector(incomingVector.set(b.vel), normal));
+                                b.vel.add(-normal.x * 200 * dt, -normal.y * 200 * dt);
                             }
-                            b.vel.set(Utils.reflectVector(incomingVector.set(b.vel), normal));
-                            b.vel.add(-normal.x * 10 * dt, -normal.y * 10 * dt);
+
+
                         }
                     }
                 }
