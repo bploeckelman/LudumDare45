@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.Pools;
 import lando.systems.ld45.accessors.*;
 import lando.systems.ld45.audio.AudioManager;
 import lando.systems.ld45.particles.ParticleManager;
@@ -17,6 +19,10 @@ import lando.systems.ld45.screens.BaseScreen;
 import lando.systems.ld45.screens.TitleScreen;
 
 public class Game extends ApplicationAdapter {
+
+	public Pool<Vector2> vector2Pool = Pools.get(Vector2.class);
+	public Pool<Color>   colorPool   = Pools.get(Color.class);
+
 	public ParticleManager particle;
 	public AudioManager audio;
 	public Assets assets;

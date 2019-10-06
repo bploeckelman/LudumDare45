@@ -1,4 +1,4 @@
-package lando.systems.ld45.effects.trail;
+package lando.systems.ld45.utils;
 
 import com.badlogic.gdx.utils.Array;
 

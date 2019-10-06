@@ -21,6 +21,7 @@ public class GameScreen extends BaseScreen {
     public Boundary boundary;
 
     private GameHud hud = new GameHud();
+    private float pathShaderTimer;
 
     public boolean editMode = true;
     public Vector3 projection = new Vector3();
@@ -47,7 +48,7 @@ public class GameScreen extends BaseScreen {
             }
         }
 
-        for (int i  = 0; i < 100; i++) {
+        for (int i  = 0; i < 200; i++) {
             balls.add(new Ball(this, MathUtils.random(3f, 8f)));
         }
         this.collisionManager = new CollisionManager(this);
@@ -64,6 +65,8 @@ public class GameScreen extends BaseScreen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
+
+        pathShaderTimer += dt;
 
         collisionManager.solve(dt);
         balls.forEach(ball -> ball.update(dt));
@@ -86,12 +89,9 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void render(SpriteBatch batch) {
-        Gdx.gl.glEnable(GL20.GL_BLEND);
-        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-        assets.ballTrailTexture.bind();
-        balls.forEach(Ball::renderTrail);
+        // NOTE: this has to be outside of batch begin/end because reasons
+        renderBallTrails();
 
-        balls.forEach(ball -> ball.trail.render(worldCamera));
         batch.setProjectionMatrix(worldCamera.combined);
         batch.begin();
         {
@@ -101,12 +101,32 @@ public class GameScreen extends BaseScreen {
             gameObjects.forEach(x -> x.render(batch));
             particle.renderForegroundParticles(batch);
         }
+        batch.end();
 
         batch.draw(assets.whiteCircle, mousePosition.x - 2, mousePosition.y - 2, 2, 2, 4, 4, 1, 1, 1);
 
         batch.setProjectionMatrix(hudCamera.combined);
-        hud.render(batch);
-
+        batch.begin();
+        {
+            hud.render(batch);
+        }
         batch.end();
     }
+
+    private void renderBallTrails() {
+        Gdx.gl.glEnable(GL20.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        assets.ballTrailShader.begin();
+        {
+            game.assets.ballTrailTexture.bind(0);
+
+            assets.ballTrailShader.setUniformMatrix("u_projTrans", game.getScreen().worldCamera.combined);
+            assets.ballTrailShader.setUniformi("u_texture", 0);
+            assets.ballTrailShader.setUniformf("u_time", pathShaderTimer);
+
+            balls.forEach(Ball::renderTrailMesh);
+        }
+        assets.ballTrailShader.end();
+    }
+
 }
