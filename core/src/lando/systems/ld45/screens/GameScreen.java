@@ -165,6 +165,7 @@ public class GameScreen extends BaseScreen {
             boundary.render(batch);
             particle.renderBackgroundParticles(batch);
             balls.forEach(ball -> ball.render(batch));
+            if (editMode) gameObjects.forEach(x -> x.renderEditModeRadius(batch));
             gameObjects.forEach(x -> x.render(batch));
             particle.renderForegroundParticles(batch);
             hopper.render(batch);

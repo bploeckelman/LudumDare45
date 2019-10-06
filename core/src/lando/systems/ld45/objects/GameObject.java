@@ -2,6 +2,7 @@ package lando.systems.ld45.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
@@ -91,11 +92,14 @@ public abstract class GameObject {
 
     Vector2 tempPosition = new Vector2();
     Vector2 tempVector = new Vector2();
+    Vector2 originalPosition = new Vector2();
     private void adjustPosition(Vector2 mousePosition) {
         if (isSelected) {
             tempPosition.set(mousePosition).sub(selectionOffset);
+            originalPosition.set(placementBounds.x, placementBounds.y);
             boolean overlaping = true;
-            while(overlaping){
+            int fuckingInifiteLoops = 0;
+            while(overlaping && fuckingInifiteLoops++ < 100){
                 overlaping = false;
                 for (int i = 0; i < screen.gameObjects.size; i++){
                     GameObject obj = screen.gameObjects.get(i);
@@ -105,14 +109,24 @@ public abstract class GameObject {
                         overlaping = true;
                         tempVector.set(tempPosition).sub(obj.placementBounds.x, obj.placementBounds.y);
                         if (tempVector.epsilonEquals(Vector2.Zero)) tempVector.set(0,1);
-                        tempVector.nor().rotate(MathUtils.random(-1f, 1f)).scl(placementBounds.radius + obj.placementBounds.radius + 1f);
+                        tempVector.nor().scl(placementBounds.radius + obj.placementBounds.radius + 1f);
                         tempPosition.set(obj.placementBounds.x, obj.placementBounds.y).add(tempVector);
                     }
                 }
             }
-
-            setPosition(tempPosition);
+            if (fuckingInifiteLoops >= 99) {
+                placementBounds.setPosition(originalPosition);
+            }
+            else {
+                setPosition(tempPosition);
+            }
         }
+    }
+
+    public void renderEditModeRadius(SpriteBatch batch) {
+        batch.setColor(1, 1, 1, .5f);
+        batch.draw(screen.assets.whiteCircle, placementBounds.x - placementBounds.radius, placementBounds.y - placementBounds.radius, placementBounds.radius*2f, placementBounds.radius*2f);
+        batch.setColor(Color.WHITE);
     }
 
     public void render(SpriteBatch batch) {
