@@ -7,6 +7,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.ObjectMap;
 import lando.systems.ld45.utils.ArtPack;
@@ -46,12 +47,17 @@ public class Assets {
     public TextureRegion whiteCircle;
 
     public TextureRegion uiCursorHand;
+    public Array<TextureRegion> equations;
+
+
     public NinePatch buildArea;
 
     public ObjectMap<Integer, Animation<TextureRegion>> fontPoints;
 
     public ObjectMap<ArtPack, ObjectMap<AssetType, Animation<TextureRegion>>> assetMap;
     public ObjectMap<ArtPack, ObjectMap<UIAssetType, NinePatch>> uiAssetNinepatchMap;
+
+    public Animation<TextureRegion> scribble;
 
     public ShaderProgram ballTrailShader;
     public ShaderProgram hexGridShader;
@@ -105,6 +111,10 @@ public class Assets {
         atlas = mgr.get(atlasAsset);
         whitePixel = atlas.findRegion("white-pixel");
         whiteCircle = atlas.findRegion("white-circle");
+        equations = new Array<>();
+        for (int i = 0; i < 7; i++){
+            equations.add(atlas.findRegion("equation"+i));
+        }
 
         assetMap = new ObjectMap<>();
         uiAssetNinepatchMap = new ObjectMap<>();
@@ -112,7 +122,7 @@ public class Assets {
             assetMap.put(artPack, new ObjectMap<>());
             for (AssetType assetType : AssetType.values()) {
                 String assetName = assetType.fileName + "-" + artPack.name();
-                assetMap.get(artPack).put(assetType, new Animation<>(0.1f, atlas.findRegions(assetName)));
+                assetMap.get(artPack).put(assetType, new Animation<>(0.1f, atlas.findRegions(assetName), Animation.PlayMode.LOOP));
             }
 
             String fileName;
@@ -127,10 +137,7 @@ public class Assets {
             uiAssetNinepatchMap.get(artPack).put(UIAssetType.upgrade_panel_inset, new NinePatch(atlas.findRegion(fileName), 6, 6, 6, 6));
         }
 
-        assetMap.get(ArtPack.a).get(AssetType.boundary_line).setPlayMode(Animation.PlayMode.LOOP);
-        assetMap.get(ArtPack.a).get(AssetType.bumper).setPlayMode(Animation.PlayMode.LOOP);
-        assetMap.get(ArtPack.a).get(AssetType.bumper).setFrameDuration(.1f);
-
+        scribble = new Animation<>(0.1f, atlas.findRegions("scribble-a"));
 
         uiCursorHand = atlas.findRegion("ui-cursor-hand");
         buildArea = new NinePatch(atlas.findRegion("redbox"), 4, 4, 4, 4);

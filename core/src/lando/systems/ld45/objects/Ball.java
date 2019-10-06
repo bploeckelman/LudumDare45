@@ -42,7 +42,7 @@ public class Ball {
 
         this.color = color;
         if (screen.game.artPack == ArtPack.a){
-            this.color = Color.BLACK;
+            this.color = new Color(Color.BLACK);
         }
         this.bounds.set(0, 0, radius);
         this.screen = screen;

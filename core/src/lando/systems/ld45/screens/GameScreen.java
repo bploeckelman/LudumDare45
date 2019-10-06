@@ -179,6 +179,7 @@ public class GameScreen extends BaseScreen {
 
     private void renderBallTrails() {
         Gdx.gl.glEnable(GL20.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
         // normal blendy
 //        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
         // vector-ish blendy

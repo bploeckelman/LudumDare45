@@ -20,6 +20,6 @@ public class Peg extends GameObject {
     public void update(float dt, Vector2 mousePosition) {
         super.update(dt, mousePosition);
         setCircleBounds(pos.x, pos.y, size.x/2f);
-        image = screen.assets.assetMap.get(screen.game.artPack).get(AssetType.peg).getKeyFrames()[0];
+        image = screen.assets.assetMap.get(screen.game.artPack).get(AssetType.peg).getKeyFrame(artAccum);
     }
 }
