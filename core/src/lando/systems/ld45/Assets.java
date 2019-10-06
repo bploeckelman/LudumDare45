@@ -43,6 +43,8 @@ public class Assets {
     public ObjectMap<Integer, Animation<TextureRegion>> fontPoints;
 
     public ShaderProgram ballTrailShader;
+    public ShaderProgram hexGridShader;
+
 
     public boolean initialized;
 
@@ -141,6 +143,7 @@ public class Assets {
         }
 
         ballTrailShader = loadShader("shaders/standardMesh.vert", "shaders/ballTrailMesh.frag");
+        hexGridShader = loadShader("shaders/standard.vert", "shaders/hexGrid.frag");
 
         return 1;
     }

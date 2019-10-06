@@ -169,11 +169,12 @@ public class CollisionManager {
                                 continue collisionLoop;
                             } else if (time <= 1f) {
                                 obj.hit();
-
                                 frameEndPos.set(tempStart1.x + frameVel1.x * (time * .99f), tempStart1.y + frameVel1.y * (time * .99f));
                                 tempStart2.set(tempStart2.x + frameVel2.x * (time * .99f), tempStart2.y + frameVel2.y * (time * .99f));
                                 b.bounds.x = frameEndPos.x;
                                 b.bounds.y = frameEndPos.y;
+
+                                screen.background.addCollision(frameEndPos.x, frameEndPos.y, 4, 2, b.color);
 
                                 float mass1 = b.bounds.radius;
                                 float mass2 = 10000;
@@ -181,7 +182,6 @@ public class CollisionManager {
                                 float nx = (tempStart2.x - frameEndPos.x) / dist;
                                 float ny = (tempStart2.y - frameEndPos.y) / dist;
                                 float p = 2 * (b.vel.x * nx + b.vel.y * ny - 0 * nx - 0 * ny) / (mass1 + mass2);
-
 
                                 b.vel.set(b.vel.x - p * mass2 * nx, b.vel.y - p * mass2 * ny);
                                 b.vel.scl(.8f);
@@ -227,6 +227,8 @@ public class CollisionManager {
                             float x = frameEndPos.x - backupDist * (normal.x);
                             float y = frameEndPos.y - backupDist * (normal.y);
                             frameEndPos.set(x, y);
+                            screen.background.addCollision(frameEndPos.x, frameEndPos.y, 4, 2, b.color);
+
                             b.vel.scl(.8f);
                             if (nearest2.epsilonEquals(segment.start) || nearest2.epsilonEquals(segment.end)){
                                 normal.set(nearest2).sub(frameEndPos).nor();

@@ -10,12 +10,15 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld45.Config;
 import lando.systems.ld45.Game;
+import lando.systems.ld45.backgrounds.HexBackground;
+import lando.systems.ld45.backgrounds.iBackground;
 import lando.systems.ld45.collision.CollisionManager;
 import lando.systems.ld45.objects.*;
 import lando.systems.ld45.state.PlayerState;
 
 public class GameScreen extends BaseScreen {
 
+    public iBackground background;
     public Array<GameObject> gameObjects = new Array<>();
     public Array<Ball> balls = new Array<>();
 
@@ -34,7 +37,7 @@ public class GameScreen extends BaseScreen {
 
     public GameScreen(Game game) {
         super(game);
-
+        background = new HexBackground(this);
         hopper = new Hopper(this);
 
         int x = 150;
@@ -82,6 +85,8 @@ public class GameScreen extends BaseScreen {
 //                balls.add(new Ball(this, MathUtils.random(3f, 8f)));
 //            }
 //        }
+
+        background.update(dt);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
             editMode = !editMode;
@@ -137,6 +142,11 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void render(SpriteBatch batch) {
+
+        batch.setProjectionMatrix(worldCamera.combined);
+        batch.begin();
+        background.render(batch);
+        batch.end();
         // NOTE: this has to be outside of batch begin/end because reasons
         renderBallTrails();
 
