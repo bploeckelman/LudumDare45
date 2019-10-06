@@ -145,8 +145,8 @@ public class Trail {
         }
 
         // generate triangles for each half of the trail
-        batchSize = generate(input, 1);
-        int bSize = generate(input, -1);
+//        batchSize = generate(input, 1);
+//        int bSize = generate(input, -1);
     }
 
 }

@@ -1,5 +1,6 @@
 package lando.systems.ld45.collision;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld45.objects.Ball;
@@ -20,6 +21,8 @@ public class CollisionManager {
     Vector2 frameEndPos = new Vector2();
     Vector2 tempStart2 = new Vector2();
     Vector2 tempEnd2 = new Vector2();
+    Vector2 frameVel1 = new Vector2();
+    Vector2 frameVel2 = new Vector2();
     Vector2 nearest1 = new Vector2();
     Vector2 nearest2 = new Vector2();
     Vector2 normal = new Vector2();
@@ -29,25 +32,30 @@ public class CollisionManager {
             b.dtLeft = dt;
         }
         boolean collisionHappened = true;
-
+        int fuckInifiteLoops =0;
         collisionLoop:
-        while (collisionHappened){
+        while (collisionHappened){// && fuckInifiteLoops < 10000){
             collisionHappened = false;
+            fuckInifiteLoops++;
             for (Ball b : screen.balls){
                 if (b.dtLeft <= 0) continue;
                 boolean collided = false;
+                frameVel1.set(b.vel.x * b.dtLeft, b.vel.y * b.dtLeft);
                 tempStart1.set(b.bounds.x, b.bounds.y);
-                tempEnd1.set(b.bounds.x + b.vel.x * dt, b.bounds.y + b.vel.y * dt);
+                tempEnd1.set(b.bounds.x + frameVel1.x, b.bounds.y + frameVel1.y);
                 frameEndPos.set(tempEnd1);
 
+                boolean overlapHappened = false;
                 // first pass to move them all away
                 for (int i = 0; i < screen.balls.size; i ++){
+                    tempStart1.set(b.bounds.x, b.bounds.y);
                     Ball otherBall = screen.balls.get(i);
                     if (b == otherBall) continue;
                     tempStart2.set(otherBall.bounds.x, otherBall.bounds.y);
                     float overlapDist = tempStart1.dst(tempStart2) - (b.bounds.radius + otherBall.bounds.radius);
-                    if (overlapDist <= 0){
-                        overlapDist -= .1f;
+                    if (overlapDist <= .1f){
+                        overlapDist -= 1.2f;
+                        overlapHappened = true;
                         normal.set(tempStart2).sub(tempStart1).nor();
                         b.bounds.x = tempStart1.x + (overlapDist/2f) * normal.x;
                         b.bounds.y = tempStart1.y + (overlapDist/2f) * normal.y;
@@ -55,31 +63,39 @@ public class CollisionManager {
                         otherBall.bounds.x = tempStart2.x - (overlapDist/2f) * normal.x;
                         otherBall.bounds.y = tempStart2.y - (overlapDist/2f) * normal.y;
                         collisionHappened = true;
-                        continue collisionLoop;
+                        Gdx.app.log("Collision", "RadiusCombined: " + (b.bounds.radius + otherBall.bounds.radius)+
+                                "  Overlap: " + overlapDist + " init: " + tempStart2.dst(tempStart1) +
+                                " final: " + tempStart1.set(b.bounds.x, b.bounds.y).dst(tempStart2.set(otherBall.bounds.x, otherBall.bounds.y)));
                     }
                 }
+                if (overlapHappened) continue collisionLoop;
 
                 // Bounce balls
                 for (int i = 0; i < screen.balls.size; i++){
                     Ball otherBall = screen.balls.get(i);
                     if (otherBall == b) continue;
+                    tempStart1.set(b.bounds.x, b.bounds.y);
                     tempStart2.set(otherBall.bounds.x, otherBall.bounds.y);
-                    Float time = Utils.intersectCircleCircle(tempStart1, tempStart2, b.vel, otherBall.vel, b.bounds.radius, otherBall.bounds.radius, dt);
+                    tempEnd1.set(b.bounds.x + frameVel1.x, b.bounds.y + frameVel1.y);
+                    frameVel1.set(b.vel.x * b.dtLeft, b.vel.y * b.dtLeft);
+                    frameVel2.set(otherBall.vel.x * otherBall.dtLeft, otherBall.vel.y * otherBall.dtLeft);
+                    Float time = Utils.intersectCircleCircle(tempStart1, tempStart2, frameVel1, frameVel2, b.bounds.radius, otherBall.bounds.radius);
                     if (time != null){
-                        if (time == 0f){
-                            // no op? this shouldn't happen
-                        } else if (time <= 1f){
+                        if (time <= 0f){
+
+                        }
+                        else if (time <= 1f){
                             collisionHappened = true;
-                            screen.particle.addBallColisionParticle(otherBall, b);
-                            frameEndPos.set(tempStart1.x + b.vel.x * dt * time, tempStart1.y + b.vel.y * dt * time);
-                            tempStart2.set(tempStart2.x + otherBall.vel.x * dt * time, tempStart2.y + otherBall.vel.y * dt * time);
+
+                            frameEndPos.set(tempStart1.x + frameVel1.x * (time*.99f), tempStart1.y + frameVel1.y * (time*.99f));
+                            tempStart2.set(tempStart2.x + frameVel2.x * (time*.99f), tempStart2.y + frameVel2.y * (time*.99f));
                             b.bounds.x = frameEndPos.x;
                             b.bounds.y = frameEndPos.y;
                             otherBall.bounds.x = tempStart2.x;
                             otherBall.bounds.y = tempStart2.y;
 
-                            float mass1 = b.bounds.radius * b.bounds.radius;
-                            float mass2 = otherBall.bounds.radius * otherBall.bounds.radius;
+                            float mass1 = b.bounds.radius;
+                            float mass2 = otherBall.bounds.radius;
                             float dist = frameEndPos.dst(tempStart2);
                             float nx = (tempStart2.x - frameEndPos.x) / dist;
                             float ny = (tempStart2.y - frameEndPos.y) / dist;
@@ -87,9 +103,9 @@ public class CollisionManager {
 
                             b.vel.set(b.vel.x - p * mass2 * nx, b.vel.y - p * mass2 * ny);
                             otherBall.vel.set(otherBall.vel.x + p * mass1 * nx, otherBall.vel.y + p * mass1 * ny);
-                            b.dtLeft -= time * dt;
-                            otherBall.dtLeft -= time * dt;
-                            continue collisionLoop;
+                            b.dtLeft -= time * b.dtLeft;
+                            otherBall.dtLeft -= Math.max(time * otherBall.dtLeft, 0f);
+//                            continue collisionLoop;
                         }
                     }
                 }
@@ -103,13 +119,17 @@ public class CollisionManager {
                             collisionHappened = true;
                             b.dtLeft -= t * dt;
                             frameEndPos.set(nearest1);
-                            normal.set(segment.end).sub(segment.start).nor().rotate90(-1);
 
-                            float backupDist = (b.bounds.radius+.1f) - nearest1.dst(nearest2);
+                            float backupDist = (b.bounds.radius+.05f) - nearest1.dst(nearest2);
                             float moveVectorLength = b.vel.len();
                             float x = frameEndPos.x - backupDist * (b.vel.x / moveVectorLength);
                             float y = frameEndPos.y - backupDist * (b.vel.y / moveVectorLength);
                             frameEndPos.set(x, y);
+                            if (nearest2.epsilonEquals(segment.start) || nearest2.epsilonEquals(segment.end)){
+                                normal.set(nearest2).sub(nearest1).nor();
+                            } else {
+                                normal.set(segment.end).sub(segment.start).nor().rotate90(-1);
+                            }
                             b.vel.set(Utils.reflectVector(incomingVector.set(b.vel), normal));
                         }
                     }

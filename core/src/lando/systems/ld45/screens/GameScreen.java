@@ -46,8 +46,7 @@ public class GameScreen extends BaseScreen {
         }
 
         for (int i  = 0; i < 100; i++) {
-            balls.add(new Ball(this, MathUtils.random(10f, 15f)));
-            balls.add(new Ball(this, MathUtils.random(7f, 8f)));
+            balls.add(new Ball(this, MathUtils.random(3f, 8f)));
         }
         this.collisionManager = new CollisionManager(this);
         this.boundary = new Boundary(this);

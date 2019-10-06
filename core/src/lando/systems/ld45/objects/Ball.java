@@ -16,6 +16,8 @@ import lando.systems.ld45.utils.Utils;
 
 public class Ball {
 
+    public static float MAXSPEED = 400f;
+
     public Circle bounds = new Circle();
     public Vector2 vel = new Vector2();
     public Vector2 pos = new Vector2();
@@ -39,7 +41,7 @@ public class Ball {
         }
 
         this.screen = screen;
-        this.bounds.set(Config.gameWidth / 2f + MathUtils.random(-50f, 50f), Config.gameHeight / 2f + MathUtils.random(-50f, 50f), radius);
+        this.bounds.set(Config.gameWidth / 2f + MathUtils.random(-200f, 200f), Config.gameHeight - 50 - MathUtils.random(50f), radius);
         this.pos.set(bounds.x, bounds.y);
         this.color = color;
         this.trail = new TrailHandler(Color.WHITE, 30, screen.assets);
@@ -53,6 +55,9 @@ public class Ball {
     public void update(float dt) {
         vel.y -= Config.gravity*dt;
         vel.scl(.999f);
+        if (vel.len() > MAXSPEED){
+            vel.nor().scl(MAXSPEED);
+        }
 //        bounds.x += vel.x * dt;
 //        bounds.y += vel.y * dt;
 

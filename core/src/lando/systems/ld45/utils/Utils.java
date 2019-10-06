@@ -51,16 +51,16 @@ public class Utils {
 
     static Vector2 s = new Vector2();
     static Vector2 v = new Vector2();
-    public static Float intersectCircleCircle(Vector2 pos1, Vector2 pos2, Vector2 vel1, Vector2 vel2, float rad1, float rad2, float dt) {
-        return Utils.intersectCircleCircle(pos1.x, pos1.y, pos2.x, pos2.y, vel1.x, vel1.y, vel2.x, vel2.y, rad1, rad2, dt);
+    public static Float intersectCircleCircle(Vector2 pos1, Vector2 pos2, Vector2 vel1, Vector2 vel2, float rad1, float rad2) {
+        return Utils.intersectCircleCircle(pos1.x, pos1.y, pos2.x, pos2.y, vel1.x, vel1.y, vel2.x, vel2.y, rad1, rad2);
     }
 
     public static Float intersectCircleCircle(float pos1x, float pos1y, float pos2x, float pos2y,
                                               float vel1x, float vel1y, float vel2x, float vel2y,
-                                              float rad1, float rad2, float dt) {
+                                              float rad1, float rad2) {
         Float t;
         s.set(pos2x, pos2y).sub(pos1x, pos1y);
-        v.set(vel2x * dt, vel2y * dt).sub(vel1x * dt, vel1y * dt);
+        v.set(vel2x, vel2y).sub(vel1x, vel1y);
         float r = rad1 + rad2;
         float c = s.dot(s) - r * r;
         if (c < 0){
