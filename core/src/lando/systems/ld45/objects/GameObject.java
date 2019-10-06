@@ -72,7 +72,7 @@ public abstract class GameObject {
     }
 
     public void update(float dt, Vector2 mousePosition) {
-
+        artAccum += dt;
         if (checkSelected(mousePosition)) {
             adjustPosition(mousePosition);
         };

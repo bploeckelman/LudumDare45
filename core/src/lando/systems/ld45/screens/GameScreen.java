@@ -15,6 +15,7 @@ import lando.systems.ld45.collision.CollisionManager;
 import lando.systems.ld45.objects.*;
 import lando.systems.ld45.state.PlayerState;
 import lando.systems.ld45.ui.Panel;
+import lando.systems.ld45.utils.ArtPack;
 import lando.systems.ld45.utils.UIAssetType;
 
 public class GameScreen extends BaseScreen {
@@ -91,7 +92,9 @@ public class GameScreen extends BaseScreen {
         boundary.update(dt);
         pathShaderTimer += dt;
 
-        hopper.update(dt);
+        if (!editMode) {
+            hopper.update(dt);
+        }
 
         collisionManager.solve(dt);
         for (int i = balls.size -1; i >= 0; i--){
@@ -158,9 +161,10 @@ public class GameScreen extends BaseScreen {
             if (editMode) gameObjects.forEach(x -> x.renderEditModeRadius(batch));
             gameObjects.forEach(x -> x.render(batch));
             particle.renderForegroundParticles(batch);
-            hopper.render(batch);
 
+            if (!editMode) hopper.render(batch);
             toyChestPanel.render(batch);
+
         }
 
         batch.end();
@@ -178,10 +182,16 @@ public class GameScreen extends BaseScreen {
         // normal blendy
 //        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
         // vector-ish blendy
-        Gdx.gl.glBlendFuncSeparate(GL20.GL_SRC_COLOR, GL20.GL_ONE, GL20.GL_SRC_ALPHA, GL20.GL_ZERO);
+//        Gdx.gl.glBlendFuncSeparate(GL20.GL_SRC_COLOR, GL20.GL_ONE, GL20.GL_SRC_ALPHA, GL20.GL_ZERO);
         assets.ballTrailShader.begin();
         {
-            game.assets.ballTrailTexture.bind(0);
+            if (artPack == ArtPack.a){
+                game.assets.crossHatchGradientTexture.bind(0);
+            }else {
+                Gdx.gl.glBlendFuncSeparate(GL20.GL_SRC_COLOR, GL20.GL_ONE, GL20.GL_SRC_ALPHA, GL20.GL_ZERO);
+
+                game.assets.ballTrailTexture.bind(0);
+            }
 
             assets.ballTrailShader.setUniformMatrix("u_projTrans", game.getScreen().worldCamera.combined);
             assets.ballTrailShader.setUniformi("u_texture", 0);
@@ -189,6 +199,7 @@ public class GameScreen extends BaseScreen {
 
             balls.forEach(Ball::renderTrailMesh);
         }
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
         assets.ballTrailShader.end();
     }
 

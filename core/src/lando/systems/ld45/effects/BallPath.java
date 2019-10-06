@@ -6,6 +6,8 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld45.Game;
+import lando.systems.ld45.screens.GameScreen;
+import lando.systems.ld45.utils.ArtPack;
 import lando.systems.ld45.utils.FixedList;
 import lando.systems.ld45.objects.Ball;
 
@@ -77,7 +79,13 @@ public class BallPath {
 
         shader.begin();
         {
-            game.assets.ballTrailTexture.bind(0);
+            if (game.getScreen() instanceof GameScreen){
+                if (((GameScreen)game.getScreen()).artPack == ArtPack.a){
+                    game.assets.crossHatchGradientTexture.bind(0);
+                } else {
+                    game.assets.ballTrailTexture.bind(0);
+                }
+            }
 
             shader.setUniformMatrix("u_projTrans", game.getScreen().worldCamera.combined);
             shader.setUniformi("u_texture", 0);

@@ -102,7 +102,7 @@ public class ParticleManager {
         float speed = MathUtils.random(20);
         float vx = MathUtils.cosDeg(angle) * speed;
         float vy = MathUtils.sinDeg(angle) * speed;
-        float size = MathUtils.random(10f, 20f);
+        float size = MathUtils.random(4f, 8f);
         float randomcolorFade = MathUtils.random(-.2f, .2f);
         int keyFrame = MathUtils.random(0, 2);
         TextureRegion particleStar = assets.assetMap.get(artPack).get(AssetType.particle_star).getKeyFrame(keyFrame);

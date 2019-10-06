@@ -21,6 +21,7 @@ public class Assets {
     private final AssetDescriptor<Texture> pixelTextureAsset = new AssetDescriptor<>("images/pixel.png", Texture.class);
     private final AssetDescriptor<Texture> gridpaperTextureAsset = new AssetDescriptor<>("images/gridpaper.png", Texture.class);
     private final AssetDescriptor<Texture> pathGradientTextureAsset = new AssetDescriptor<>("images/path-gradient.png", Texture.class);
+    private final AssetDescriptor<Texture> crosshatchGradientTextureAsset = new AssetDescriptor<>("images/crosshatch-gradient.png", Texture.class);
     private final AssetDescriptor<Texture> laserTextureAsset = new AssetDescriptor<>("images/laser.png", Texture.class);
     private final AssetDescriptor<TextureAtlas> atlasAsset = new AssetDescriptor<>("images/sprites.atlas", TextureAtlas.class);
     private final AssetDescriptor<BitmapFont> pixelFont16Asset = new AssetDescriptor<>("fonts/chevyray-column-16.fnt", BitmapFont.class);
@@ -38,6 +39,7 @@ public class Assets {
     public Texture pixel;
     public Texture ballTrailTexture;
     public Texture pathGradientTexture;
+    public Texture crossHatchGradientTexture;
     public Texture gridPaper;
 
     public TextureRegion whitePixel;
@@ -68,6 +70,7 @@ public class Assets {
         mgr.load(atlasAsset);
         mgr.load(pixelTextureAsset);
         mgr.load(pathGradientTextureAsset);
+        mgr.load(crosshatchGradientTextureAsset);
         mgr.load(laserTextureAsset);
         mgr.load(pixelFont16Asset);
         mgr.load(gridpaperTextureAsset);
@@ -93,6 +96,7 @@ public class Assets {
         gridPaper.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         gridPaper.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         pathGradientTexture = mgr.get(pathGradientTextureAsset);
+        crossHatchGradientTexture = mgr.get(crosshatchGradientTextureAsset);
         ballTrailTexture = mgr.get(laserTextureAsset);
         debugTexture = mgr.get("images/badlogic.jpg", Texture.class);
 
@@ -123,8 +127,10 @@ public class Assets {
             uiAssetNinepatchMap.get(artPack).put(UIAssetType.upgrade_panel_inset, new NinePatch(atlas.findRegion(fileName), 6, 6, 6, 6));
         }
 
-        assetMap.get(ArtPack.a).get(AssetType.boundary_line).setPlayMode(Animation.PlayMode.LOOP_RANDOM);
-        assetMap.get(ArtPack.a).get(AssetType.bumper).setPlayMode(Animation.PlayMode.LOOP_RANDOM);
+        assetMap.get(ArtPack.a).get(AssetType.boundary_line).setPlayMode(Animation.PlayMode.LOOP);
+        assetMap.get(ArtPack.a).get(AssetType.bumper).setPlayMode(Animation.PlayMode.LOOP);
+        assetMap.get(ArtPack.a).get(AssetType.bumper).setFrameDuration(.1f);
+
 
         uiCursorHand = atlas.findRegion("ui-cursor-hand");
         buildArea = new NinePatch(atlas.findRegion("redbox"), 4, 4, 4, 4);

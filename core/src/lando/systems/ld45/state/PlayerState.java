@@ -1,5 +1,7 @@
 package lando.systems.ld45.state;
 
+import lando.systems.ld45.utils.ArtPack;
+
 import java.math.BigInteger;
 
 public class PlayerState {
