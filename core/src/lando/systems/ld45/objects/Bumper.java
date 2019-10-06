@@ -3,6 +3,7 @@ package lando.systems.ld45.objects;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld45.Config;
 import lando.systems.ld45.screens.GameScreen;
 
@@ -21,13 +22,12 @@ public class Bumper extends GameObject {
 
         this.bumperSize = this.currentBumperSize = size;
 
-        pos.x = MathUtils.random(10, Config.gameWidth - 20);
-        pos.y = MathUtils.random(10, Config.gameHeight - 20);
+        setPosition(MathUtils.random(10, Config.gameWidth - 20), MathUtils.random(10, Config.gameHeight - 20));
     }
 
     @Override
-    public void update(float dt) {
-        super.update(dt);
+    public void update(float dt, Vector2 mousePosition) {
+        super.update(dt, mousePosition);
 
         if (currentHitTime > 0) {
             if (currentBumperSize > (hitTime / 2)) {

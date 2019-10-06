@@ -1,14 +1,19 @@
 package lando.systems.ld45.objects;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld45.screens.GameScreen;
 
 public abstract class GameObject {
 
-    public Vector2 pos = new Vector2();
+    // don't set directly!
+    protected Vector2 pos = new Vector2();
+    public Rectangle bounds = new Rectangle();
 
     protected Vector2 size;
     protected TextureRegion image;
@@ -17,6 +22,9 @@ public abstract class GameObject {
     protected float currentHitTime = 0;
 
     protected GameScreen screen;
+
+    private boolean isSelected = false;
+    private Vector2 selectionOffset = new Vector2();
 
     public GameObject(GameScreen screen, TextureRegion image) {
         this(screen, image, image.getRegionWidth(), image.getRegionHeight());
@@ -29,7 +37,18 @@ public abstract class GameObject {
         size = new Vector2(width, height);
     }
 
-    public void update(float dt) {
+    public void setPosition(float x, float y) {
+        pos.x = x;
+        pos.y = y;
+        bounds.set(x - size.x / 2, y - size.y / 2, size.x, size.y);
+    }
+
+    public void update(float dt, Vector2 mousePosition) {
+
+        if (checkSelected(mousePosition)) {
+            adjustPosition(mousePosition);
+        };
+
         // temp
         if (MathUtils.random(100) < 2) {
             hit();
@@ -41,6 +60,26 @@ public abstract class GameObject {
             currentHitTime = 0;
         }
     }
+
+    public boolean checkSelected(Vector2 mousePosition) {
+        if (Gdx.input.justTouched() || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+            if (bounds.contains(mousePosition)) {
+                selectionOffset.set(mousePosition.x - pos.x, mousePosition.y - pos.y);
+                isSelected = true;
+            }
+        } else if (isSelected && !(Gdx.input.isButtonPressed(Input.Buttons.LEFT) || Gdx.input.isTouched())) {
+            isSelected = false;
+        }
+
+        return isSelected;
+    }
+
+    private void adjustPosition(Vector2 mousePosition) {
+        if (isSelected) {
+            setPosition(mousePosition.x - selectionOffset.x, mousePosition.y - selectionOffset.y);
+        }
+    }
+
 
     public void render(SpriteBatch batch) {
         batch.draw(image, pos.x - size.x / 2, pos.y - size.y / 2, size.x, size.y);

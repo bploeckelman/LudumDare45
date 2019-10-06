@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld45.Game;
 import lando.systems.ld45.collision.CollisionManager;
@@ -20,6 +22,10 @@ public class GameScreen extends BaseScreen {
 
     private GameHud hud = new GameHud();
 
+    public boolean editMode = true;
+    public Vector3 projection = new Vector3();
+    public Vector2 mousePosition = new Vector2();
+
     public GameScreen(Game game) {
         super(game);
 
@@ -27,19 +33,15 @@ public class GameScreen extends BaseScreen {
         for (int g = 0; g < 3; g++) {
             for (int l = 0; l < 4; l++) {
                 GameObject item = addObject(Bumper.getBumper(this, g));
-                item.pos.x = x;
-                item.pos.y = 200;
+                item.setPosition(x, 200);
 
                 item = addObject(Peg.getPeg(this, l, g));
-                item.pos.x = x;
-                item.pos.y = 300;
-
+                item.setPosition(x, 300);
 
                 Spinner spinner = Spinner.getSpinner(this, l, g);
                 spinner.left = (l % 2) == 0;
                 item = addObject(spinner);
-                item.pos.x = x;
-                item.pos.y = 400;
+                item.setPosition(x, 400);
 
                 x += 50;
             }
@@ -72,7 +74,11 @@ public class GameScreen extends BaseScreen {
                 balls.removeIndex(i);
             }
         }
-        gameObjects.forEach(x -> x.update(dt));
+
+        projection.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+        projection = worldCamera.unproject(projection);
+        mousePosition.set(projection.x, projection.y);
+        gameObjects.forEach(x -> x.update(dt, mousePosition));
         particle.update(dt);
 
         hud.update(dt);
@@ -95,6 +101,8 @@ public class GameScreen extends BaseScreen {
             gameObjects.forEach(x -> x.render(batch));
             particle.renderForegroundParticles(batch);
         }
+
+        batch.draw(assets.whiteCircle, mousePosition.x - 2, mousePosition.y - 2, 2, 2, 4, 4, 1, 1, 1);
 
         batch.setProjectionMatrix(hudCamera.combined);
         hud.render(batch);
