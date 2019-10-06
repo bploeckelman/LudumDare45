@@ -21,7 +21,7 @@ public class DemoScreen extends BaseScreen {
         upgradeButton = new Button(assets.whitePixel, Config.gameWidth - 200, 50, 180, 50);
         upgradeButton.setText("UPGRADE");
         upgradeButton.set(this);
-        upgradeButton.addClickHandler(() -> game.setScreen(new GameScreen(game)) );
+        upgradeButton.addClickHandler(() -> game.setScreen(new UpgradeScreen(game)) );
     }
 
     @Override

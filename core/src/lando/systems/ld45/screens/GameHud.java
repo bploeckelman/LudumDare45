@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import lando.systems.ld45.ui.Panel;
 
@@ -15,7 +14,6 @@ public class GameHud {
     private double totalTime;
     private float scoreValue;
     private Panel toyChestPanel;
-    private Panel upgradePanel;
 
     private boolean firstView = true;
 
@@ -27,9 +25,6 @@ public class GameHud {
         this.toyChestPanel.setInitialBounds(screen.hudCamera.viewportWidth, 0f,
                                             screen.hudCamera.viewportWidth * (1f / 3f),
                                             screen.hudCamera.viewportHeight);
-        this.upgradePanel = new Panel(screen);
-        this.upgradePanel.setInitialBounds(0, -screen.hudCamera.viewportHeight, screen.hudCamera.viewportWidth, screen.hudCamera.viewportHeight);
-        this.upgradePanel.horizontal = false;
     }
 
     public void update(float dt) {
@@ -38,17 +33,12 @@ public class GameHud {
 
         if (firstView) {
             firstView = false;
-            upgradePanel.toggle(screen.hudCamera);
         }
 
         toyChestPanel.update(dt);
-        upgradePanel.update(dt);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.TAB)) {
             toyChestPanel.toggle(screen.hudCamera);
-        }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.U)) {
-            upgradePanel.toggle(screen.hudCamera);
         }
     }
 
@@ -66,7 +56,6 @@ public class GameHud {
         drawString(batch, toTimeString((long)totalTime / 1000), x + 80, y, screen.assets.font);
 
         toyChestPanel.render(batch);
-        upgradePanel.render(batch);
 //        if (toyChestPanel.isVisible()) {
 //            TextureRegion cursor = screen.assets.uiCursorHand;
 //            batch.draw(cursor, Gdx.input.getX(), screen.hudCamera.viewportHeight - Gdx.input.getY() - cursor.getRegionHeight());
