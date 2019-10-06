@@ -78,9 +78,12 @@ void main() {
     float centerLine = cubicPulse(.5, lineEdge, v_texCoords.y);
     vec4 lineColor = v_color;
     lineColor.rgb = mix(v_color.rgb, vec3(.7), centerLine);
-    vec4 finalColor = texSample * lineColor + vec4(vec3(n1+n2+n3)*.6, 0);
+    // NOTE: this adds in the noise layer
+//    vec4 finalColor = texSample * lineColor + vec4(vec3(n1+n2+n3)*.6, 0);
+    vec4 finalColor = texSample * lineColor;
 
-    finalColor.a = max(crackle * finalColor.a, finalColor.a);
+    // NOTE: this adds in the 'crackle' effect
+//    finalColor.a = max(crackle * finalColor.a, finalColor.a);
 
     gl_FragColor = finalColor;
 }

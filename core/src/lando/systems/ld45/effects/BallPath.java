@@ -192,25 +192,27 @@ public class BallPath {
             vertices[verticesIndex++] = color.b;
             vertices[verticesIndex++] = alpha;
 
-            // vertex 3
-            vertices[verticesIndex++] = p2.x + perp.x;
-            vertices[verticesIndex++] = p2.y + perp.y;
-            vertices[verticesIndex++] = interp2;
-            vertices[verticesIndex++] = 1f;
-            vertices[verticesIndex++] = color.r;
-            vertices[verticesIndex++] = color.g;
-            vertices[verticesIndex++] = color.b;
-            vertices[verticesIndex++] = alpha;
+            // NOTE: these are duplicated (which was needed when it was a closed loop)
 
-            // vertex 4
-            vertices[verticesIndex++] = p2.x - perp.x;
-            vertices[verticesIndex++] = p2.y - perp.y;
-            vertices[verticesIndex++] = interp2;
-            vertices[verticesIndex++] = 0f;
-            vertices[verticesIndex++] = color.r;
-            vertices[verticesIndex++] = color.g;
-            vertices[verticesIndex++] = color.b;
-            vertices[verticesIndex++] = alpha;
+            // vertex 3
+//            vertices[verticesIndex++] = p2.x + perp.x;
+//            vertices[verticesIndex++] = p2.y + perp.y;
+//            vertices[verticesIndex++] = interp2;
+//            vertices[verticesIndex++] = 1f;
+//            vertices[verticesIndex++] = color.r;
+//            vertices[verticesIndex++] = color.g;
+//            vertices[verticesIndex++] = color.b;
+//            vertices[verticesIndex++] = alpha;
+//
+//            // vertex 4
+//            vertices[verticesIndex++] = p2.x - perp.x;
+//            vertices[verticesIndex++] = p2.y - perp.y;
+//            vertices[verticesIndex++] = interp2;
+//            vertices[verticesIndex++] = 0f;
+//            vertices[verticesIndex++] = color.r;
+//            vertices[verticesIndex++] = color.g;
+//            vertices[verticesIndex++] = color.b;
+//            vertices[verticesIndex++] = alpha;
         }
     }
 
@@ -219,7 +221,7 @@ public class BallPath {
     // ------------------------------------------------------------------------
 
     private static final int SMOOTHING_ITERATIONS = 1;
-    private static final float SIMPLIFICATION_TOLERANCE = 10f;
+    private static final float SIMPLIFICATION_TOLERANCE = 0f;
 
     private Array<Vector2> tmp = new Array<>();
 
