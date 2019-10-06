@@ -3,6 +3,7 @@ package lando.systems.ld45.particles;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -158,6 +159,30 @@ public class ParticleManager {
                     0, 1000f,
                     MathUtils.random(1f,2f));
             activeForegroundParticles.add(part);
+        }
+    }
+
+    public void addPointsParticles(long points, float x, float y) {
+        // create a particle for each number in 'points'
+        Color startColor = Color.GOLD;
+        Color endColor = Color.BROWN;
+        float size = 15f;
+        float yVel = 60f;
+        String pointsStr = Long.toString(points, 10);
+        for (int i = 0; i < pointsStr.length(); ++i) {
+            GenericParticle part = particlePool.obtain();
+            TextureRegion texture = assets.fontPoints.get(Character.digit(pointsStr.charAt(i), 10)).getKeyFrames()[0];
+            part.init(texture,
+                      size, 3f,
+                      size, 3f,
+                      x + i * (size-3f), y, 0f, yVel,
+                      1, 1, 0.5f,
+                      GenericParticle.OriginType.CENTER, 0, 0,
+                      startColor.r, startColor.g, startColor.b, 1.0f,
+                      endColor.r,   endColor.g,   endColor.b  , 0.25f,
+                      0f, 0f, 2f);
+            part.setDrawDropShadow(true);
+            activeTextParticles.add(part);
         }
     }
 

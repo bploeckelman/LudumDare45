@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.badlogic.gdx.utils.ObjectMap;
 
 public class Assets {
 
@@ -38,6 +39,8 @@ public class Assets {
 
     public TextureRegion[][] pegs;
     public TextureRegion[][] spinners;
+
+    public ObjectMap<Integer, Animation<TextureRegion>> fontPoints;
 
     public ShaderProgram ballTrailShader;
 
@@ -131,6 +134,11 @@ public class Assets {
                         atlas.findRegion("spinner-d-3")
                 }
         };
+
+        fontPoints = new ObjectMap<>();
+        for (int i = 0; i <= 9; ++i) {
+            fontPoints.put(i, new Animation<>(0.1f, atlas.findRegions("font-points-" + i)));
+        }
 
         ballTrailShader = loadShader("shaders/standardMesh.vert", "shaders/ballTrailMesh.frag");
 

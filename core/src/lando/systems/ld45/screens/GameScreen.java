@@ -101,8 +101,10 @@ public class GameScreen extends BaseScreen {
             b.update(dt);
             if (b.bounds.y < - (b.bounds.radius * 10)){
                 balls.removeIndex(i);
-                // TODO: pop a little score graphic particle up
-                player.addScore(1);
+
+                long points = 1;
+                player.addScore(points);
+                particle.addPointsParticles(points, b.bounds.x, 10f);
             }
         }
 
