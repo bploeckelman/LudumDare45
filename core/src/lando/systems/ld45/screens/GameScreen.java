@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import lando.systems.ld45.Config;
 import lando.systems.ld45.Game;
 import lando.systems.ld45.collision.CollisionManager;
 import lando.systems.ld45.objects.*;
@@ -19,6 +20,7 @@ public class GameScreen extends BaseScreen {
     public Array<Ball> balls = new Array<>();
 
     public PlayerState player = new PlayerState();
+    public Hopper hopper;
 
     private CollisionManager collisionManager;
     public Boundary boundary;
@@ -33,26 +35,35 @@ public class GameScreen extends BaseScreen {
     public GameScreen(Game game) {
         super(game);
 
-        int x = 150;
-        for (int g = 0; g < 3; g++) {
-            for (int l = 0; l < 4; l++) {
-                GameObject item = addObject(Bumper.getBumper(this, g));
-                item.setPosition(x, 200);
+        hopper = new Hopper(this);
 
-                item = addObject(Peg.getPeg(this, l, g));
-                item.setPosition(x, 300);
-
-                Spinner spinner = Spinner.getSpinner(this, l, g);
-                spinner.left = (l % 2) == 0;
-                item = addObject(spinner);
-                item.setPosition(x, 400);
-
-                x += 50;
-            }
-        }
+//        int x = 150;
+//        for (int g = 0; g < 3; g++) {
+//            for (int l = 0; l < 4; l++) {
+//                GameObject item = addObject(Bumper.getBumper(this, g));
+//                item.setPosition(x, 200);
+//
+//                item = addObject(Peg.getPeg(this, l, g));
+//                item.setPosition(x, 300);
+//
+//                Spinner spinner = Spinner.getSpinner(this, l, g);
+//                spinner.left = (l % 2) == 0;
+//                item = addObject(spinner);
+//                item.setPosition(x, 400);
+//
+//                x += 50;
+//            }
+//        }
 
         this.collisionManager = new CollisionManager(this);
         this.boundary = new Boundary(this);
+
+        startGame();
+    }
+
+    public void startGame() {
+        editMode = false;
+        hopper.reset();
     }
 
     public GameObject addObject(GameObject gameObject) {
@@ -66,11 +77,11 @@ public class GameScreen extends BaseScreen {
             Gdx.app.exit();
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
-            for (int i  = 0; i < 20; i++) {
-                balls.add(new Ball(this, MathUtils.random(3f, 8f)));
-            }
-        }
+//        if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
+//            for (int i  = 0; i < 20; i++) {
+//                balls.add(new Ball(this, MathUtils.random(3f, 8f)));
+//            }
+//        }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
             editMode = !editMode;
@@ -81,6 +92,8 @@ public class GameScreen extends BaseScreen {
         }
 
         pathShaderTimer += dt;
+
+        hopper.update(dt);
 
         collisionManager.solve(dt);
         balls.forEach(ball -> ball.update(dt));
@@ -103,7 +116,16 @@ public class GameScreen extends BaseScreen {
         gameObjects.forEach(x -> x.update(dt, mousePosition));
         particle.update(dt);
 
+        if (balls.size == 0) {
+            endGame();
+        }
+
         hud.update(dt);
+    }
+
+    private void endGame() {
+        // player.balls += 3;
+        startGame();
     }
 
     @Override
@@ -119,7 +141,9 @@ public class GameScreen extends BaseScreen {
             balls.forEach(ball -> ball.render(batch));
             gameObjects.forEach(x -> x.render(batch));
             particle.renderForegroundParticles(batch);
+            hopper.render(batch);
         }
+
         batch.end();
 
         batch.setProjectionMatrix(hudCamera.combined);

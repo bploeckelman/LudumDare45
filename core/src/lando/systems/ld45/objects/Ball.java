@@ -35,17 +35,20 @@ public class Ball {
         if (color == Color.BLACK || color == Color.CLEAR) {
             color = Color.SALMON;
         }
-
-        this.screen = screen;
-        this.bounds.set(Config.gameWidth / 2f + MathUtils.random(-200f, 200f), Config.gameHeight - 50 - MathUtils.random(50f), radius);
-        this.pos.set(bounds.x, bounds.y);
         this.color = color;
-        this.vel.set(MathUtils.random(-200f, 200f),
-                     MathUtils.random(-200f, 200f));
+        this.bounds.set(0, 0, radius);
+        this.screen = screen;
+
         this.keyframe = screen.assets.whiteCircle;
         this.dtLeft = 0;
 
         this.path = new BallPath(screen.game, color);
+    }
+
+    public void initialize(Vector2 position, Vector2 velocity) {
+        bounds.set(position.x, position.y, bounds.radius);
+        pos.set(position.x,position.y);
+        vel.set(velocity);
     }
 
     public void update(float dt) {

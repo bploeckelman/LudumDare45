@@ -13,7 +13,7 @@ public class PlayerState {
     public int bumperLevel = 0;
     public int bumpers;
     public int graphicsPack = 0;
-    public int balls = 1;
+    public int balls = 5;
 
     public void addScore(long value) {
         score.add(BigInteger.valueOf(value));
