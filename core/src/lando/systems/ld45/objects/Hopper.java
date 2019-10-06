@@ -42,9 +42,9 @@ public class Hopper {
         dropTime -= dt;
         if (Gdx.input.isKeyPressed(Input.Keys.B)) {
             dropBall(dt);
-        } else {
-            move(dt);
         }
+        move(dt);
+
     }
 
     public void dropBall(float dt) {
@@ -52,7 +52,7 @@ public class Hopper {
             dropTime = 0.5f;
 
             Ball ball = new Ball(screen, 5);
-            ball.initialize(position, new Vector2(0, -99));
+            ball.initialize(position, new Vector2(velocity.x / 2, -99));
             screen.balls.add(ball);
 
             availableBalls--;
