@@ -8,6 +8,8 @@ import lando.systems.ld45.screens.GameScreen;
 
 public class Spinner extends GameObject {
 
+    public static final long SCORE_VALUE = 5;
+
     private float rotation = 0;
 
     public boolean left = true;

@@ -10,6 +10,8 @@ import lando.systems.ld45.screens.GameScreen;
 
 public class Bumper extends GameObject {
 
+    public static final long SCORE_VALUE = 2;
+
     private float bumperSize;
 
     private float currentBumperSize = 0;

@@ -188,12 +188,13 @@ public class CollisionManager {
                                 normal.set(frameEndPos).sub(tempStart2).nor();
                                 if (obj instanceof Bumper) {
                                     b.vel.add(normal.x * 4000 * dt, normal.y * 4000 * dt);
+                                    screen.player.addScore(Bumper.SCORE_VALUE);
                                 }
                                 if (obj instanceof Spinner){
                                     Spinner spin = (Spinner) obj;
                                     normal.rotate90(spin.left ? 1 : -1);
                                     b.vel.add(normal.x * 10000 * dt, normal.y * 10000 * dt);
-
+                                    screen.player.addScore(Spinner.SCORE_VALUE);
                                 }
                                 b.dtLeft -= time * b.dtLeft;
                             }
