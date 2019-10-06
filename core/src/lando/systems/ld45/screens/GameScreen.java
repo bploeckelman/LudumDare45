@@ -73,6 +73,10 @@ public class GameScreen extends BaseScreen {
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+            editMode = !editMode;
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.C)) {
             balls.clear();
         }
 
@@ -95,7 +99,7 @@ public class GameScreen extends BaseScreen {
         } else {
             mousePosition.set(0, 0);
         }
-        
+
         gameObjects.forEach(x -> x.update(dt, mousePosition));
         particle.update(dt);
 
