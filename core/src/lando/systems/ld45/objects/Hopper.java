@@ -13,18 +13,17 @@ public class Hopper {
 
     public Vector2 position;
     public Vector2 velocity;
+    public int availableBalls;
 
     private GameScreen screen;
 
     private float length = 100;
-    private int availableBalls;
     private float dropTime = 0;
 
     public Hopper(GameScreen screen) {
         this.screen = screen;
 
-        position = new Vector2(Config.gameWidth / 2, Config.gameHeight - 20);
-        velocity = new Vector2(200, 0);
+        velocity = new Vector2(400, 0);
         if (MathUtils.randomBoolean()) {
             velocity.x = -velocity.x;
         }
@@ -33,15 +32,37 @@ public class Hopper {
     }
 
     public void reset() {
+        position = new Vector2(Config.gameWidth / 2, Config.gameHeight - 20);
         availableBalls = screen.player.balls;
     }
 
     public void update(float dt) {
         if (availableBalls == 0) return;
 
+        dropTime -= dt;
+        if (Gdx.input.isKeyPressed(Input.Keys.B)) {
+            dropBall(dt);
+        } else {
+            move(dt);
+        }
+    }
+
+    public void dropBall(float dt) {
+        if (dropTime < 0) {
+            dropTime = 0.5f;
+
+            Ball ball = new Ball(screen, 5);
+            ball.initialize(position, new Vector2(0, -99));
+            screen.balls.add(ball);
+
+            availableBalls--;
+        }
+    }
+
+    private void move(float dt) {
         position.x += (velocity.x * dt);
 
-        float space = 40;
+        float space = 60;
         float halfLength = length / 2;
         if (velocity.x > 0) {
             if (position.x + halfLength > Config.gameWidth - space) {
@@ -53,23 +74,6 @@ public class Hopper {
                 position.x = halfLength + space;
                 velocity.x = -velocity.x;
             }
-        }
-
-        dropTime -= dt;
-        if (Gdx.input.isKeyPressed(Input.Keys.B)) {
-            dropBall(dt);
-        }
-    }
-
-    public void dropBall(float dt) {
-        if (dropTime < 0) {
-            dropTime = 0.5f;
-
-            Ball ball = new Ball(screen, 5);
-            ball.initialize(position, new Vector2(velocity.x/2, -99));
-            screen.balls.add(ball);
-
-            availableBalls--;
         }
     }
 

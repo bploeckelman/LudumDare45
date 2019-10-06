@@ -116,7 +116,7 @@ public class GameScreen extends BaseScreen {
         gameObjects.forEach(x -> x.update(dt, mousePosition));
         particle.update(dt);
 
-        if (balls.size == 0) {
+        if (isGameOver()) {
             endGame();
         }
 
@@ -126,6 +126,10 @@ public class GameScreen extends BaseScreen {
     private void endGame() {
         // player.balls += 3;
         startGame();
+    }
+
+    public boolean isGameOver() {
+        return (balls.size == 0) && (hopper.availableBalls == 0);
     }
 
     @Override
