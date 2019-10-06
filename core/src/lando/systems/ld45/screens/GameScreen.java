@@ -80,7 +80,7 @@ public class GameScreen extends BaseScreen {
         shitCommands();
 
         background.update(dt);
-
+        boundary.update(dt);
         pathShaderTimer += dt;
 
         hopper.update(dt);

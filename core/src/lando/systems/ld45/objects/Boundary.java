@@ -14,6 +14,7 @@ public class Boundary {
     GameScreen screen;
     public Rectangle buildArea;
     float margin = 10f;
+    float accum;
 
     public Boundary(GameScreen screen){
         this.screen = screen;
@@ -26,10 +27,14 @@ public class Boundary {
         buildArea = new Rectangle(90, 180, (int)screen.worldCamera.viewportWidth-180, (int)screen.worldCamera.viewportHeight-270);
     }
 
+    public void update(float dt){
+        accum += dt;
+    }
+
     public void render(SpriteBatch batch){
         float width = 10;
         for (Segment2D segment : segments){
-            batch.draw(screen.assets.assetMap.get(screen.artPack).get(AssetType.boundary_line).getKeyFrame(0), segment.start.x - width/2f, segment.start.y - width/2f, width/2f, width/2f, segment.delta.len() + width, width, 1, 1, segment.getRotation());
+            batch.draw(screen.assets.assetMap.get(screen.artPack).get(AssetType.boundary_line).getKeyFrame(accum), segment.start.x - width/2f, segment.start.y - width/2f, width/2f, width/2f, segment.delta.len() + width, width, 1, 1, segment.getRotation());
         }
     }
 

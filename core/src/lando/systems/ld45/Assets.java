@@ -111,6 +111,8 @@ public class Assets {
             }
         }
 
+        assetMap.get(ArtPack.a).get(AssetType.boundary_line).setPlayMode(Animation.PlayMode.LOOP_RANDOM);
+
         uiCursorHand = atlas.findRegion("ui-cursor-hand");
         uiPanelNinepatch = new NinePatch(atlas.findRegion("ui-panel-ninepatch"), 10, 10, 10, 10);
         uiPanelInsetNinepatch = new NinePatch(atlas.findRegion("ui-panel-inset-ninepatch"), 6, 6, 6, 6);
