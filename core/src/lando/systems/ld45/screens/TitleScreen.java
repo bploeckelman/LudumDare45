@@ -15,13 +15,8 @@ public class TitleScreen extends BaseScreen {
         super(game);
 
         this.label = new TypingLabel(assets.font,
-//                                     "{JUMP=.2}{RAINBOW} SCORE GOALS {ENDRAINBOW}{ENDJUMP}\n"
-//                                               + "{WIND=;;;0.7;}{GRADIENT=red;blue} TO GET LETTERS {ENDGRADIENT}{ENDWIND}\n\n"
-//                                               + "{JUMP=.2}{RAINBOW} SPELL BLAST! {ENDRAINBOW}{ENDJUMP}\n"
-//                                               + "{WAVE=0.9;1.2;1.75}{GRADIENT=red;blue} TO {SHAKE}WIN {ENDGRADIENT}{ENDSHAKE}{ENDWAVE}",
-                                        "{JUMP=.2}{WAVE=0.9;1.2;1.75}{GRADIENT=red;blue}{RAINBOW}CLICK TO START{ENDRAINBOW}{ENDGRADIENT}{ENDWAVE}{ENDJUMP}"
-                                                + " \n\nB to add balls\n\nC to clear balls\n\nE edit mode",
-                                     0f, 0f);
+                "{JUMP=.2}{WAVE=0.9;1.2;1.75}{GRADIENT=red;blue}{RAINBOW}CLICK TO START{ENDRAINBOW}{ENDGRADIENT}{ENDWAVE}{ENDJUMP}",
+                0f, 0f);
         this.label.setWidth(Config.gameWidth);
         this.label.setFontScale(2f);
         this.label.setY(Config.gameHeight / 2f + 100f);
@@ -32,7 +27,7 @@ public class TitleScreen extends BaseScreen {
        label.update(dt);
 
         if (Gdx.input.isTouched()) {
-            game.setScreen(new GameScreen(game));
+            game.setScreen(new DemoScreen(game));
         }
     }
 
