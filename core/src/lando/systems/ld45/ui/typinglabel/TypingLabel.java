@@ -158,6 +158,10 @@ public class TypingLabel {
     /// --- External API --- ///
     ////////////////////////////
 
+    public float getLineHeight() {
+        return height;
+    }
+
     public void setX(float x) {
         posX = x;
     }
