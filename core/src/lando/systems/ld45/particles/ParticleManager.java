@@ -106,7 +106,6 @@ public class ParticleManager {
         float randomcolorFade = MathUtils.random(-.2f, .2f);
         int keyFrame = MathUtils.random(0, 2);
         TextureRegion particleStar = assets.assetMap.get(artPack).get(AssetType.particle_star).getKeyFrame(keyFrame);
-        Gdx.app.log("Ball Trailing Particle", "particle star " + particleStar.toString() + " - keyframe: " + keyFrame);
         part.init(particleStar, size, size, size, size,
                 ball.pos.x, ball.pos.y, vx, vy, 0, 0,
                 0, GenericParticle.OriginType.CENTER, 0, 0,
