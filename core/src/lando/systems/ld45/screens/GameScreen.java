@@ -11,11 +11,14 @@ import com.badlogic.gdx.utils.Array;
 import lando.systems.ld45.Game;
 import lando.systems.ld45.collision.CollisionManager;
 import lando.systems.ld45.objects.*;
+import lando.systems.ld45.state.PlayerState;
 
 public class GameScreen extends BaseScreen {
 
     public Array<GameObject> gameObjects = new Array<>();
     public Array<Ball> balls = new Array<>();
+
+    public PlayerState player = new PlayerState();
 
     private CollisionManager collisionManager;
     public Boundary boundary;
@@ -23,7 +26,7 @@ public class GameScreen extends BaseScreen {
     private GameHud hud = new GameHud(this);
     private float pathShaderTimer;
 
-    public boolean editMode = true;
+    public boolean editMode = false;
     public Vector3 projection = new Vector3();
     public Vector2 mousePosition = new Vector2();
 
@@ -48,9 +51,6 @@ public class GameScreen extends BaseScreen {
             }
         }
 
-        for (int i  = 0; i < 200; i++) {
-            balls.add(new Ball(this, MathUtils.random(3f, 8f)));
-        }
         this.collisionManager = new CollisionManager(this);
         this.boundary = new Boundary(this);
     }
@@ -64,6 +64,16 @@ public class GameScreen extends BaseScreen {
     public void update(float dt) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
+            for (int i  = 0; i < 20; i++) {
+                balls.add(new Ball(this, MathUtils.random(3f, 8f)));
+            }
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+            balls.clear();
         }
 
         pathShaderTimer += dt;

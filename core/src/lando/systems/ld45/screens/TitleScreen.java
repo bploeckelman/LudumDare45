@@ -19,7 +19,8 @@ public class TitleScreen extends BaseScreen {
 //                                               + "{WIND=;;;0.7;}{GRADIENT=red;blue} TO GET LETTERS {ENDGRADIENT}{ENDWIND}\n\n"
 //                                               + "{JUMP=.2}{RAINBOW} SPELL BLAST! {ENDRAINBOW}{ENDJUMP}\n"
 //                                               + "{WAVE=0.9;1.2;1.75}{GRADIENT=red;blue} TO {SHAKE}WIN {ENDGRADIENT}{ENDSHAKE}{ENDWAVE}",
-                                        "{JUMP=.2}{WAVE=0.9;1.2;1.75}{GRADIENT=red;blue}{RAINBOW}CLICK TO START{ENDRAINBOW}{ENDGRADIENT}{ENDWAVE}{ENDJUMP}",
+                                        "{JUMP=.2}{WAVE=0.9;1.2;1.75}{GRADIENT=red;blue}{RAINBOW}CLICK TO START{ENDRAINBOW}{ENDGRADIENT}{ENDWAVE}{ENDJUMP}"
+                                                + " \n\nB to add balls\n\nE to clear balls",
                                      0f, 0f);
         this.label.setWidth(Config.gameWidth);
         this.label.setFontScale(2f);

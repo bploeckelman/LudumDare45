@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -13,6 +12,8 @@ import lando.systems.ld45.collision.Segment2D;
 import lando.systems.ld45.screens.GameScreen;
 
 public abstract class GameObject {
+
+    public long value = 1;
 
     // don't set directly!
     protected Vector2 pos = new Vector2();
@@ -54,12 +55,7 @@ public abstract class GameObject {
             adjustPosition(mousePosition);
         };
 
-        // temp
-//        if (MathUtils.random(100) < 2) {
-//            hit();
-//        }
         currentHitTime = Math.max(currentHitTime - dt, 0);
-
     }
 
     public boolean checkSelected(Vector2 mousePosition) {
@@ -80,7 +76,6 @@ public abstract class GameObject {
             setPosition(mousePosition.x - selectionOffset.x, mousePosition.y - selectionOffset.y);
         }
     }
-
 
     public void render(SpriteBatch batch) {
         batch.draw(image, pos.x - size.x / 2, pos.y - size.y / 2, size.x, size.y);
