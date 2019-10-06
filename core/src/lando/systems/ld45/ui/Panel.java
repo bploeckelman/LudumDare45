@@ -21,6 +21,8 @@ public class Panel {
 
     private final float insetMargin = 20f;
 
+    public boolean horizontal = true;
+
     public Panel(Assets assets, TweenManager tween) {
         this.tween = tween;
         this.visible = false;
@@ -52,8 +54,12 @@ public class Panel {
 
         visible = true;
         animating = true;
-        Tween.to(bounds, RectangleAccessor.X, 0.33f)
-             .target(camera.viewportWidth - bounds.width)
+
+        int accessor = (horizontal) ? RectangleAccessor.X : RectangleAccessor.Y;
+        float target = (horizontal) ? camera.viewportWidth - bounds.width : 0;
+
+        Tween.to(bounds, accessor, 0.33f)
+             .target(target)
              .ease(Bounce.OUT)
              .setCallback((i, baseTween) -> animating = false)
              .start(tween);
@@ -64,8 +70,12 @@ public class Panel {
         if (!visible) return;
 
         animating = true;
-        Tween.to(bounds, RectangleAccessor.X, 0.05f)
-             .target(camera.viewportWidth)
+
+        int accessor = (horizontal) ? RectangleAccessor.X : RectangleAccessor.Y;
+        float target = (horizontal) ? camera.viewportWidth : -camera.viewportHeight;
+
+        Tween.to(bounds, accessor, 0.05f)
+             .target(target)
              .setCallback((i, baseTween) -> {
                  visible = false;
                  animating = false;
