@@ -49,6 +49,10 @@ public class Utils {
         return Colors.getColors().get(colorKeysCache.get(MathUtils.random(0, colorKeysCache.size - 1)));
     }
 
+    public static Color getRandomHSVColor(){
+        return hsvToRgb(MathUtils.random(1f), 1f, 1f, null);
+    }
+
     static Vector2 s = new Vector2();
     static Vector2 v = new Vector2();
     public static Float intersectCircleCircle(Vector2 pos1, Vector2 pos2, Vector2 vel1, Vector2 vel2, float rad1, float rad2) {

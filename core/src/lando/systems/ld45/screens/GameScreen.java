@@ -37,23 +37,23 @@ public class GameScreen extends BaseScreen {
 
         hopper = new Hopper(this);
 
-//        int x = 150;
-//        for (int g = 0; g < 3; g++) {
-//            for (int l = 0; l < 4; l++) {
-//                GameObject item = addObject(Bumper.getBumper(this, g));
-//                item.setPosition(x, 200);
-//
-//                item = addObject(Peg.getPeg(this, l, g));
-//                item.setPosition(x, 300);
-//
-//                Spinner spinner = Spinner.getSpinner(this, l, g);
-//                spinner.left = (l % 2) == 0;
-//                item = addObject(spinner);
-//                item.setPosition(x, 400);
-//
-//                x += 50;
-//            }
-//        }
+        int x = 150;
+        for (int g = 0; g < 3; g++) {
+            for (int l = 0; l < 4; l++) {
+                GameObject item = addObject(Bumper.getBumper(this, g));
+                item.setPosition(x, 200);
+
+                item = addObject(Peg.getPeg(this, l, g));
+                item.setPosition(x, 300);
+
+                Spinner spinner = Spinner.getSpinner(this, l, g);
+                spinner.left = (l % 2) == 0;
+                item = addObject(spinner);
+                item.setPosition(x, 400);
+
+                x += 50;
+            }
+        }
 
         this.collisionManager = new CollisionManager(this);
         this.boundary = new Boundary(this);
@@ -96,11 +96,10 @@ public class GameScreen extends BaseScreen {
         hopper.update(dt);
 
         collisionManager.solve(dt);
-        balls.forEach(ball -> ball.update(dt));
         for (int i = balls.size -1; i >= 0; i--){
             Ball b = balls.get(i);
             b.update(dt);
-            if (b.bounds.y < - b.bounds.radius){
+            if (b.bounds.y < - (b.bounds.radius * 10)){
                 balls.removeIndex(i);
             }
         }

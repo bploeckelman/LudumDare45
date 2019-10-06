@@ -213,14 +213,14 @@ public class CollisionManager {
                             float x = frameEndPos.x - backupDist * (normal.x);
                             float y = frameEndPos.y - backupDist * (normal.y);
                             frameEndPos.set(x, y);
-                            b.vel.scl(.9f);
+                            b.vel.scl(.8f);
                             if (nearest2.epsilonEquals(segment.start) || nearest2.epsilonEquals(segment.end)){
                                 normal.set(nearest2).sub(frameEndPos).nor();
                                 b.vel.set(Utils.reflectVector(incomingVector.set(b.vel), normal));
                             } else {
                                 normal.set(segment.end).sub(segment.start).nor().rotate90(1);
                                 b.vel.set(Utils.reflectVector(incomingVector.set(b.vel), normal));
-                                b.vel.add(-normal.x * 200 * dt, -normal.y * 200 * dt);
+                                b.vel.add(-normal.x * 400 * dt, -normal.y * 400 * dt);
                             }
 
 

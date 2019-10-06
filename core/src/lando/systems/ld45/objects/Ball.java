@@ -27,7 +27,7 @@ public class Ball {
     private float accum;
 
     public Ball(GameScreen screen, float radius) {
-        this(screen, radius, Utils.getRandomColor());
+        this(screen, radius, Utils.getRandomHSVColor());
     }
 
     public Ball(GameScreen screen, float radius, Color color) {
