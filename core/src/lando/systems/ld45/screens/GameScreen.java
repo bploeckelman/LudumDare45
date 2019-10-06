@@ -9,11 +9,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld45.Game;
-import lando.systems.ld45.backgrounds.*;
+import lando.systems.ld45.backgrounds.Background;
+import lando.systems.ld45.backgrounds.GraphPaperBackground;
 import lando.systems.ld45.collision.CollisionManager;
 import lando.systems.ld45.objects.*;
 import lando.systems.ld45.state.PlayerState;
-import lando.systems.ld45.utils.ArtPack;
+import lando.systems.ld45.ui.Panel;
+import lando.systems.ld45.utils.UIAssetType;
 
 public class GameScreen extends BaseScreen {
 
@@ -32,6 +34,8 @@ public class GameScreen extends BaseScreen {
     public boolean editMode = false;
     public Vector3 projection = new Vector3();
     public Vector2 mousePosition = new Vector2();
+
+    private Panel toyChestPanel;
 
     public GameScreen(Game game) {
         super(game);
@@ -58,6 +62,11 @@ public class GameScreen extends BaseScreen {
 
         this.collisionManager = new CollisionManager(this);
         this.boundary = new Boundary(this);
+
+        this.toyChestPanel = new Panel(this, UIAssetType.toychest_panel, UIAssetType.toychest_panel_inset);
+        this.toyChestPanel.setInitialBounds(worldCamera.viewportWidth, 0f,
+                                            worldCamera.viewportWidth * (1f / 3f),
+                                            worldCamera.viewportHeight);
 
         startGame();
     }
@@ -108,6 +117,11 @@ public class GameScreen extends BaseScreen {
         gameObjects.forEach(x -> x.update(dt, mousePosition));
         particle.update(dt);
 
+        toyChestPanel.update(dt);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.TAB)) {
+            toyChestPanel.toggle(worldCamera);
+        }
+
         if (isGameOver()) {
             endGame();
         }
@@ -145,6 +159,8 @@ public class GameScreen extends BaseScreen {
             gameObjects.forEach(x -> x.render(batch));
             particle.renderForegroundParticles(batch);
             hopper.render(batch);
+
+            toyChestPanel.render(batch);
         }
 
         batch.end();
@@ -182,7 +198,7 @@ public class GameScreen extends BaseScreen {
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
-            artPack = artPack.getNext();
+            game.artPack = game.artPack.getNext();
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {

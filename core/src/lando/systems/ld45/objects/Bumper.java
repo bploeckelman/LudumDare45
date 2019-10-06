@@ -22,7 +22,7 @@ public class Bumper extends GameObject {
     }
 
     public Bumper(GameScreen screen, int gfxPack, float size) {
-        super(screen, screen.assets.assetMap.get(screen.artPack).get(AssetType.bumper).getKeyFrames()[0], size, size);
+        super(screen, screen.assets.assetMap.get(screen.game.artPack).get(AssetType.bumper).getKeyFrames()[0], size, size);
 
         this.bumperSize = this.currentBumperSize = size;
 
@@ -35,7 +35,7 @@ public class Bumper extends GameObject {
     public void update(float dt, Vector2 mousePosition) {
         super.update(dt, mousePosition);
 
-        image = screen.assets.assetMap.get(screen.artPack).get(AssetType.bumper).getKeyFrame(artAccum);
+        image = screen.assets.assetMap.get(screen.game.artPack).get(AssetType.bumper).getKeyFrame(artAccum);
 
         if (currentHitTime > 0) {
             if (currentBumperSize > (hitTime / 2)) {

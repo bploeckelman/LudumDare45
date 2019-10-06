@@ -20,7 +20,7 @@ public class Spinner extends GameObject {
     }
 
     public Spinner(GameScreen screen, int level, int gfxPack, float size) {
-        super(screen, screen.assets.assetMap.get(screen.artPack).get(AssetType.spinner).getKeyFrames()[0], size, size);
+        super(screen, screen.assets.assetMap.get(screen.game.artPack).get(AssetType.spinner).getKeyFrames()[0], size, size);
         setCircleBounds(-10, -10, size/2f);
     }
 
@@ -28,7 +28,7 @@ public class Spinner extends GameObject {
     public void update(float dt, Vector2 mousePosition) {
         super.update(dt, mousePosition);
 
-        image = screen.assets.assetMap.get(screen.artPack).get(AssetType.spinner).getKeyFrames()[0];
+        image = screen.assets.assetMap.get(screen.game.artPack).get(AssetType.spinner).getKeyFrames()[0];
 
         float dr = 30 * dt;
         if (currentHitTime > 0) {

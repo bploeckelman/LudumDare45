@@ -17,6 +17,7 @@ import lando.systems.ld45.particles.ParticleManager;
 import lando.systems.ld45.screens.BaseScreen;
 import lando.systems.ld45.screens.TitleScreen;
 import lando.systems.ld45.state.PlayerState;
+import lando.systems.ld45.utils.ArtPack;
 
 public class Game extends ApplicationAdapter {
 
@@ -29,6 +30,7 @@ public class Game extends ApplicationAdapter {
 	public AudioManager audio;
 	public Assets assets;
 	public TweenManager tween;
+	public ArtPack artPack = ArtPack.a;
 
 	BaseScreen currentScreen;
 

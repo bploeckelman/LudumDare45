@@ -42,7 +42,7 @@ public class Ball {
         this.bounds.set(0, 0, radius);
         this.screen = screen;
 
-        this.keyframe = screen.assets.assetMap.get(screen.artPack).get(AssetType.ball).getKeyFrames()[0];
+        this.keyframe = screen.assets.assetMap.get(screen.game.artPack).get(AssetType.ball).getKeyFrames()[0];
         this.dtLeft = 0;
 
         this.path = new BallPath(screen.game, color);
@@ -76,10 +76,10 @@ public class Ball {
         accum += dt;
         path.update(this, dt);
 
-        keyframe = screen.assets.assetMap.get(screen.artPack).get(AssetType.ball).getKeyFrames()[0];
+        keyframe = screen.assets.assetMap.get(screen.game.artPack).get(AssetType.ball).getKeyFrames()[0];
         // making trails appear less if the vel is smaller. probably better way to do this.
         if (vel.len2() > MathUtils.random(200000)) {
-            screen.particle.addBallTrailingParticle(this, screen.artPack);
+            screen.particle.addBallTrailingParticle(this, screen.game.artPack);
         }
     }
 

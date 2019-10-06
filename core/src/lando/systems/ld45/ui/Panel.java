@@ -1,15 +1,13 @@
 package lando.systems.ld45.ui;
 
 import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenManager;
 import aurelienribon.tweenengine.equations.Bounce;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import lando.systems.ld45.Assets;
 import lando.systems.ld45.accessors.RectangleAccessor;
-import lando.systems.ld45.screens.GameScreen;
+import lando.systems.ld45.screens.BaseScreen;
 import lando.systems.ld45.utils.UIAssetType;
 
 public class Panel {
@@ -17,21 +15,25 @@ public class Panel {
     private boolean visible;
     private boolean animating;
     private Rectangle bounds;
+    private UIAssetType uiAssetTypePanel;
+    private UIAssetType uiAssetTypePanelInset;
     private NinePatch panel;
     private NinePatch inset;
-    private GameScreen screen;
+    private BaseScreen screen;
 
     private final float insetMargin = 20f;
 
     public boolean horizontal = true;
 
-    public Panel(GameScreen screen) {
+    public Panel(BaseScreen screen, UIAssetType uiAssetTypePanel, UIAssetType uiAssetTypePanelInset) {
         this.screen = screen;
         this.visible = false;
         this.animating = false;
         this.bounds = new Rectangle();
-        this.panel = screen.assets.uiAssetNinepatchMap.get(screen.artPack).get(UIAssetType.toychest_panel);
-        this.inset = screen.assets.uiAssetNinepatchMap.get(screen.artPack).get(UIAssetType.toychest_panel_inset);
+        this.uiAssetTypePanel = uiAssetTypePanel;
+        this.uiAssetTypePanelInset = uiAssetTypePanelInset;
+        this.panel = screen.assets.uiAssetNinepatchMap.get(screen.game.artPack).get(uiAssetTypePanel);
+        this.inset = screen.assets.uiAssetNinepatchMap.get(screen.game.artPack).get(uiAssetTypePanelInset);
     }
 
     public void setInitialBounds(float x, float y, float w, float h) {
@@ -39,8 +41,8 @@ public class Panel {
     }
 
     public void update(float dt) {
-        panel = screen.assets.uiAssetNinepatchMap.get(screen.artPack).get(UIAssetType.toychest_panel);
-        inset = screen.assets.uiAssetNinepatchMap.get(screen.artPack).get(UIAssetType.toychest_panel_inset);
+        panel = screen.assets.uiAssetNinepatchMap.get(screen.game.artPack).get(uiAssetTypePanel);
+        inset = screen.assets.uiAssetNinepatchMap.get(screen.game.artPack).get(uiAssetTypePanelInset);
     }
 
     public void render(SpriteBatch batch) {

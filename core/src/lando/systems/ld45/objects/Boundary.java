@@ -34,7 +34,7 @@ public class Boundary {
     public void render(SpriteBatch batch){
         float width = 10;
         for (Segment2D segment : segments){
-            batch.draw(screen.assets.assetMap.get(screen.artPack).get(AssetType.boundary_line).getKeyFrame(accum), segment.start.x - width/2f, segment.start.y - width/2f, width/2f, width/2f, segment.delta.len() + width, width, 1, 1, segment.getRotation());
+            batch.draw(screen.assets.assetMap.get(screen.game.artPack).get(AssetType.boundary_line).getKeyFrame(accum), segment.start.x - width/2f, segment.start.y - width/2f, width/2f, width/2f, segment.delta.len() + width, width, 1, 1, segment.getRotation());
         }
     }
 

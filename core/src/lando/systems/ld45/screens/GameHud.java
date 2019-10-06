@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import lando.systems.ld45.ui.Panel;
+import lando.systems.ld45.utils.UIAssetType;
 
 public class GameHud {
     private GameScreen screen;
@@ -21,10 +22,6 @@ public class GameHud {
         this.screen = gameScreen;
         this.time = System.currentTimeMillis();
         this.scoreValue = 0f;
-        this.toyChestPanel = new Panel(screen);
-        this.toyChestPanel.setInitialBounds(screen.hudCamera.viewportWidth, 0f,
-                                            screen.hudCamera.viewportWidth * (1f / 3f),
-                                            screen.hudCamera.viewportHeight);
     }
 
     public void update(float dt) {
@@ -33,12 +30,6 @@ public class GameHud {
 
         if (firstView) {
             firstView = false;
-        }
-
-        toyChestPanel.update(dt);
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.TAB)) {
-            toyChestPanel.toggle(screen.hudCamera);
         }
     }
 
@@ -54,12 +45,6 @@ public class GameHud {
 
         drawString(batch, "Time:", x, y, screen.assets.font);
         drawString(batch, toTimeString((long)totalTime / 1000), x + 80, y, screen.assets.font);
-
-        toyChestPanel.render(batch);
-//        if (toyChestPanel.isVisible()) {
-//            TextureRegion cursor = screen.assets.uiCursorHand;
-//            batch.draw(cursor, Gdx.input.getX(), screen.hudCamera.viewportHeight - Gdx.input.getY() - cursor.getRegionHeight());
-//        }
     }
 
     private void drawString(SpriteBatch batch, String text, float x, float y, BitmapFont font) {
