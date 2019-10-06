@@ -103,12 +103,11 @@ public class GameScreen extends BaseScreen {
         }
         batch.end();
 
-        batch.draw(assets.whiteCircle, mousePosition.x - 2, mousePosition.y - 2, 2, 2, 4, 4, 1, 1, 1);
-
         batch.setProjectionMatrix(hudCamera.combined);
         batch.begin();
         {
             hud.render(batch);
+            batch.draw(assets.whiteCircle, mousePosition.x - 2, mousePosition.y - 2, 2, 2, 4, 4, 1, 1, 1);
         }
         batch.end();
     }
