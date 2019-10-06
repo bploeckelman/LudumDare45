@@ -50,6 +50,8 @@ public class Button extends UIElement {
         if (label == null) {
             label = createLabel();
         }
+        label.setX(bounds.x);
+        label.setY(bounds.y + bounds.height - (bounds.height - label.getLineHeight())/2);
         label.update(dt);
     }
 
@@ -74,10 +76,10 @@ public class Button extends UIElement {
     @Override
     protected void renderElement(SpriteBatch batch) {
         batch.setColor((isHover) ? Color.RED : Color.BLUE);
-        batch.draw(this.texture, bounds.x, bounds.y, bounds.width, bounds.height);
-
+        batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
         if (label != null) {
             label.render(batch);
         }
+        batch.setColor(Color.WHITE);
     }
 }

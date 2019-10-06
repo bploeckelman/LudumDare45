@@ -8,18 +8,22 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import lando.systems.ld45.accessors.RectangleAccessor;
 import lando.systems.ld45.screens.BaseScreen;
+import lando.systems.ld45.utils.Callback;
 import lando.systems.ld45.utils.UIAssetType;
 
 public class Panel {
 
-    private boolean visible;
-    private boolean animating;
-    private Rectangle bounds;
-    private UIAssetType uiAssetTypePanel;
-    private UIAssetType uiAssetTypePanelInset;
-    private NinePatch panel;
-    private NinePatch inset;
-    private BaseScreen screen;
+    private static final float DEFAULT_SHOW_DURATION = 0.33f;
+    private static final float DEFAULT_HIDE_DURATION = 0.2f;
+
+    protected boolean visible;
+    protected boolean animating;
+    protected Rectangle bounds;
+    protected UIAssetType uiAssetTypePanel;
+    protected UIAssetType uiAssetTypePanelInset;
+    protected NinePatch panel;
+    protected NinePatch inset;
+    protected BaseScreen screen;
 
     private final float insetMargin = 20f;
 
@@ -54,6 +58,14 @@ public class Panel {
     }
 
     public void show(OrthographicCamera camera) {
+        show(camera, DEFAULT_SHOW_DURATION);
+    }
+
+    public void show(OrthographicCamera camera, float duration) {
+        show(camera, duration, null);
+    }
+
+    public void show(OrthographicCamera camera, float duration, Callback callback) {
         if (animating) return;
         if (visible) return;
 
@@ -63,14 +75,25 @@ public class Panel {
         int accessor = (horizontal) ? RectangleAccessor.X : RectangleAccessor.Y;
         float target = (horizontal) ? camera.viewportWidth - bounds.width : 0;
 
-        Tween.to(bounds, accessor, 0.33f)
+        Tween.to(bounds, accessor, duration)
              .target(target)
              .ease(Bounce.OUT)
-             .setCallback((i, baseTween) -> animating = false)
+             .setCallback((i, baseTween) -> {
+                 animating = false;
+                 if (callback != null) callback.call();
+             })
              .start(screen.game.tween);
     }
 
     public void hide(OrthographicCamera camera) {
+        hide(camera, DEFAULT_HIDE_DURATION);
+    }
+
+    public void hide(OrthographicCamera camera, float duration) {
+        hide(camera, duration, null);
+    }
+
+    public void hide(OrthographicCamera camera, float duration, Callback callback) {
         if (animating) return;
         if (!visible) return;
 
@@ -79,19 +102,24 @@ public class Panel {
         int accessor = (horizontal) ? RectangleAccessor.X : RectangleAccessor.Y;
         float target = (horizontal) ? camera.viewportWidth : -camera.viewportHeight;
 
-        Tween.to(bounds, accessor, 0.05f)
+        Tween.to(bounds, accessor, duration)
              .target(target)
              .setCallback((i, baseTween) -> {
                  visible = false;
                  animating = false;
+                 if (callback != null) callback.call();
              })
              .start(screen.game.tween);
     }
 
     public void toggle(OrthographicCamera camera) {
+        toggle(camera, null);
+    }
+
+    public void toggle(OrthographicCamera camera, Callback callback) {
         if (animating) return;
-        if (visible) hide(camera);
-        else         show(camera);
+        if (visible) hide(camera, DEFAULT_HIDE_DURATION, callback);
+        else         show(camera, DEFAULT_SHOW_DURATION, callback);
     }
 
     public boolean isVisible() { return visible; }
