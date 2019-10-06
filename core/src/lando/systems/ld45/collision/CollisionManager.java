@@ -207,6 +207,41 @@ public class CollisionManager {
                         }
 
                     }
+                    if (obj.segmentBounds != null){
+                        tempStart1.set(b.bounds.x, b.bounds.y);
+                        frameVel1.set(b.vel.x * b.dtLeft, b.vel.y * b.dtLeft);
+                        tempEnd1.set(b.bounds.x + frameVel1.x, b.bounds.y + frameVel1.y);
+                        for (Segment2D segment : screen.boundary.segments){
+                            float t = checkSegmentCollision(tempStart1, tempEnd1, segment.start, segment.end, nearest1, nearest2);
+                            if (t != Float.MAX_VALUE){
+                                if (nearest1.dst(nearest2) < b.bounds.radius + 2f){
+                                    collided = true;
+                                    collisionHappened = true;
+                                    b.dtLeft -= t * dt;
+                                    frameEndPos.set(nearest1);
+                                    normal.set(segment.end).sub(segment.start).nor().rotate90(1);
+
+                                    float backupDist = (b.bounds.radius + 2.1f) - nearest1.dst(nearest2);
+                                    float x = frameEndPos.x - backupDist * (normal.x);
+                                    float y = frameEndPos.y - backupDist * (normal.y);
+                                    frameEndPos.set(x, y);
+                                    screen.background.addCollision(frameEndPos.x, frameEndPos.y, 4, 2, b.color);
+
+                                    b.bounds.x = frameEndPos.x;
+                                    b.bounds.y = frameEndPos.y;
+
+                                    b.vel.scl(.8f);
+                                    if (nearest2.epsilonEquals(segment.start) || nearest2.epsilonEquals(segment.end)){
+                                        normal.set(nearest2).sub(frameEndPos).nor();
+                                        b.vel.set(Utils.reflectVector(incomingVector.set(b.vel), normal));
+                                    } else {
+                                        normal.set(segment.end).sub(segment.start).nor().rotate90(1);
+                                        b.vel.set(Utils.reflectVector(incomingVector.set(b.vel), normal));
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
 
                 // Collide Boundary
@@ -216,7 +251,7 @@ public class CollisionManager {
                 for (Segment2D segment : screen.boundary.segments){
                     float t = checkSegmentCollision(tempStart1, tempEnd1, segment.start, segment.end, nearest1, nearest2);
                     if (t != Float.MAX_VALUE){
-                        if (nearest1.dst(nearest2) < b.bounds.radius + 2f){
+                        if (t < b.dtLeft && nearest1.dst(nearest2) < b.bounds.radius + 2f){
                             collided = true;
                             collisionHappened = true;
                             b.dtLeft -= dt;
