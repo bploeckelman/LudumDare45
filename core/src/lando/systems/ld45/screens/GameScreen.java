@@ -20,7 +20,7 @@ public class GameScreen extends BaseScreen {
     private CollisionManager collisionManager;
     public Boundary boundary;
 
-    private GameHud hud = new GameHud();
+    private GameHud hud = new GameHud(this);
     private float pathShaderTimer;
 
     public boolean editMode = true;
