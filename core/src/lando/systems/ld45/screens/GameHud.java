@@ -23,14 +23,13 @@ public class GameHud {
         this.screen = gameScreen;
         this.time = System.currentTimeMillis();
         this.scoreValue = 0f;
-        this.toyChestPanel = new Panel(screen.assets, screen.game.tween);
+        this.toyChestPanel = new Panel(screen);
         this.toyChestPanel.setInitialBounds(screen.hudCamera.viewportWidth, 0f,
                                             screen.hudCamera.viewportWidth * (1f / 3f),
                                             screen.hudCamera.viewportHeight);
-
-        upgradePanel = new Panel(screen.assets, screen.game.tween);
-        upgradePanel.setInitialBounds(0, -screen.hudCamera.viewportHeight, screen.hudCamera.viewportWidth, screen.hudCamera.viewportHeight);
-        upgradePanel.horizontal = false;
+        this.upgradePanel = new Panel(screen);
+        this.upgradePanel.setInitialBounds(0, -screen.hudCamera.viewportHeight, screen.hudCamera.viewportWidth, screen.hudCamera.viewportHeight);
+        this.upgradePanel.horizontal = false;
     }
 
     public void update(float dt) {

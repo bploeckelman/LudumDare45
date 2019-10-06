@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.ObjectMap;
 import lando.systems.ld45.utils.ArtPack;
 import lando.systems.ld45.utils.AssetType;
+import lando.systems.ld45.utils.UIAssetType;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
@@ -43,13 +44,12 @@ public class Assets {
     public TextureRegion whiteCircle;
 
     public TextureRegion uiCursorHand;
-    public NinePatch uiPanelNinepatch;
-    public NinePatch uiPanelInsetNinepatch;
     public NinePatch buildArea;
 
     public ObjectMap<Integer, Animation<TextureRegion>> fontPoints;
 
     public ObjectMap<ArtPack, ObjectMap<AssetType, Animation<TextureRegion>>> assetMap;
+    public ObjectMap<ArtPack, ObjectMap<UIAssetType, NinePatch>> uiAssetNinepatchMap;
 
     public ShaderProgram ballTrailShader;
     public ShaderProgram hexGridShader;
@@ -103,19 +103,29 @@ public class Assets {
         whiteCircle = atlas.findRegion("white-circle");
 
         assetMap = new ObjectMap<>();
+        uiAssetNinepatchMap = new ObjectMap<>();
         for (ArtPack artPack : ArtPack.values()) {
             assetMap.put(artPack, new ObjectMap<>());
             for (AssetType assetType : AssetType.values()) {
                 String assetName = assetType.fileName + "-" + artPack.name();
                 assetMap.get(artPack).put(assetType, new Animation<>(0.1f, atlas.findRegions(assetName)));
             }
+
+            String fileName;
+            uiAssetNinepatchMap.put(artPack, new ObjectMap<>());
+            fileName = UIAssetType.toychest_panel.fileName + "-" + artPack.name();
+            uiAssetNinepatchMap.get(artPack).put(UIAssetType.toychest_panel, new NinePatch(atlas.findRegion(fileName), 10, 10, 10, 10));
+            fileName = UIAssetType.toychest_panel_inset.fileName + "-" + artPack.name();
+            uiAssetNinepatchMap.get(artPack).put(UIAssetType.toychest_panel_inset, new NinePatch(atlas.findRegion(fileName), 6, 6, 6, 6));
+            fileName = UIAssetType.upgrade_panel.fileName + "-" + artPack.name();
+            uiAssetNinepatchMap.get(artPack).put(UIAssetType.upgrade_panel, new NinePatch(atlas.findRegion(fileName), 10, 10, 10, 10));
+            fileName = UIAssetType.upgrade_panel_inset.fileName + "-" + artPack.name();
+            uiAssetNinepatchMap.get(artPack).put(UIAssetType.upgrade_panel_inset, new NinePatch(atlas.findRegion(fileName), 6, 6, 6, 6));
         }
 
         assetMap.get(ArtPack.a).get(AssetType.boundary_line).setPlayMode(Animation.PlayMode.LOOP_RANDOM);
 
         uiCursorHand = atlas.findRegion("ui-cursor-hand");
-        uiPanelNinepatch = new NinePatch(atlas.findRegion("ui-panel-ninepatch"), 10, 10, 10, 10);
-        uiPanelInsetNinepatch = new NinePatch(atlas.findRegion("ui-panel-inset-ninepatch"), 6, 6, 6, 6);
         buildArea = new NinePatch(atlas.findRegion("redbox"), 4, 4, 4, 4);
 
         fontPoints = new ObjectMap<>();

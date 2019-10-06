@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import lando.systems.ld45.Assets;
 import lando.systems.ld45.accessors.RectangleAccessor;
+import lando.systems.ld45.screens.GameScreen;
+import lando.systems.ld45.utils.UIAssetType;
 
 public class Panel {
 
@@ -17,19 +19,19 @@ public class Panel {
     private Rectangle bounds;
     private NinePatch panel;
     private NinePatch inset;
-    private TweenManager tween;
+    private GameScreen screen;
 
     private final float insetMargin = 20f;
 
     public boolean horizontal = true;
 
-    public Panel(Assets assets, TweenManager tween) {
-        this.tween = tween;
+    public Panel(GameScreen screen) {
+        this.screen = screen;
         this.visible = false;
         this.animating = false;
         this.bounds = new Rectangle();
-        this.panel = assets.uiPanelNinepatch;
-        this.inset = assets.uiPanelInsetNinepatch;
+        this.panel = screen.assets.uiAssetNinepatchMap.get(screen.artPack).get(UIAssetType.toychest_panel);
+        this.inset = screen.assets.uiAssetNinepatchMap.get(screen.artPack).get(UIAssetType.toychest_panel_inset);
     }
 
     public void setInitialBounds(float x, float y, float w, float h) {
@@ -37,7 +39,8 @@ public class Panel {
     }
 
     public void update(float dt) {
-
+        panel = screen.assets.uiAssetNinepatchMap.get(screen.artPack).get(UIAssetType.toychest_panel);
+        inset = screen.assets.uiAssetNinepatchMap.get(screen.artPack).get(UIAssetType.toychest_panel_inset);
     }
 
     public void render(SpriteBatch batch) {
@@ -62,7 +65,7 @@ public class Panel {
              .target(target)
              .ease(Bounce.OUT)
              .setCallback((i, baseTween) -> animating = false)
-             .start(tween);
+             .start(screen.game.tween);
     }
 
     public void hide(OrthographicCamera camera) {
@@ -80,7 +83,7 @@ public class Panel {
                  visible = false;
                  animating = false;
              })
-             .start(tween);
+             .start(screen.game.tween);
     }
 
     public void toggle(OrthographicCamera camera) {
