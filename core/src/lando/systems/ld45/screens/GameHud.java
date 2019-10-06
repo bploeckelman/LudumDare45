@@ -1,61 +1,38 @@
 package lando.systems.ld45.screens;
 
-import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.equations.Bounce;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
-import lando.systems.ld45.accessors.RectangleAccessor;
+import lando.systems.ld45.ui.Panel;
 
 public class GameHud {
     private GameScreen screen;
     private double time;
     private double totalTime;
     private float scoreValue;
-    private boolean toyChestPanelVisible;
-    private boolean toyChestPanelAnimating;
-    private Rectangle toyChestPanelBounds;
+    private Panel toyChestPanel;
 
     public GameHud(GameScreen gameScreen) {
         this.screen = gameScreen;
         this.time = System.currentTimeMillis();
         this.scoreValue = 0f;
-        this.toyChestPanelVisible = false;
-        this.toyChestPanelAnimating = false;
-        this.toyChestPanelBounds = new Rectangle(screen.hudCamera.viewportWidth, 0f,
-                                                 screen.hudCamera.viewportWidth * (1f / 3f),
-                                                 screen.hudCamera.viewportHeight);
+        this.toyChestPanel = new Panel(screen.assets, screen.game.tween);
+        this.toyChestPanel.setInitialBounds(screen.hudCamera.viewportWidth, 0f,
+                                            screen.hudCamera.viewportWidth * (1f / 3f),
+                                            screen.hudCamera.viewportHeight);
     }
 
     public void update(float dt) {
         totalTime = System.currentTimeMillis() - time;
         scoreValue = MathUtils.lerp(scoreValue, screen.player.score, 0.15f);
 
+        toyChestPanel.update(dt);
         if (Gdx.input.isKeyJustPressed(Input.Keys.TAB)) {
-            if (!toyChestPanelAnimating) {
-                toyChestPanelAnimating = true;
-
-                if (toyChestPanelVisible) {
-                    Tween.to(toyChestPanelBounds, RectangleAccessor.X, 0.05f)
-                         .target(screen.hudCamera.viewportWidth)
-                         .setCallback((i, baseTween) -> {
-                             toyChestPanelVisible = false;
-                             toyChestPanelAnimating = false;
-                         })
-                         .start(screen.game.tween);
-                } else {
-                    toyChestPanelVisible = true;
-                    Tween.to(toyChestPanelBounds, RectangleAccessor.X, 0.33f)
-                         .target(screen.hudCamera.viewportWidth - toyChestPanelBounds.width)
-                         .ease(Bounce.OUT)
-                         .setCallback((i, baseTween) -> toyChestPanelAnimating = false)
-                         .start(screen.game.tween);
-                }
-            }
+            toyChestPanel.toggle(screen.hudCamera);
         }
     }
 
@@ -72,13 +49,11 @@ public class GameHud {
         drawString(batch, "Time:", x, y, screen.assets.font);
         drawString(batch, toTimeString((long)totalTime / 1000), x + 80, y, screen.assets.font);
 
-        if (toyChestPanelVisible) {
-            screen.assets.uiPanelNinepatch.draw(batch, toyChestPanelBounds.x, toyChestPanelBounds.y, toyChestPanelBounds.width, toyChestPanelBounds.height);
-            float insetMargin = 25f;
-            screen.assets.uiPanelInsetNinepatch.draw(batch,
-                toyChestPanelBounds.x + insetMargin, toyChestPanelBounds.y + insetMargin,
-            toyChestPanelBounds.width - 2f * insetMargin, toyChestPanelBounds.height - 2f * insetMargin);
-        }
+        toyChestPanel.render(batch);
+//        if (toyChestPanel.isVisible()) {
+//            TextureRegion cursor = screen.assets.uiCursorHand;
+//            batch.draw(cursor, Gdx.input.getX(), screen.hudCamera.viewportHeight - Gdx.input.getY() - cursor.getRegionHeight());
+//        }
     }
 
     private void drawString(SpriteBatch batch, String text, float x, float y, BitmapFont font) {

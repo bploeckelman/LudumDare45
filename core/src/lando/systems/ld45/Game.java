@@ -5,9 +5,7 @@ import aurelienribon.tweenengine.TweenManager;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -30,7 +28,7 @@ public class Game extends ApplicationAdapter {
 	public TweenManager tween;
 
 	BaseScreen currentScreen;
-	
+
 	@Override
 	public void create () {
 		if (tween == null) {
@@ -56,6 +54,9 @@ public class Game extends ApplicationAdapter {
 			particle = new ParticleManager(assets);
 		}
 
+        Cursor customCursor = Gdx.graphics.newCursor(new Pixmap(Gdx.files.internal("images/ui-cursor-hand.png")), 0, 0);
+        Gdx.graphics.setCursor(customCursor);
+
 		setScreen(new TitleScreen(this));
 	}
 
@@ -73,7 +74,7 @@ public class Game extends ApplicationAdapter {
 
 		currentScreen.render(assets.batch);
 	}
-	
+
 	@Override
 	public void dispose () {
 	}

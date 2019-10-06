@@ -171,7 +171,6 @@ public class GameScreen extends BaseScreen {
         batch.begin();
         {
             hud.render(batch);
-            batch.draw(assets.whiteCircle, mousePosition.x - 2, mousePosition.y - 2, 2, 2, 4, 4, 1, 1, 1);
         }
         batch.end();
     }

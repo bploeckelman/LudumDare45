@@ -40,6 +40,7 @@ public class Assets {
     public TextureRegion[][] pegs;
     public TextureRegion[][] spinners;
 
+    public TextureRegion uiCursorHand;
     public NinePatch uiPanelNinepatch;
     public NinePatch uiPanelInsetNinepatch;
 
@@ -140,6 +141,7 @@ public class Assets {
                 }
         };
 
+        uiCursorHand = atlas.findRegion("ui-cursor-hand");
         uiPanelNinepatch = new NinePatch(atlas.findRegion("ui-panel-ninepatch"), 10, 10, 10, 10);
         uiPanelInsetNinepatch = new NinePatch(atlas.findRegion("ui-panel-inset-ninepatch"), 6, 6, 6, 6);
 
