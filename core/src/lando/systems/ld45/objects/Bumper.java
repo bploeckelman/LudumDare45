@@ -27,7 +27,7 @@ public class Bumper extends GameObject {
 
         setPosition(MathUtils.random(10, Config.gameWidth - 20), MathUtils.random(10, Config.gameHeight - 200));
 
-        circleBounds = new Circle(pos.x, pos.y, bumperSize/2f);
+        setCircleBounds(pos.x, pos.y, bumperSize/2f);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class Bumper extends GameObject {
             currentBumperSize = bumperSize;
         }
         size.x = size. y = currentBumperSize;
-        circleBounds.set(pos.x, pos.y, bumperSize/2f);
+        setCircleBounds(pos.x, pos.y, bumperSize/2f);
 
     }
 

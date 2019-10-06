@@ -20,7 +20,7 @@ public class Spinner extends GameObject {
 
     public Spinner(GameScreen screen, int level, int gfxPack, float size) {
         super(screen, screen.assets.spinners[gfxPack][level], size, size);
-        circleBounds = new Circle(-10, -10, size/2f);
+        setCircleBounds(-10, -10, size/2f);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class Spinner extends GameObject {
             }
         }
         rotation += (left) ? dr : -dr;
-        circleBounds.set(pos.x, pos.y, size.x/2f);
+        setCircleBounds(pos.x, pos.y, size.x/2f);
 
     }
 

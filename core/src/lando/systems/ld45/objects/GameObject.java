@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -32,6 +33,8 @@ public abstract class GameObject {
     private boolean isSelected = false;
     private Vector2 selectionOffset = new Vector2();
 
+    public Circle placementBounds;
+
     public GameObject(GameScreen screen, TextureRegion image) {
         this(screen, image, image.getRegionWidth(), image.getRegionHeight());
     }
@@ -41,6 +44,21 @@ public abstract class GameObject {
 
         this.image = image;
         size = new Vector2(width, height);
+        placementBounds = new Circle(0,0, size.x/2f);
+    }
+
+    public void setCircleBounds(float x, float y, float radius) {
+        if (circleBounds == null){
+            circleBounds = new Circle(x, y, radius);
+        } else {
+            circleBounds.set(x, y, radius);
+        }
+
+        placementBounds.set(x, y, radius + 10);
+    }
+
+    public void setPosition(Vector2 position){
+        this.setPosition(position.x, position.y);
     }
 
     public void setPosition(float x, float y) {
@@ -71,9 +89,29 @@ public abstract class GameObject {
         return isSelected;
     }
 
+    Vector2 tempPosition = new Vector2();
+    Vector2 tempVector = new Vector2();
     private void adjustPosition(Vector2 mousePosition) {
         if (isSelected) {
-            setPosition(mousePosition.x - selectionOffset.x, mousePosition.y - selectionOffset.y);
+            tempPosition.set(mousePosition).sub(selectionOffset);
+            boolean overlaping = true;
+            while(overlaping){
+                overlaping = false;
+                for (int i = 0; i < screen.gameObjects.size; i++){
+                    GameObject obj = screen.gameObjects.get(i);
+                    if (obj == this) continue;
+                    placementBounds.setPosition(tempPosition);
+                    if (obj.placementBounds.overlaps(placementBounds)){
+                        overlaping = true;
+                        tempVector.set(tempPosition).sub(obj.placementBounds.x, obj.placementBounds.y);
+                        if (tempVector.epsilonEquals(Vector2.Zero)) tempVector.set(0,1);
+                        tempVector.nor().rotate(MathUtils.random(-1f, 1f)).scl(placementBounds.radius + obj.placementBounds.radius + 1f);
+                        tempPosition.set(obj.placementBounds.x, obj.placementBounds.y).add(tempVector);
+                    }
+                }
+            }
+
+            setPosition(tempPosition);
         }
     }
 

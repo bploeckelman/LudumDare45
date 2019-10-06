@@ -211,7 +211,7 @@ public class CollisionManager {
                         tempStart1.set(b.bounds.x, b.bounds.y);
                         frameVel1.set(b.vel.x * b.dtLeft, b.vel.y * b.dtLeft);
                         tempEnd1.set(b.bounds.x + frameVel1.x, b.bounds.y + frameVel1.y);
-                        for (Segment2D segment : screen.boundary.segments){
+                        for (Segment2D segment : obj.segmentBounds){
                             float t = checkSegmentCollision(tempStart1, tempEnd1, segment.start, segment.end, nearest1, nearest2);
                             if (t != Float.MAX_VALUE){
                                 if (nearest1.dst(nearest2) < b.bounds.radius + 2f){
@@ -251,7 +251,7 @@ public class CollisionManager {
                 for (Segment2D segment : screen.boundary.segments){
                     float t = checkSegmentCollision(tempStart1, tempEnd1, segment.start, segment.end, nearest1, nearest2);
                     if (t != Float.MAX_VALUE){
-                        if (t < b.dtLeft && nearest1.dst(nearest2) < b.bounds.radius + 2f){
+                        if (nearest1.dst(nearest2) < b.bounds.radius + 2f){
                             collided = true;
                             collisionHappened = true;
                             b.dtLeft -= dt;

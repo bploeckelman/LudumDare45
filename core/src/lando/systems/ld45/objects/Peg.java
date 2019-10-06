@@ -12,13 +12,13 @@ public class Peg extends GameObject {
 
     public Peg(GameScreen screen, int level, int gfxPack, float size) {
         super(screen, screen.assets.pegs[gfxPack][level], size, size);
-        circleBounds = new Circle(-10, 10, size/2f);
+        setCircleBounds(-10, 10, size/2f);
     }
 
     @Override
     public void update(float dt, Vector2 mousePosition) {
         super.update(dt, mousePosition);
-        circleBounds.set(pos.x, pos.y, size.x/2f);
+        setCircleBounds(pos.x, pos.y, size.x/2f);
 
     }
 }
