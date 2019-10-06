@@ -8,8 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld45.Game;
-import lando.systems.ld45.backgrounds.HexBackground;
-import lando.systems.ld45.backgrounds.iBackground;
+import lando.systems.ld45.backgrounds.*;
 import lando.systems.ld45.collision.CollisionManager;
 import lando.systems.ld45.objects.*;
 import lando.systems.ld45.state.PlayerState;
@@ -17,7 +16,7 @@ import lando.systems.ld45.utils.ArtPack;
 
 public class GameScreen extends BaseScreen {
 
-    public iBackground background;
+    public Background background;
     public Array<GameObject> gameObjects = new Array<>();
     public Array<Ball> balls = new Array<>();
     public ArtPack artPack = ArtPack.a;
@@ -37,7 +36,7 @@ public class GameScreen extends BaseScreen {
 
     public GameScreen(Game game) {
         super(game);
-        background = new HexBackground(this);
+        background = new GraphPaperBackground(this);
         hopper = new Hopper(this);
 
         int x = 150;

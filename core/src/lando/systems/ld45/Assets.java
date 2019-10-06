@@ -18,6 +18,7 @@ import java.util.stream.Stream;
 public class Assets {
 
     private final AssetDescriptor<Texture> pixelTextureAsset = new AssetDescriptor<>("images/pixel.png", Texture.class);
+    private final AssetDescriptor<Texture> gridpaperTextureAsset = new AssetDescriptor<>("images/gridpaper.png", Texture.class);
     private final AssetDescriptor<Texture> pathGradientTextureAsset = new AssetDescriptor<>("images/path-gradient.png", Texture.class);
     private final AssetDescriptor<Texture> laserTextureAsset = new AssetDescriptor<>("images/laser.png", Texture.class);
     private final AssetDescriptor<TextureAtlas> atlasAsset = new AssetDescriptor<>("images/sprites.atlas", TextureAtlas.class);
@@ -36,6 +37,7 @@ public class Assets {
     public Texture pixel;
     public Texture ballTrailTexture;
     public Texture pathGradientTexture;
+    public Texture gridPaper;
 
     public TextureRegion whitePixel;
     public TextureRegion whiteCircle;
@@ -68,6 +70,7 @@ public class Assets {
         mgr.load(pathGradientTextureAsset);
         mgr.load(laserTextureAsset);
         mgr.load(pixelFont16Asset);
+        mgr.load(gridpaperTextureAsset);
 
         mgr.load("audio/music.mp3", Music.class);
 
@@ -86,6 +89,9 @@ public class Assets {
         music = mgr.get("audio/music.mp3", Music.class);
 
         pixel = mgr.get(pixelTextureAsset);
+        gridPaper = mgr.get(gridpaperTextureAsset);
+        gridPaper.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+        gridPaper.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         pathGradientTexture = mgr.get(pathGradientTextureAsset);
         ballTrailTexture = mgr.get(laserTextureAsset);
         debugTexture = mgr.get("images/badlogic.jpg", Texture.class);

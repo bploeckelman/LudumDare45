@@ -6,28 +6,30 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld45.collision.Segment2D;
 import lando.systems.ld45.screens.GameScreen;
+import lando.systems.ld45.utils.AssetType;
 
 
 public class Boundary {
     public Array<Segment2D> segments;
     GameScreen screen;
     public Rectangle buildArea;
+    float margin = 10f;
 
     public Boundary(GameScreen screen){
         this.screen = screen;
         segments = new Array<>();
-        segments.add(new Segment2D(0, 90, 0, screen.worldCamera.viewportHeight));
-        segments.add(new Segment2D(0, screen.worldCamera.viewportHeight, screen.worldCamera.viewportWidth, screen.worldCamera.viewportHeight));
-        segments.add(new Segment2D(screen.worldCamera.viewportWidth, screen.worldCamera.viewportHeight, screen.worldCamera.viewportWidth, 90));
-        segments.add(new Segment2D(screen.worldCamera.viewportWidth, 90, screen.worldCamera.viewportWidth/2f + 50, 20));
-        segments.add(new Segment2D(screen.worldCamera.viewportWidth/2f - 50, 20, 0, 90));
+        segments.add(new Segment2D(margin, 90, margin, screen.worldCamera.viewportHeight - margin));
+        segments.add(new Segment2D(margin, screen.worldCamera.viewportHeight - margin, screen.worldCamera.viewportWidth-margin, screen.worldCamera.viewportHeight - margin));
+        segments.add(new Segment2D(screen.worldCamera.viewportWidth - margin, screen.worldCamera.viewportHeight- margin, screen.worldCamera.viewportWidth - margin, 90));
+        segments.add(new Segment2D(screen.worldCamera.viewportWidth- margin, 90, screen.worldCamera.viewportWidth/2f + 50, 20));
+        segments.add(new Segment2D(screen.worldCamera.viewportWidth/2f - 50, 20, margin, 90));
         buildArea = new Rectangle(90, 180, (int)screen.worldCamera.viewportWidth-180, (int)screen.worldCamera.viewportHeight-270);
     }
 
     public void render(SpriteBatch batch){
-        float width = 2;
+        float width = 10;
         for (Segment2D segment : segments){
-            batch.draw(screen.assets.whitePixel, segment.start.x - width/2f, segment.start.y - width/2f, width/2f, width/2f, segment.delta.len() + width, width, 1, 1, segment.getRotation());
+            batch.draw(screen.assets.assetMap.get(screen.artPack).get(AssetType.boundary_line).getKeyFrame(0), segment.start.x - width/2f, segment.start.y - width/2f, width/2f, width/2f, segment.delta.len() + width, width, 1, 1, segment.getRotation());
         }
     }
 

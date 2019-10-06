@@ -8,37 +8,17 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld45.screens.GameScreen;
 
-public class HexBackground implements iBackground {
+public class HexBackground extends Background {
 
     float[] explosionArray = new float[40 * 4];
     float[] explosionOwnerArray = new float[40 * 3];
 
-    GameScreen gameScreen;
-    Array<Collision> collisions;
+
     Color gridColor = new Color(.5f, .5f, .5f, .3f);
 
     public HexBackground(GameScreen gameScreen){
-        this.gameScreen = gameScreen;
-        this.collisions = new Array<>();
-    }
+        super(gameScreen);
 
-
-    @Override
-    public void addCollision(float x, float y, float size, float ttl, Color color) {
-        if (collisions.size < 40) {
-            collisions.add(new Collision(x, y, size, ttl, color));
-        }
-    }
-
-    @Override
-    public void update(float dt) {
-        for (int i = collisions.size-1; i >= 0; i--){
-            Collision collision = collisions.get(i);
-            collision.update(dt);
-            if (collision.finished){
-                collisions.removeIndex(i);
-            }
-        }
     }
 
     @Override

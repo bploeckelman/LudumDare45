@@ -6,6 +6,8 @@ public enum AssetType {
     , bumper("bumper")
     , spinner("spinner")
     , particle_star("particles/particle-star")
+    , part_boundary("partboundary")
+    , boundary_line("line")
     ;
     public String fileName;
     AssetType(String fileName) {

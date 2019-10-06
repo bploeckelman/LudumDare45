@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld45.collision.Segment2D;
 import lando.systems.ld45.screens.GameScreen;
+import lando.systems.ld45.utils.AssetType;
 
 public abstract class GameObject {
 
@@ -131,7 +132,7 @@ public abstract class GameObject {
 
     public void renderEditModeRadius(SpriteBatch batch) {
         batch.setColor(1, 1, 1, .5f);
-        batch.draw(screen.assets.whiteCircle, placementBounds.x - placementBounds.radius, placementBounds.y - placementBounds.radius, placementBounds.radius*2f, placementBounds.radius*2f);
+        batch.draw(screen.assets.assetMap.get(screen.artPack).get(AssetType.part_boundary).getKeyFrame(0), placementBounds.x - placementBounds.radius, placementBounds.y - placementBounds.radius, placementBounds.radius*2f, placementBounds.radius*2f);
         batch.setColor(Color.WHITE);
     }
 
