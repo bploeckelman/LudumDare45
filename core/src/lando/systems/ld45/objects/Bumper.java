@@ -35,7 +35,7 @@ public class Bumper extends GameObject {
     public void update(float dt, Vector2 mousePosition) {
         super.update(dt, mousePosition);
 
-        image = screen.assets.assetMap.get(screen.artPack).get(AssetType.bumper).getKeyFrames()[0];
+        image = screen.assets.assetMap.get(screen.artPack).get(AssetType.bumper).getKeyFrame(artAccum);
 
         if (currentHitTime > 0) {
             if (currentBumperSize > (hitTime / 2)) {

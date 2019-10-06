@@ -24,6 +24,7 @@ public abstract class GameObject {
 
     protected Vector2 size;
     protected TextureRegion image;
+    protected float artAccum;
 
     protected float hitTime = 1;
     protected float currentHitTime = 0;
@@ -47,6 +48,7 @@ public abstract class GameObject {
         this.image = image;
         size = new Vector2(width, height);
         placementBounds = new Circle(0,0, size.x/2f);
+        artAccum = MathUtils.random(3f);
     }
 
     public void setCircleBounds(float x, float y, float radius) {

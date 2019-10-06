@@ -124,6 +124,7 @@ public class Assets {
         }
 
         assetMap.get(ArtPack.a).get(AssetType.boundary_line).setPlayMode(Animation.PlayMode.LOOP_RANDOM);
+        assetMap.get(ArtPack.a).get(AssetType.bumper).setPlayMode(Animation.PlayMode.LOOP_RANDOM);
 
         uiCursorHand = atlas.findRegion("ui-cursor-hand");
         buildArea = new NinePatch(atlas.findRegion("redbox"), 4, 4, 4, 4);
