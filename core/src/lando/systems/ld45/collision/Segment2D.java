@@ -7,6 +7,7 @@ public class Segment2D {
     public Vector2 start;
     public Vector2 end;
     public Vector2 delta;
+    public Vector2 normal;
 
 
     public Segment2D (Vector2 start, Vector2 end){
@@ -17,6 +18,7 @@ public class Segment2D {
         this.start = new Vector2(x1, y1);
         this.end = new Vector2(x2, y2);
         this.delta = new Vector2(end).sub(start);
+        this.normal = new Vector2(end).sub(start).nor().rotate90(1);
     }
 
     public float getRotation(){

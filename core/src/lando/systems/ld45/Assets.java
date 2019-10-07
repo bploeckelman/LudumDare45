@@ -14,9 +14,6 @@ import lando.systems.ld45.utils.ArtPack;
 import lando.systems.ld45.utils.AssetType;
 import lando.systems.ld45.utils.UIAssetType;
 
-import java.util.Arrays;
-import java.util.stream.Stream;
-
 public class Assets {
 
     private final AssetDescriptor<Texture> pixelTextureAsset = new AssetDescriptor<>("images/pixel.png", Texture.class);
@@ -24,6 +21,11 @@ public class Assets {
     private final AssetDescriptor<Texture> pathGradientTextureAsset = new AssetDescriptor<>("images/path-gradient.png", Texture.class);
     private final AssetDescriptor<Texture> crosshatchGradientTextureAsset = new AssetDescriptor<>("images/crosshatch-gradient.png", Texture.class);
     private final AssetDescriptor<Texture> laserTextureAsset = new AssetDescriptor<>("images/laser.png", Texture.class);
+    private final AssetDescriptor<Texture> linebAsset = new AssetDescriptor<>("images/line-b.png", Texture.class);
+    private final AssetDescriptor<Texture> linecAsset = new AssetDescriptor<>("images/line-c.png", Texture.class);
+    private final AssetDescriptor<Texture> linedAsset = new AssetDescriptor<>("images/line-d.png", Texture.class);
+
+
     private final AssetDescriptor<TextureAtlas> atlasAsset = new AssetDescriptor<>("images/sprites.atlas", TextureAtlas.class);
     private final AssetDescriptor<BitmapFont> fontArtPackAssetA = new AssetDescriptor<>("fonts/sketch-nothing.fnt", BitmapFont.class);
     private final AssetDescriptor<BitmapFont> fontArtPackAssetB = new AssetDescriptor<>("fonts/chevyray-pinch.fnt", BitmapFont.class);
@@ -39,6 +41,10 @@ public class Assets {
 
     public Texture debugTexture;
     public Texture pixel;
+    public Animation<Texture> lineAAnimation;
+    public Texture lineB;
+    public Texture lineC;
+    public Texture lineD;
     public Texture ballTrailTexture;
     public Texture pathGradientTexture;
     public Texture crossHatchGradientTexture;
@@ -67,6 +73,7 @@ public class Assets {
 
     public ShaderProgram ballTrailShader;
     public ShaderProgram hexGridShader;
+    public ShaderProgram borderShader;
 
     public Array<ShaderProgram> randomTransitions;
     public ShaderProgram blindsShader;
@@ -80,6 +87,7 @@ public class Assets {
     public ShaderProgram heartShader;
     public ShaderProgram stereoShader;
     public ShaderProgram circleCropShader;
+
 
     public boolean initialized;
 
@@ -102,9 +110,21 @@ public class Assets {
         mgr.load(fontArtPackAssetD);
         mgr.load(gridpaperTextureAsset);
 
+        mgr.load(linebAsset);
+        mgr.load(linecAsset);
+        mgr.load(linedAsset);
+
+
         mgr.load("audio/music.mp3", Music.class);
 
         mgr.load("images/badlogic.jpg", Texture.class);
+        mgr.load("images/line-a_1.png", Texture.class);
+        mgr.load("images/line-a_2.png", Texture.class);
+        mgr.load("images/line-a_3.png", Texture.class);
+        mgr.load("images/line-a_4.png", Texture.class);
+        mgr.load("images/line-a_5.png", Texture.class);
+        mgr.load("images/line-a_6.png", Texture.class);
+        mgr.load("images/line-a_7.png", Texture.class);
 
         mgr.finishLoading();
         load();
@@ -125,6 +145,25 @@ public class Assets {
         crossHatchGradientTexture = mgr.get(crosshatchGradientTextureAsset);
         ballTrailTexture = mgr.get(laserTextureAsset);
         debugTexture = mgr.get("images/badlogic.jpg", Texture.class);
+
+        Array<Texture> lineTex = new Array<>();
+        for (int i = 1; i < 8; i++){
+            Texture line = mgr.get("images/line-a_"+i+".png", Texture.class);
+            line.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+            lineTex.add(line);
+        }
+
+        lineAAnimation = new Animation<Texture>(.2f, lineTex, Animation.PlayMode.LOOP);
+
+
+        lineB = mgr.get(linebAsset);
+        lineB.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+
+        lineC = mgr.get(linecAsset);
+        lineC.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+
+        lineD = mgr.get(linedAsset);
+        lineD.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
         atlas = mgr.get(atlasAsset);
 
@@ -180,6 +219,7 @@ public class Assets {
 
         ballTrailShader = loadShader("shaders/standardMesh.vert", "shaders/ballTrailMesh.frag");
         hexGridShader = loadShader("shaders/standard.vert", "shaders/hexGrid.frag");
+        borderShader = loadShader("shaders/standardMeshNoColor.vert", "shaders/border.frag");
 
         randomTransitions = new Array<>();
         blindsShader = loadShader("shaders/default.vert", "shaders/blinds.frag");

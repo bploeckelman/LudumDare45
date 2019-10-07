@@ -206,6 +206,8 @@ public class GameScreen extends BaseScreen {
         batch.end();
 
         // NOTE: this has to be outside of batch begin/end because reasons
+        boundary.renderMeshOnly();
+
         if (player.hasEffectTrails) {
             renderBallTrails();
         }
@@ -214,8 +216,6 @@ public class GameScreen extends BaseScreen {
         batch.begin();
         {
             if (editMode) boundary.renderEditMode(batch);
-
-            boundary.render(batch);
 
             if (player.hasEffectParticles) {
                 particle.renderBackgroundParticles(batch);
