@@ -24,7 +24,7 @@ public class BallPath {
     private static final int MAX_NUM_VERTICES = MAX_TRIANGLES * 3;
 
     private Game game;
-    private Color color;
+    public Color color;
 
     private FixedList<Vector2> ballPosSamples;
     private Array<Vector2> ballPosSamplesSimplified;

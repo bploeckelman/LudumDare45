@@ -27,7 +27,7 @@ public class Ball {
     public BaseScreen screen;
     public float dtLeft;
 
-    private BallPath path;
+    public BallPath path;
     private float accum;
 
     public Ball(BaseScreen screen, float radius) {

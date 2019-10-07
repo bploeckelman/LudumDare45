@@ -14,6 +14,7 @@ import lando.systems.ld45.collision.CollisionManager;
 import lando.systems.ld45.objects.*;
 import lando.systems.ld45.state.PlayerState;
 import lando.systems.ld45.ui.Panel;
+import lando.systems.ld45.ui.ToyChestPanel;
 import lando.systems.ld45.utils.ArtPack;
 import lando.systems.ld45.utils.UIAssetType;
 import lando.systems.ld45.utils.screenshake.ScreenShakeCameraController;
@@ -41,8 +42,10 @@ public class GameScreen extends BaseScreen {
 
     public boolean gameOver = false;
 
-    public GameScreen(Game game) {
+
+    public GameScreen(Game game, boolean editMode) {
         super(game);
+        this.editMode = editMode;
         game.particle.clearAll();
         gameObjects = game.player.gameObjects;
 
@@ -83,16 +86,21 @@ public class GameScreen extends BaseScreen {
         this.collisionManager = new CollisionManager(this);
         this.boundary = new Boundary(this);
 
-        this.toyChestPanel = new Panel(this, UIAssetType.toychest_panel, UIAssetType.toychest_panel_inset);
+        this.toyChestPanel = new ToyChestPanel(this, UIAssetType.toychest_panel, UIAssetType.toychest_panel_inset);
         this.toyChestPanel.setInitialBounds(worldCamera.viewportWidth, 0f,
                                             worldCamera.viewportWidth * (1f / 3f),
                                             worldCamera.viewportHeight);
 
-        startGame();
+        if (editMode){
+            toyChestPanel.show(worldCamera);
+        }
+//        startGame();
+        hopper.reset();
     }
 
     public void startGame() {
         gameOver = editMode = false;
+        toyChestPanel.hide(worldCamera);
         hopper.reset();
     }
 
@@ -115,9 +123,24 @@ public class GameScreen extends BaseScreen {
         background.update(dt);
         boundary.update(dt);
         pathShaderTimer += dt;
+        projection.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+        projection = worldCamera.unproject(projection);
 
         if (!editMode) {
             hopper.update(dt);
+        } else if (!toyChestPanel.isVisible() && !toyChestPanel.isAnimating()){
+            boolean isSelected = false;
+            for (GameObject gameObject : gameObjects){
+                if (gameObject.isSelected) isSelected = true;
+            }
+
+            if (projection.x > worldCamera.viewportWidth * .9f && !isSelected){
+                toyChestPanel.show(worldCamera);
+            }
+        }
+
+        if (editMode && toyChestPanel.isVisible() && projection.x < worldCamera.viewportWidth*.5f){
+            toyChestPanel.hide(worldCamera);
         }
 
         collisionManager.solve(dt);
@@ -133,7 +156,7 @@ public class GameScreen extends BaseScreen {
             }
         }
 
-        if (editMode) {
+        if (editMode && (!toyChestPanel.isVisible() || toyChestPanel.isAnimating())) {
             projection.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             projection = worldCamera.unproject(projection);
             mousePosition.set(projection.x, projection.y);
@@ -144,7 +167,10 @@ public class GameScreen extends BaseScreen {
         gameObjects.forEach(x -> x.update(dt, mousePosition));
         particle.update(dt);
 
-        toyChestPanel.update(dt);
+
+        if (toyChestPanel.isVisible()) {
+            toyChestPanel.update(dt);
+        }
 
         if (isGameOver()) {
             endGame();

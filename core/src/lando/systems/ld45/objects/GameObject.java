@@ -33,8 +33,8 @@ public abstract class GameObject {
     public Circle circleBounds;
     public Array<Segment2D> segmentBounds;
 
-    private boolean isSelected = false;
-    private Vector2 selectionOffset = new Vector2();
+    public boolean isSelected = false;
+    public Vector2 selectionOffset = new Vector2();
 
     public Circle placementBounds;
 

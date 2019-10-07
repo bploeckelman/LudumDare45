@@ -1,7 +1,10 @@
 package lando.systems.ld45.state;
 
 import com.badlogic.gdx.utils.Array;
+import lando.systems.ld45.objects.Bumper;
 import lando.systems.ld45.objects.GameObject;
+import lando.systems.ld45.objects.Peg;
+import lando.systems.ld45.objects.Spinner;
 import lando.systems.ld45.utils.ArtPack;
 
 import java.math.BigInteger;
@@ -15,15 +18,15 @@ public class PlayerState {
     private long totalScore = 0;
 
     public int pegs = 0;
-    public int leftSpinners = 0;
-    public int rightSpinners;
+    public int leftSpinners = 10;
+    public int rightSpinners = 10;
     public int bumpers = 0;
     public int balls = 5;
     public ArtPack artPack;
 
     public Array<GameObject> gameObjects;
 
-    public PlayerState(){
+    public PlayerState() {
         gameObjects = new Array<>();
         artPack = ArtPack.a;
     }
@@ -35,5 +38,60 @@ public class PlayerState {
 
     public long getTotalScore() {
         return totalScore;
+    }
+
+    public int getCurrentPegs() {
+        int count = 0;
+        for (GameObject gameObject : gameObjects) {
+            if (gameObject instanceof Peg) count++;
+        }
+        return count;
+    }
+
+
+    public int getCurrentBumpers() {
+        int count = 0;
+        for (GameObject gameObject : gameObjects) {
+            if (gameObject instanceof Bumper) count++;
+        }
+        return count;
+    }
+
+    public int getCurrentLeftSpinner() {
+        int count = 0;
+        for (GameObject gameObject : gameObjects) {
+            if (gameObject instanceof Spinner) {
+                Spinner spinner = (Spinner) gameObject;
+                if (spinner.left) count++;
+            }
+        }
+        return count;
+    }
+
+    public int getCurrentRightSpinner() {
+        int count = 0;
+        for (GameObject gameObject : gameObjects) {
+            if (gameObject instanceof Spinner) {
+                Spinner spinner = (Spinner) gameObject;
+                if (!spinner.left) count++;
+            }
+        }
+        return count;
+    }
+
+    public boolean canBuildPeg() {
+        return getCurrentPegs() < pegs;
+    }
+
+    public boolean canBuildBumper() {
+        return getCurrentBumpers() < bumpers;
+    }
+
+    public boolean canBuildLeftSpinner() {
+        return getCurrentLeftSpinner() < leftSpinners;
+    }
+
+    public boolean canBuildRightSpinner() {
+        return getCurrentRightSpinner() < rightSpinners;
     }
 }

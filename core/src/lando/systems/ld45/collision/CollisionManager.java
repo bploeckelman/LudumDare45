@@ -175,7 +175,7 @@ public class CollisionManager {
                                 b.bounds.x = frameEndPos.x;
                                 b.bounds.y = frameEndPos.y;
 
-                                screen.background.addCollision(frameEndPos.x, frameEndPos.y, 4, 2, b.color);
+                                screen.background.addCollision(frameEndPos.x, frameEndPos.y, 4, 2, b.path.color);
 
                                 float mass1 = b.bounds.radius;
                                 float mass2 = 10000;
@@ -226,7 +226,7 @@ public class CollisionManager {
                                     float x = frameEndPos.x - backupDist * (normal.x);
                                     float y = frameEndPos.y - backupDist * (normal.y);
                                     frameEndPos.set(x, y);
-                                    screen.background.addCollision(frameEndPos.x, frameEndPos.y, 4, 2, b.color);
+                                    screen.background.addCollision(frameEndPos.x, frameEndPos.y, 4, 2, b.path.color);
 
                                     b.bounds.x = frameEndPos.x;
                                     b.bounds.y = frameEndPos.y;
@@ -263,7 +263,7 @@ public class CollisionManager {
                             float x = frameEndPos.x - backupDist * (normal.x);
                             float y = frameEndPos.y - backupDist * (normal.y);
                             frameEndPos.set(x, y);
-                            screen.background.addCollision(frameEndPos.x, frameEndPos.y, 4, 2, b.color);
+                            screen.background.addCollision(frameEndPos.x, frameEndPos.y, 4, 2, b.path.color);
 
                             b.vel.scl(.8f);
                             if (nearest2.epsilonEquals(segment.start) || nearest2.epsilonEquals(segment.end)){

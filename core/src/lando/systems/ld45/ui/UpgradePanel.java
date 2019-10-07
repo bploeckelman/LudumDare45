@@ -24,7 +24,7 @@ public class UpgradePanel extends Panel {
         this.startGameButton.setText("Start Game");
         this.startGameButton.addClickHandler(() -> {
             if (isVisible() && !isAnimating()) {
-                hide(screen.worldCamera, 0.5f, (params) -> screen.game.setScreen(new GameScreen(screen.game)));
+                hide(screen.worldCamera, 0.5f, (params) -> screen.game.setScreen(new GameScreen(screen.game, false)));
             }
         });
     }
