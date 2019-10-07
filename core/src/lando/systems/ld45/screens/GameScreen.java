@@ -65,23 +65,7 @@ public class GameScreen extends BaseScreen {
         }
         hopper = new Hopper(this);
 
-        int x = 150;
-        for (int g = 0; g < 2; g++) {
-            //for (int l = 0; l < 4; l++) {
-                GameObject item = addObject(Bumper.getBumper(this));
-                item.setPosition(x, 200);
 
-                item = addObject(Peg.getPeg(this));
-                item.setPosition(x, 300);
-
-                Spinner spinner = Spinner.getSpinner(this);
-                spinner.left = (g % 2) == 0;
-                item = addObject(spinner);
-                item.setPosition(x, 400);
-
-                x += 500;
-            //}
-        }
 
         this.collisionManager = new CollisionManager(this);
         this.boundary = new Boundary(this);
