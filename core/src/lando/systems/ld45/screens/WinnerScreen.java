@@ -23,7 +23,7 @@ public class WinnerScreen extends BaseScreen {
     private TypingLabel disclaimerLabel;
 
 
-    static String title = "{SICK}Ball of Duty{ENDSICK}: Pachinko Edition";
+    static String title = "Ball of Duty: {SICK}Pachinko Edition{ENDSICK}";
     static String theme = "Made for Ludum Dare 45:\nTheme: Start with nothing";
     static String thanks = "Thanks for playing our game!";
     static String developers = "Developed by:\nDoug Graham\nBrian Ploeckelman\nBrian Rossman\nJeffrey Hwang\nJake";
