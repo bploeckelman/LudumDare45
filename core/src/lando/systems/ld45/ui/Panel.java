@@ -25,6 +25,7 @@ public class Panel {
     protected NinePatch panel;
     protected NinePatch inset;
     protected BaseScreen screen;
+    private HudBox outline;
 
     protected final float INSET_MARGIN = 20f;
 
@@ -39,6 +40,7 @@ public class Panel {
         this.uiAssetTypePanelInset = uiAssetTypePanelInset;
         this.panel = screen.assets.uiAssetNinepatchMap.get(screen.game.player.artPack).get(uiAssetTypePanel);
         this.inset = screen.assets.uiAssetNinepatchMap.get(screen.game.player.artPack).get(uiAssetTypePanelInset);
+        this.outline = new HudBox(0f, 0f, 0f, 0f);
     }
 
     public void setInitialBounds(float x, float y, float w, float h) {
@@ -48,11 +50,14 @@ public class Panel {
     public void update(float dt) {
 //        panel = screen.assets.uiAssetNinepatchMap.get(screen.game.player.artPack).get(uiAssetTypePanel);
 //        inset = screen.assets.uiAssetNinepatchMap.get(screen.game.player.artPack).get(uiAssetTypePanelInset);
+        outline.reset(bounds.x, bounds.y, bounds.width, bounds.height);
+        outline.update(dt);
     }
 
     public void render(SpriteBatch batch) {
         if (!visible) return;
         batch.draw(Game.getAssets().whitePixel, bounds.x, bounds.y, bounds.width, bounds.height);
+        outline.render(batch);
 //        panel.draw(batch, bounds.x, bounds.y, bounds.width, bounds.height);
 //        inset.draw(batch, bounds.x + INSET_MARGIN, bounds.y + INSET_MARGIN,
 //                   bounds.width - 2f * INSET_MARGIN,
