@@ -31,7 +31,7 @@ public class WinnerScreen extends BaseScreen {
     static String artists = "Art by:\nMatt Neumann\nTroy Sullivan";
     static String otherDuties = "Other Duties as Assigned:\nLuke Bain";
     static String emotionalSupport = "Emotional Support:\nAsuka the Shiba\n" + "Romeo the Poodle";
-    static String music = "Sound by:\nSomeone";
+    static String music = "Sound by:\nLuke Bain\nBrian Ploeckelman";
     static String libgdx = "Made with {COLOR=red}<3{COLOR=white} and LibGDX";
     static String disclaimer = "Disclaimer!!!\nNo balls were harmed in making of this game.";
     Color textColor = new Color(Color.WHITE);
