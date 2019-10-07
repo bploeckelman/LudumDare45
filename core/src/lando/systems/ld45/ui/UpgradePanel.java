@@ -529,7 +529,8 @@ public class UpgradePanel extends Panel {
     }
 
     private String getCostTextForButton(UpgradeButton button) {
-        return "{GRADIENT=red;blue}FUCK, MAKE FUNC TO CALC FOR HOVERED BUTTON{ENDGRADIENT} ";
+        return "{GRADIENT=red;blue}Upgrade Cost: $" + button.props.getCurrentCost() + " {ENDGRADIENT}   "
+             + "{GRADIENT=forest;olive}Available Cash: $ " + screen.player.score + " {ENDGRADIENT} ";
     }
 
 }
