@@ -24,7 +24,7 @@ public class WinnerScreen extends BaseScreen {
     private TypingLabel disclaimerLabel;
 
 
-    static String title = "Ball of Duty: {SICK}Pachinko Edition{ENDSICK}";
+    static String title = "Ball of Duty: Special Drops";
     static String theme = "Made for Ludum Dare 45:\nTheme: Start with nothing";
     static String thanks = "Thanks for playing our game!";
     static String developers = "Developed by:\nDoug Graham\nBrian Ploeckelman\nBrian Rossman\nJeffrey Hwang\nJake Shropshire";
@@ -46,10 +46,10 @@ public class WinnerScreen extends BaseScreen {
         titleLabel.setFontScale(2f);
         titleLabel.setY(Config.gameHeight / 2f + 280f);
 
-        themeLabel = new TypingLabel(assets.fontMap.get(ArtPack.b), theme, 25f, 0f);
+        themeLabel = new TypingLabel(assets.fontMap.get(ArtPack.d), theme, 25f, 0f);
         themeLabel.setWidth(Config.gameWidth / 2 - 50f);
-        themeLabel.setFontScale(1.5f);
-        themeLabel.setY(Config.gameHeight / 2f + 230f);
+        themeLabel.setFontScale(1);
+        themeLabel.setY(Config.gameHeight / 2f + 220f);
 
         leftCreditLabel = new TypingLabel(assets.fontMap.get(ArtPack.c), developers + "\n\n" + emotionalSupport + "\n\n", 75f, Config.gameHeight / 2f + 130f);
         leftCreditLabel.setWidth(Config.gameWidth / 2 - 150f);
