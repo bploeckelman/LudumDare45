@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Align;
 import lando.systems.ld45.Game;
 import lando.systems.ld45.audio.AudioManager;
@@ -28,6 +29,8 @@ public class Button extends UIElement {
 
     public boolean isDisabled = false;
 
+    public boolean highlight = false;
+
     public Color backgroundColor = Color.WHITE;
     public Color backgroundHoverColor = Color.GOLD;
     public Color backgroundDisabledColor = Color.DARK_GRAY;
@@ -35,6 +38,8 @@ public class Button extends UIElement {
     public Color textColor = Color.BLACK;
     public Color textHoverColor = Color.BLUE;
     public Color textDisabledColor = Color.GRAY;
+
+    private float pulseTime = 0;
 
     public Button(BaseScreen screen, OrthographicCamera camera, TextureRegion texture, float x, float y) {
         this(screen, camera, texture, x, y, texture.getRegionWidth(), texture.getRegionHeight());
@@ -71,6 +76,13 @@ public class Button extends UIElement {
         bounds.set(x, y, width, height);
     }
 
+    public void setHighlight(boolean highlight) {
+        if (this.highlight != highlight) {
+            this.highlight = highlight;
+            pulseTime = 0;
+        }
+    }
+
     public void addClickHandler(ClickHandler clickHandler) {
         this.clickHandler = clickHandler;
     }
@@ -78,6 +90,10 @@ public class Button extends UIElement {
     @Override
     public void update(float dt) {
         super.update(dt);
+
+        if (highlight && !isDisabled) {
+            pulseTime += dt;
+        }
 
         if (box != null) {
             box.update(dt);
@@ -103,6 +119,7 @@ public class Button extends UIElement {
 
         if (box != null) {
             batch.draw(screen.assets.whitePixel, bounds.x, bounds.y, bounds.width, bounds.height);
+            drawPulse(batch);
             box.renderBox(batch, textColor);
         }
 
@@ -111,6 +128,16 @@ public class Button extends UIElement {
         }
 
         batch.setColor(Color.WHITE);
+    }
+
+    private void drawPulse(SpriteBatch batch) {
+        if (highlight && !isDisabled) {
+            batch.setColor(backgroundHoverColor.r, backgroundHoverColor.g, backgroundHoverColor.b,
+                    0.3f + (0.5f * MathUtils.sin(pulseTime * 5)));
+            batch.draw(screen.assets.whitePixel, bounds.x, bounds.y, bounds.width, bounds.height);
+
+            batch.setColor(Color.WHITE);
+        }
     }
 
     private void drawShittyButton(SpriteBatch batch, Color textColor) {

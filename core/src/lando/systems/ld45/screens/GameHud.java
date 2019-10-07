@@ -34,6 +34,9 @@ public class GameHud {
     private String[] timeText = new String[] { "1X", "5X", "10X", "1/10X", "1/5X" };
     private int timeTextIndex = 0;
 
+    private boolean highlightEdit;
+    private boolean highlightUpgrad;
+
     public GameHud(GameScreen gameScreen) {
 
         this.screen = gameScreen;
@@ -126,6 +129,8 @@ public class GameHud {
     public void update(float dt) {
         time += dt;
 
+        setHighlights();
+
         if ((screen.gameOver || screen.editMode) && timeTextIndex != 0) {
             resetSpeed();
         }
@@ -177,5 +182,16 @@ public class GameHud {
         }
         sb.append(seconds);
         return sb.toString();
+    }
+
+    private void setHighlights() {
+        if (!upgradeButton.isDisabled) {
+            upgradeButton.setHighlight(screen.player.canUpgradeSomething());
+        }
+
+        boolean edits = screen.player.canBuildSomething();
+        if (!editButton.isDisabled) {
+            editButton.setHighlight(edits);
+        }
     }
 }

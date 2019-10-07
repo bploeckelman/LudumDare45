@@ -116,6 +116,12 @@ public class UpgradePanel extends Panel {
     public void update(float dt) {
         super.update(dt);
 
+
+        boolean edits = screen.player.canBuildSomething();
+        if (!startEditingButton.isDisabled) {
+            startEditingButton.setHighlight(edits);
+        }
+
         // Since the panel moves with show/hide/toggle, have to continuously reset positions... immediate-mode gui style
         float contentHeight = (bounds.height - 2f * INSET_MARGIN - 2f * CONTENT_MARGIN);
         float descriptionHeight = (1f / 3f) * contentHeight;
