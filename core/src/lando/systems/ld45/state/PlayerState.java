@@ -7,8 +7,6 @@ import lando.systems.ld45.objects.Peg;
 import lando.systems.ld45.objects.Spinner;
 import lando.systems.ld45.utils.ArtPack;
 
-import java.math.BigInteger;
-
 public class PlayerState {
 
     // Points used for buying shit
@@ -24,8 +22,13 @@ public class PlayerState {
     public int rightSpinners = 10;
     public int bumpers = 0;
     public int balls = 5;
-    public boolean screenShakeUnlocked = true;
     public ArtPack artPack;
+
+    public boolean hasEffectParticles   = false;
+    public boolean hasEffectTrails      = false;
+    public boolean hasEffectScreenshake = false;
+
+
 
     public Array<GameObject> gameObjects;
 

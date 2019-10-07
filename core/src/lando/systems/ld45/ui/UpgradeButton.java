@@ -1,6 +1,5 @@
 package lando.systems.ld45.ui;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 
 public class UpgradeButton extends Button {
@@ -34,6 +33,5 @@ public class UpgradeButton extends Button {
         bounds.set(x + hpad, y + vpad, width - 2f * hpad, height - 2f * vpad);
         collisionBounds.set(x + hpad, y + vpad, width - 2f * hpad, height - 2f * vpad);
     }
-
 
 }

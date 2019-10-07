@@ -3,6 +3,9 @@ package lando.systems.ld45.ui;
 public enum UpgradeProps {
       special_effects(3, "Buy Special Effects",
                       "{SPEED=5}{GRADIENT=black;gray}Purchase special effects:\n\nParticles, Ball trails, Screenshake{ENDGRADIENT}"
+                      , "{SPEED=5}{GRADIENT=black;gray}Purchase special effects: {ENDGRADIENT} \n\n{GRADIENT=forest;olive}Particles, {ENDGRADIENT}{GRADIENT=black;gray}Ball trails, Screenshake{ENDGRADIENT}"
+                      , "{SPEED=5}{GRADIENT=black;gray}Purchase special effects: {ENDGRADIENT} \n\n{GRADIENT=forest;olive}Particles, Ball trails, {ENDGRADIENT}{GRADIENT=black;gray}Screenshake{ENDGRADIENT}"
+                      , "{SPEED=5}{GRADIENT=black;gray}Purchase special effects: {ENDGRADIENT} {RAINBOW} COMPLETE {ENDRAINBOW} \n\n{GRADIENT=forest;olive}Particles, Ball trails, Screenshake {ENDGRADIENT} "
       )
     , pegs(3, "Buy Pegs",
            "{SPEED=5}{GRADIENT=black;gray}Purchase pegs:\n\nUnlock first, then purchase additional pegs up to X{ENDGRADIENT}"
@@ -46,6 +49,11 @@ public enum UpgradeProps {
         if (currentDescription <= descriptions.length - 1) {
             currentDescription += 1;
         }
+        return descriptions[currentDescription];
+    }
+
+    public String setToLastDescription() {
+        currentDescription = descriptions.length - 1;
         return descriptions[currentDescription];
     }
 

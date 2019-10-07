@@ -190,31 +190,55 @@ public class UpgradePanel extends Panel {
 
     private void initializeButtons() {
         buyEffectsButton.addClickHandler(() -> {
-            Gdx.app.log("CLICK", "'" + buyEffectsButton.props.text + "' button clicked");
+            UpgradeButton button = buyEffectsButton;
+            Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
+            if (!screen.player.hasEffectParticles) {
+                screen.player.hasEffectParticles = true;
+                button.props.nextDescription();
+                // TODO: subtract cost
+            } else if (!screen.player.hasEffectTrails) {
+                screen.player.hasEffectTrails = true;
+                button.props.nextDescription();
+                // TODO: subtract cost
+            } else if (!screen.player.hasEffectScreenshake) {
+                screen.player.hasEffectScreenshake = true;
+                button.props.nextDescription();
+                // TODO: subtract cost
+                // TODO: disable as 'sold out'
+            }
         });
+
         buyPegGizmosButton.addClickHandler(() -> {
-            Gdx.app.log("CLICK", "'" + buyPegGizmosButton.props.text + "' button clicked");
+            UpgradeButton button = buyPegGizmosButton;
+            Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
         });
         buyBumperGizmosButton.addClickHandler(() -> {
-            Gdx.app.log("CLICK", "'" + buyBumperGizmosButton.props.text + "' button clicked");
+            UpgradeButton button = buyBumperGizmosButton;
+            Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
         });
         buyLeftSpinnerGizmosButton.addClickHandler(() -> {
-            Gdx.app.log("CLICK", "'" + buyLeftSpinnerGizmosButton.props.text + "' button clicked");
+            UpgradeButton button = buyLeftSpinnerGizmosButton;
+            Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
         });
         buyRightSpinnerGizmosButton.addClickHandler(() -> {
-            Gdx.app.log("CLICK", "'" + buyRightSpinnerGizmosButton.props.text + "' button clicked");
+            UpgradeButton button = buyRightSpinnerGizmosButton;
+            Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
         });
         buyCashMultiplierButton.addClickHandler(() -> {
-            Gdx.app.log("CLICK", "'" + buyCashMultiplierButton.props.text + "' button clicked");
+            UpgradeButton button = buyCashMultiplierButton;
+            Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
         });
         buyBallMultiplierButton.addClickHandler(() -> {
-            Gdx.app.log("CLICK", "'" + buyBallMultiplierButton.props.text + "' button clicked");
+            UpgradeButton button = buyBallMultiplierButton;
+            Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
         });
         buyAudioButton.addClickHandler(() -> {
-            Gdx.app.log("CLICK", "'" + buyAudioButton.props.text + "' button clicked");
+            UpgradeButton button = buyAudioButton;
+            Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
         });
         buyArtPackButton.addClickHandler(() -> {
-            Gdx.app.log("CLICK", "'" + buyArtPackButton.props.text + "' button clicked");
+            UpgradeButton button = buyArtPackButton;
+            Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
         });
     }
 

@@ -198,28 +198,41 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void render(SpriteBatch batch) {
-
         batch.setProjectionMatrix(shaker.getCombinedMatrix());
         batch.begin();
-        background.render(batch);
+        {
+            background.render(batch);
+        }
         batch.end();
+
         // NOTE: this has to be outside of batch begin/end because reasons
-        renderBallTrails();
+        if (player.hasEffectTrails) {
+            renderBallTrails();
+        }
 
         batch.setProjectionMatrix(shaker.getCombinedMatrix());
         batch.begin();
         {
             if (editMode) boundary.renderEditMode(batch);
+
             boundary.render(batch);
-            particle.renderBackgroundParticles(batch);
+
+            if (player.hasEffectParticles) {
+                particle.renderBackgroundParticles(batch);
+            }
+
             balls.forEach(ball -> ball.render(batch));
+
             if (editMode) gameObjects.forEach(x -> x.renderEditModeRadius(batch));
+
             gameObjects.forEach(x -> x.render(batch));
-            particle.renderForegroundParticles(batch);
+
+            if (player.hasEffectParticles) {
+                particle.renderForegroundParticles(batch);
+            }
 
             if (!editMode) hopper.render(batch);
             toyChestPanel.render(batch);
-
         }
 
         batch.end();
@@ -301,7 +314,7 @@ public class GameScreen extends BaseScreen {
     }
 
     public void addShake(float amount){
-        if (player.screenShakeUnlocked){
+        if (player.hasEffectScreenshake){
             shaker.addDamage(amount);
         }
     }

@@ -112,7 +112,7 @@ public class Ball {
     }
 
     public void causeExplosion(int size){
-        if (lastExposion <= 0){
+        if (screen.player.hasEffectParticles && lastExposion <= 0){
             GameScreen gameScreen = (GameScreen)screen;
             gameScreen.background.addCollision(bounds.x, bounds.y, size, .9f, path.color);
             lastExposion = .1f;
