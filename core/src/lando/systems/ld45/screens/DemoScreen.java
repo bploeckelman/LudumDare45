@@ -19,6 +19,8 @@ public class DemoScreen extends BaseScreen {
     public DemoScreen(Game game) {
         super(game);
 
+        game.player.ballsDropped++;
+
         ball = new Ball(this, Config.ballRadius);
         ball.color.set(Color.WHITE);
         ball.initialize(Config.gameWidth / 2, 620, 0, -99);
@@ -31,6 +33,7 @@ public class DemoScreen extends BaseScreen {
         upgradeButton.setText("Buy Upgrade Menu: $1");
         upgradeButton.addClickHandler(() -> game.setScreen(new UpgradeScreen(game), game.assets.pizelizeShader, 1f) );
         upgradeButton.isVisible = false;
+        upgradeButton.setHighlight(true);
         addUIElement(upgradeButton);
     }
 
