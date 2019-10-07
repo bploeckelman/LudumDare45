@@ -26,8 +26,8 @@ public class Assets {
     private final AssetDescriptor<Texture> laserTextureAsset = new AssetDescriptor<>("images/laser.png", Texture.class);
     private final AssetDescriptor<TextureAtlas> atlasAsset = new AssetDescriptor<>("images/sprites.atlas", TextureAtlas.class);
     private final AssetDescriptor<BitmapFont> fontArtPackAssetA = new AssetDescriptor<>("fonts/cabin-sketch.fnt", BitmapFont.class);
-    private final AssetDescriptor<BitmapFont> fontArtPackAssetB = new AssetDescriptor<>("fonts/chevyray-bubble-time.fnt", BitmapFont.class);
-    private final AssetDescriptor<BitmapFont> fontArtPackAssetC = new AssetDescriptor<>("fonts/dignity-of-labor.fnt", BitmapFont.class);
+    private final AssetDescriptor<BitmapFont> fontArtPackAssetB = new AssetDescriptor<>("fonts/emulogic-16pt.fnt", BitmapFont.class);
+    private final AssetDescriptor<BitmapFont> fontArtPackAssetC = new AssetDescriptor<>("fonts/chevyray-roundabout.fnt", BitmapFont.class);
     private final AssetDescriptor<BitmapFont> fontArtPackAssetD = new AssetDescriptor<>("fonts/destructobeam.fnt", BitmapFont.class);
 
     public Music music;
