@@ -2,6 +2,7 @@ package lando.systems.ld45.ui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Align;
@@ -43,6 +44,35 @@ public class HudBox  {
         boxSegments.add(new Segment2D(left, top, left, bottom));
     }
 
+    public void reset(float x, float y, float width, float height) {
+        bounds.set(x, y, width, height);
+
+        float left = x;
+        float right = left + width;
+        float bottom = y;
+        float top = bottom + height;
+
+        Segment2D segment = boxSegments.get(0);
+        segment.start.set(left, bottom);
+        segment.end.set(right, bottom);
+        segment.delta.set(segment.end).sub(segment.start);
+
+        segment = boxSegments.get(1);
+        segment.start.set(right, bottom);
+        segment.end.set(right, top);
+        segment.delta.set(segment.end).sub(segment.start);
+
+        segment = boxSegments.get(2);
+        segment.start.set(right, top);
+        segment.end.set(left, top);
+        segment.delta.set(segment.end).sub(segment.start);
+
+        segment = boxSegments.get(3);
+        segment.start.set(left, top);
+        segment.end.set(left, bottom);
+        segment.delta.set(segment.end).sub(segment.start);
+    }
+
     public void update(float dt) {
         time += dt;
     }
@@ -59,7 +89,9 @@ public class HudBox  {
 
         if (text != null) {
             font.setColor(textColor);
-            font.draw(batch, text, bounds.x, textY, bounds.width - 10, align, wrap);
+            GlyphLayout layout = Game.getAssets().layout;
+            layout.setText(font, text, Color.BLACK, bounds.width - 10f, align, true);
+            font.draw(batch, layout, bounds.x, bounds.y + layout.height / 2f + bounds.height / 2f);
             font.setColor(Color.WHITE);
         }
     }

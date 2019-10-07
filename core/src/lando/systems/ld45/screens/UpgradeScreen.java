@@ -1,8 +1,6 @@
 package lando.systems.ld45.screens;
 
-import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenCallback;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import lando.systems.ld45.Game;
@@ -17,16 +15,8 @@ public class UpgradeScreen extends  BaseScreen {
         super(game);
 
         this.upgradePanel = new UpgradePanel(this, UIAssetType.upgrade_panel, UIAssetType.upgrade_panel_inset);
-        this.upgradePanel.setInitialBounds(0f, -worldCamera.viewportHeight,
-                                            worldCamera.viewportWidth,
-                                            worldCamera.viewportHeight);
-        Tween.call(new TweenCallback() {
-            @Override
-            public void onEvent(int i, BaseTween<?> baseTween) {
-                upgradePanel.show(worldCamera);
-            }
-        }).delay(1f).start(game.tween);
-
+        this.upgradePanel.setInitialBounds(0f, -worldCamera.viewportHeight, worldCamera.viewportWidth, worldCamera.viewportHeight);
+        Tween.call((i, baseTween) -> upgradePanel.show(worldCamera)).delay(1f).start(game.tween);
     }
 
     @Override
@@ -40,10 +30,11 @@ public class UpgradeScreen extends  BaseScreen {
         batch.begin();
         batch.setProjectionMatrix(worldCamera.combined);
         {
-            batch.setColor(Color.BLACK);
-            batch.draw(assets.whitePixel, 0,0, worldCamera.viewportWidth, worldCamera.viewportHeight);
+            batch.setColor(Color.GRAY);
+            batch.draw(assets.whitePixel, 0f, 0f, worldCamera.viewportWidth, worldCamera.viewportHeight);
             batch.setColor(Color.WHITE);
             upgradePanel.render(batch);
+            renderUIElements(batch);
         }
         batch.end();
     }

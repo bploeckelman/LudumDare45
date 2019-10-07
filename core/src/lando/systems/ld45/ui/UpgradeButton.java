@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Align;
 import lando.systems.ld45.Game;
 
-public class UpgradeButton {
+public class UpgradeButton extends Button {
 
     enum State { disabled, normal, hovered, pressed }
 
@@ -18,27 +18,27 @@ public class UpgradeButton {
     State state;
 
     public UpgradeButton(UpgradePanel panel, String text, String description) {
+        super(panel.screen, panel.screen.worldCamera, 0f, 0f, 0f, 0f);
         this.panel = panel;
         this.bounds = new Rectangle();
         this.state = State.disabled;
         this.text = text;
         this.description = description;
+        this.setText(text);
     }
 
+    @Override
     public void update(float dt) {
-        // TODO: handle clicks and such?
+        super.update(dt);
+        setText(text);
     }
 
-    public void render(SpriteBatch batch) {
-        final float hpad = 10f;
-        final float vpad = 20f;
-        batch.draw(Game.getAssets().whitePixel, bounds.x + hpad, bounds.y + vpad,
-                   bounds.width - 2f * hpad, bounds.height - 2f * vpad);
-
-        GlyphLayout layout = Game.getAssets().layout;
-        layout.setText(Game.getCurrentFont(), text, Color.BLACK, bounds.width, Align.center, false);
-        Game.getCurrentFont().draw(batch, layout, bounds.x, bounds.y + bounds.height / 2f + layout.height / 2f);
-        // TODO: cost underneath
+    public void setHudBox(float x, float y, float width, float height) {
+        float hpad = 10f;
+        float vpad = 20f;
+        box.reset(x  + hpad, y + vpad, width - 2f * hpad, height - 2f * vpad);
+        bounds.set(x + hpad, y + vpad, width - 2f * hpad, height - 2f * vpad);
     }
+
 
 }

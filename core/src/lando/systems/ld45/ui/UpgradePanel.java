@@ -17,14 +17,15 @@ public class UpgradePanel extends Panel {
     private static final String DEFAULT_DESCRIPTION = ""
         + "{SPEED=5} "
         + "{RAINBOW}Shop for upgrades!{ENDRAINBOW} \n\n"
-        + "{GRADIENT=red;blue}  Hover over buttons to see descriptions{ENDGRADIENT} \n"
-        + "{GRADIENT=goldenrod;dark_gray}  Click to upgrade (if you can afford it)!{ENDGRADIENT} \n"
-        + "{GRADIENT=forest;green}  Press 'Start Game' to go back to the game.{ENDGRADIENT} ";
+        + "{GRADIENT=red;blue}    Hover over buttons to see descriptions{ENDGRADIENT} \n"
+        + "{GRADIENT=goldenrod;dark_gray}    Click to upgrade (if you can afford it)!{ENDGRADIENT} \n"
+        + "{GRADIENT=forest;olive}    Press 'Start Game' to go back to the game.{ENDGRADIENT} ";
 
     private Button startGameButton;
 
     private Rectangle descriptionBounds;
     private Rectangle buttonGridBounds;
+    private HudBox descriptionBox;
 
     private UpgradeButton buyEffectsButton;
     private UpgradeButton buyPegGizmosButton;
@@ -47,8 +48,9 @@ public class UpgradePanel extends Panel {
 
         this.descriptionBounds = new Rectangle();
         this.buttonGridBounds = new Rectangle();
+        this.descriptionBox = new HudBox(0f, 0f, 0f, 0f);
 
-        this.startGameButton = new Button(screen, screen.worldCamera, screen.assets.whitePixel, 0f, 0f, 300f, 50f);
+        this.startGameButton = new Button(screen, screen.worldCamera, 0f, 0f, 300f, 50f);
         this.startGameButton.setText("Start Game");
         this.startGameButton.addClickHandler(() -> {
             if (isVisible() && !isAnimating()) {
@@ -56,15 +58,15 @@ public class UpgradePanel extends Panel {
             }
         });
 
-        this.buyEffectsButton            = new UpgradeButton(this, "Buy Special Effects", "{SPEED=5}Purchase special effects:\n\nParticles, Ball trails, Screenshake");
-        this.buyPegGizmosButton          = new UpgradeButton(this, "Buy Pegs",            "{SPEED=5}Purchase pegs:\n\nUnlock first, then purchase additional pegs up to X");
-        this.buyBumperGizmosButton       = new UpgradeButton(this, "Buy Bumpers",         "{SPEED=5}Purchase bumpers:\n\nUnlock first, then purchase additional bumpers up to X");
-        this.buyLeftSpinnerGizmosButton  = new UpgradeButton(this, "Buy Left Spinner",    "{SPEED=5}Purchase spinners (rotating left):\n\nUnlock first, then purchase additional spinners up to X");
-        this.buyRightSpinnerGizmosButton = new UpgradeButton(this, "Buy Right Spinner",   "{SPEED=5}Purchase spinners (rotating right):\n\nUnlock first, then purchase additional spinners up to X");
-        this.buyCashMultiplierButton     = new UpgradeButton(this, "Buy Cash Multiplier", "{SPEED=5}Purchase cash multiplier:\n\nIncrease the amount of money you get for everything;\n2x, 4x, 8x, and 16x");
-        this.buyBallMultiplierButton     = new UpgradeButton(this, "Buy Ball Multiplier", "{SPEED=5}Purchase ball multiplier:\n\nDrop more balls each playthrough;\n3x, 10x, 50x, 100x");
-        this.buyAudioButton              = new UpgradeButton(this, "Buy Audio",           "{SPEED=5}Purchase audio:\n\nIt's like graphics, but for your ears!\nUnlock placeholder pack, then final version");
-        this.buyArtPackButton            = new UpgradeButton(this, "Buy Art Packs",       "{SPEED=5}Purchase art:\n\nIt's like audio, but for your eyes!\nHire and artist and move through four distinct art packs!");
+        this.buyEffectsButton            = new UpgradeButton(this, "Buy Special Effects", "{SPEED=5}{GRADIENT=black;gray}Purchase special effects:\n\nParticles, Ball trails, Screenshake{ENDGRADIENT}");
+        this.buyPegGizmosButton          = new UpgradeButton(this, "Buy Pegs",            "{SPEED=5}{GRADIENT=black;gray}Purchase pegs:\n\nUnlock first, then purchase additional pegs up to X{ENDGRADIENT}");
+        this.buyBumperGizmosButton       = new UpgradeButton(this, "Buy Bumpers",         "{SPEED=5}{GRADIENT=black;gray}Purchase bumpers:\n\nUnlock first, then purchase additional bumpers up to X{ENDGRADIENT}");
+        this.buyLeftSpinnerGizmosButton  = new UpgradeButton(this, "Buy Left Spinner",    "{SPEED=5}{GRADIENT=black;gray}Purchase spinners (rotating left):\n\nUnlock first, then purchase additional spinners up to X{ENDGRADIENT}");
+        this.buyRightSpinnerGizmosButton = new UpgradeButton(this, "Buy Right Spinner",   "{SPEED=5}{GRADIENT=black;gray}Purchase spinners (rotating right):\n\nUnlock first, then purchase additional spinners up to X{ENDGRADIENT}");
+        this.buyCashMultiplierButton     = new UpgradeButton(this, "Buy Cash Multiplier", "{SPEED=5}{GRADIENT=black;gray}Purchase cash multiplier:\n\nIncrease the amount of money you get for everything;\n2x, 4x, 8x, and 16x{ENDGRADIENT}");
+        this.buyBallMultiplierButton     = new UpgradeButton(this, "Buy Ball Multiplier", "{SPEED=5}{GRADIENT=black;gray}Purchase ball multiplier:\n\nDrop more balls each playthrough;\n3x, 10x, 50x, 100x{ENDGRADIENT}");
+        this.buyAudioButton              = new UpgradeButton(this, "Buy Audio",           "{SPEED=5}{GRADIENT=black;gray}Purchase audio:\n\nIt's like graphics, but for your ears!\nUnlock placeholder pack, then final version{ENDGRADIENT}");
+        this.buyArtPackButton            = new UpgradeButton(this, "Buy Art Packs",       "{SPEED=5}{GRADIENT=black;gray}Purchase art:\n\nIt's like audio, but for your eyes!\nHire and artist and move through four distinct art packs!{ENDGRADIENT}");
 
         this.mousePos = new Vector3();
         this.hoveredButton = null;
@@ -86,13 +88,15 @@ public class UpgradePanel extends Panel {
         float descriptionHeight = (1f / 3f) * contentHeight;
         descriptionBounds.set(
                 bounds.x + INSET_MARGIN + CONTENT_MARGIN,
-                bounds.y + bounds.height - INSET_MARGIN - CONTENT_MARGIN - descriptionHeight,
+                bounds.y + bounds.height - INSET_MARGIN - CONTENT_MARGIN - descriptionHeight + 20f,
                 bounds.width - 2f * INSET_MARGIN - 2f * CONTENT_MARGIN,
                 descriptionHeight);
 
+        descriptionBox.reset(descriptionBounds.x, descriptionBounds.y, descriptionBounds.width, descriptionBounds.height);
+
         buttonGridBounds.set(
                 bounds.x + INSET_MARGIN + CONTENT_MARGIN,
-                bounds.y + INSET_MARGIN + CONTENT_MARGIN,
+                bounds.y + INSET_MARGIN + CONTENT_MARGIN + 20f,
                 bounds.width - 2f * INSET_MARGIN - 2f * CONTENT_MARGIN,
                 (2f / 3f) * contentHeight);
 
@@ -103,23 +107,23 @@ public class UpgradePanel extends Panel {
         float y = buttonGridBounds.y + buttonGridBounds.height - rowHeight;
 
         // first (top) row
-        buyEffectsButton              .bounds.set(x, y, buttonWidth, rowHeight); x += buttonWidth;
-        buyCashMultiplierButton       .bounds.set(x, y, buttonWidth, rowHeight); x += buttonWidth;
-        buyBallMultiplierButton       .bounds.set(x, y, buttonWidth, rowHeight); x += buttonWidth;
+        buyEffectsButton              .setHudBox(x, y, buttonWidth, rowHeight); x += buttonWidth;
+        buyCashMultiplierButton       .setHudBox(x, y, buttonWidth, rowHeight); x += buttonWidth;
+        buyBallMultiplierButton       .setHudBox(x, y, buttonWidth, rowHeight); x += buttonWidth;
 
         // second (middle) row
         y -= rowHeight;
         x = buttonGridBounds.x;
-        buyArtPackButton              .bounds.set(x, y, buttonWidth, rowHeight); x += buttonWidth;
-        buyPegGizmosButton            .bounds.set(x, y, buttonWidth, rowHeight); x += buttonWidth;
-        buyAudioButton                .bounds.set(x, y, buttonWidth, rowHeight); x += buttonWidth;
+        buyArtPackButton              .setHudBox(x, y, buttonWidth, rowHeight); x += buttonWidth;
+        buyPegGizmosButton            .setHudBox(x, y, buttonWidth, rowHeight); x += buttonWidth;
+        buyAudioButton                .setHudBox(x, y, buttonWidth, rowHeight); x += buttonWidth;
 
         // third (bottom) row
         y -= rowHeight;
         x = buttonGridBounds.x;
-        buyLeftSpinnerGizmosButton    .bounds.set(x, y, buttonWidth, rowHeight); x += buttonWidth;
-        buyBumperGizmosButton         .bounds.set(x, y, buttonWidth, rowHeight); x += buttonWidth;
-        buyRightSpinnerGizmosButton   .bounds.set(x, y, buttonWidth, rowHeight); x += buttonWidth;
+        buyLeftSpinnerGizmosButton    .setHudBox(x, y, buttonWidth, rowHeight); x += buttonWidth;
+        buyBumperGizmosButton         .setHudBox(x, y, buttonWidth, rowHeight); x += buttonWidth;
+        buyRightSpinnerGizmosButton   .setHudBox(x, y, buttonWidth, rowHeight); x += buttonWidth;
 
         buyEffectsButton             .update(dt);
         buyCashMultiplierButton      .update(dt);
@@ -156,21 +160,19 @@ public class UpgradePanel extends Panel {
         }
         descriptionLabel.update(dt);
 
-        startGameButton.bounds.setPosition(
-                bounds.x + bounds.width  / 2f - startGameButton.bounds.width  / 2f,
-                bounds.y);
+        startGameButton.setHudBox(bounds.x + bounds.width / 2f - startGameButton.bounds.width / 2f,
+                                  bounds.y + 10f, startGameButton.bounds.width, startGameButton.bounds.height);
         startGameButton.update(dt);
     }
 
     @Override
     public void render(SpriteBatch batch) {
         if (!isVisible()) return;
-        panel.draw(batch, bounds.x, bounds.y, bounds.width, bounds.height);
+//        panel.draw(batch, bounds.x, bounds.y, bounds.width, bounds.height);
 
-        inset.draw(batch, descriptionBounds.x, descriptionBounds.y, descriptionBounds.width, descriptionBounds.height);
+        descriptionBox.render(batch);
         descriptionLabel.render(batch);
 
-        inset.draw(batch, buttonGridBounds.x, buttonGridBounds.y, buttonGridBounds.width, buttonGridBounds.height);
         buyEffectsButton             .render(batch);
         buyCashMultiplierButton      .render(batch);
         buyBallMultiplierButton      .render(batch);

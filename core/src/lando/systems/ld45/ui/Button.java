@@ -15,7 +15,7 @@ public class Button extends UIElement {
 
     private TextureRegion texture;
 
-    private HudBox box;
+    protected HudBox box;
 
     private String text;
 
@@ -49,6 +49,10 @@ public class Button extends UIElement {
         } else {
             this.text = text;
         }
+    }
+
+    public void setHudBox(float x, float y, float width, float height) {
+        box.reset(x, y, width, height);
     }
 
     public void addClickHandler(ClickHandler clickHandler) {
