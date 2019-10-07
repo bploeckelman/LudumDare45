@@ -103,7 +103,7 @@ public class CollisionManager {
                     Float time = Utils.intersectCircleCircle(tempStart1, tempStart2, frameVel1, frameVel2, b.bounds.radius, otherBall.bounds.radius);
                     if (time != null){
                         collisionHappened = true;
-                        screen.particle.addBallColisionParticle(b, otherBall);
+                        //screen.particle.addBallColisionParticle(b, otherBall);
                         if (time <= 0f){
                             Gdx.app.log("collision", "ball was already inside a ball");
                             continue collisionLoop;
