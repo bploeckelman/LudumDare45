@@ -16,6 +16,7 @@ public abstract class UIElement {
     private Vector3 projection = new Vector3();
 
     public boolean isHover = false;
+    public boolean isVisible = true;
 
     public UIElement(float x, float y, float width, float height) {
         bounds = new Rectangle(x, y, width, height);
@@ -34,13 +35,17 @@ public abstract class UIElement {
 
     // handle rollover/highlight/tooltips here
     public void update(float dt) {
+        if (!isVisible) return;
+
         projection.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         projection = camera.unproject(projection);
         isHover = bounds.contains(projection.x, projection.y);
     }
 
     public void render(SpriteBatch batch) {
-        renderElement(batch);
+        if (isVisible) {
+            renderElement(batch);
+        }
     }
 
     protected abstract void renderElement(SpriteBatch batch);

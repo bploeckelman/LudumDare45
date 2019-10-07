@@ -41,6 +41,8 @@ public class Button extends UIElement {
 
     @Override
     public void update(float dt) {
+        if (!isVisible) return;
+
         super.update(dt);
         updateLabel(dt);
 

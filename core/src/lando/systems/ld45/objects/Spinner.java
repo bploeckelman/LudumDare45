@@ -15,11 +15,11 @@ public class Spinner extends GameObject {
 
     public boolean left = true;
 
-    public static Spinner getSpinner(GameScreen screen, int level, int gfxPack) {
-        return new Spinner(screen, level, gfxPack, 32);
+    public static Spinner getSpinner(GameScreen screen) {
+        return new Spinner(screen,32);
     }
 
-    public Spinner(GameScreen screen, int level, int gfxPack, float size) {
+    public Spinner(GameScreen screen, float size) {
         super(screen, screen.assets.assetMap.get(screen.game.player.artPack).get(AssetType.spinner).getKeyFrames()[0], size, size);
         setCircleBounds(-10, -10, size/2f);
     }

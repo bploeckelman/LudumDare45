@@ -17,11 +17,11 @@ public class Bumper extends GameObject {
 
     private float currentBumperSize = 0;
 
-    public static Bumper getBumper(GameScreen screen, int gfxPack) {
-        return new Bumper(screen, gfxPack, 32);
+    public static Bumper getBumper(GameScreen screen) {
+        return new Bumper(screen,32);
     }
 
-    public Bumper(GameScreen screen, int gfxPack, float size) {
+    public Bumper(GameScreen screen, float size) {
         super(screen, screen.assets.assetMap.get(screen.game.player.artPack).get(AssetType.bumper).getKeyFrames()[0], size, size);
 
         this.bumperSize = this.currentBumperSize = size;

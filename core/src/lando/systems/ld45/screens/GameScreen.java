@@ -39,6 +39,8 @@ public class GameScreen extends BaseScreen {
 
     private Panel toyChestPanel;
 
+    public boolean gameOver = false;
+
     public GameScreen(Game game) {
         super(game);
         game.particle.clearAll();
@@ -61,21 +63,21 @@ public class GameScreen extends BaseScreen {
         hopper = new Hopper(this);
 
         int x = 150;
-        for (int g = 0; g < 3; g++) {
-            for (int l = 0; l < 4; l++) {
-                GameObject item = addObject(Bumper.getBumper(this, g));
+        for (int g = 0; g < 2; g++) {
+            //for (int l = 0; l < 4; l++) {
+                GameObject item = addObject(Bumper.getBumper(this));
                 item.setPosition(x, 200);
 
-                item = addObject(Peg.getPeg(this, l, g));
+                item = addObject(Peg.getPeg(this));
                 item.setPosition(x, 300);
 
-                Spinner spinner = Spinner.getSpinner(this, l, g);
-                spinner.left = (l % 2) == 0;
+                Spinner spinner = Spinner.getSpinner(this);
+                spinner.left = (g % 2) == 0;
                 item = addObject(spinner);
                 item.setPosition(x, 400);
 
-                x += 50;
-            }
+                x += 500;
+            //}
         }
 
         this.collisionManager = new CollisionManager(this);
@@ -90,8 +92,13 @@ public class GameScreen extends BaseScreen {
     }
 
     public void startGame() {
-        editMode = false;
+        gameOver = editMode = false;
         hopper.reset();
+    }
+
+    public void editGame() {
+        gameOver = false;
+        editMode = true;
     }
 
     public GameObject addObject(GameObject gameObject) {
@@ -150,8 +157,7 @@ public class GameScreen extends BaseScreen {
     }
 
     private void endGame() {
-        // player.balls += 3;
-        startGame();
+        gameOver = true;
     }
 
     public boolean isGameOver() {
