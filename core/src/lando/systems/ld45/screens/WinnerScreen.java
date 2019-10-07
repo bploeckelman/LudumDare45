@@ -39,7 +39,7 @@ public class WinnerScreen extends BaseScreen {
         themeLabel = new TypingLabel(assets.font, theme, 0f, 0f);
         themeLabel.setWidth(Config.gameWidth);
         themeLabel.setFontScale(1.5f);
-        themeLabel.setY(Config.gameHeight / 2f + 200f);
+        themeLabel.setY(Config.gameHeight / 2f + 230f);
 
     }
 
@@ -57,16 +57,12 @@ public class WinnerScreen extends BaseScreen {
     public void render(SpriteBatch batch) {
         batch.begin();
         batch.setProjectionMatrix(worldCamera.combined);
-
         titleLabel.render(batch);
         themeLabel.render(batch);
         renderTextWithBorder(developers + "\n\n" + emotionalSupport, 2f, Config.gameWidth / 2 - 50f, 25f, Config.gameHeight / 2f + 150f);
         renderTextWithBorder(artists + "\n\n" + music + "\n\n" + libgdx, 2f, Config.gameWidth / 2 - 50f, Config.gameWidth / 2 + 25f, Config.gameHeight / 2f + 150f);
         renderTextWithBorder(thanks, 2f, Config.gameWidth, 0f,  100f);
         renderTextWithBorder(disclaimer, 1f, Config.gameWidth, 0f,  50f);
-
-
-
         batch.end();
     }
 
