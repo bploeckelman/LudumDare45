@@ -45,7 +45,7 @@ public class AudioManager implements Disposable {
         this.game = game;
 
         musics.put(1, new ObjectMap<>());
-        musics.get(1).put(Musics.mainTheme, assets.music);
+        musics.get(1).put(Musics.mainTheme, assets.musicMouth);
         musics.put(2, new ObjectMap<>());
         musics.get(2).put(Musics.mainTheme, assets.music);
 
@@ -54,6 +54,12 @@ public class AudioManager implements Disposable {
         putSound(Sounds.hit_spinner, assets.ballHitsSpinner, 2);
         putSound(Sounds.hit_arena, assets.ballHitsArena, 2);
         putSound(Sounds.click, assets.click, 2);
+
+        putSound(Sounds.hit_bumper, assets.ballHitsBumperMouth, 1);
+        putSound(Sounds.hit_peg, assets.ballHitsPegMouth, 1);
+        putSound(Sounds.hit_spinner, assets.ballHitsSpinnerMouth, 1);
+        putSound(Sounds.hit_arena, assets.ballHitsArenaMouth, 1);
+        putSound(Sounds.click, assets.clickMouth, 1);
 
         musicVolume = new MutableFloat(MUSIC_VOLUME);
 

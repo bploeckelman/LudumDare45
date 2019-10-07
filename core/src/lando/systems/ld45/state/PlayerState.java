@@ -23,7 +23,7 @@ public class PlayerState {
     public int bumpers = 0;
     public int balls = 5;
     public ArtPack artPack;
-    public int soundPack = 2;
+    public int soundPack = 0;
 
     public boolean hasEffectParticles   = false;
     public boolean hasEffectTrails      = false;
@@ -46,7 +46,7 @@ public class PlayerState {
     }
 
     public void upgradeSound(){
-        soundPack = Math.min(soundPack++, 2);
+        soundPack = Math.min(soundPack+1, 2);
         // Call play music after this is called
     }
 

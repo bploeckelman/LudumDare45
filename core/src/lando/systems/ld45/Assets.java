@@ -40,6 +40,13 @@ public class Assets {
     public Sound ballHitsArena;
     public Sound click;
 
+    public Music musicMouth;
+    public Sound ballHitsBumperMouth;
+    public Sound ballHitsPegMouth;
+    public Sound ballHitsSpinnerMouth;
+    public Sound ballHitsArenaMouth;
+    public Sound clickMouth;
+
     public SpriteBatch batch;
     public GlyphLayout layout;
     public AssetManager mgr;
@@ -132,6 +139,13 @@ public class Assets {
         mgr.load("audio/ball-hits-arena.wav", Sound.class);
         mgr.load("audio/click.mp3", Sound.class);
 
+        mgr.load("audio/fancyloop_mouth.wav", Music.class);
+        mgr.load("audio/ball-hits-bumper_mouth.wav", Sound.class);
+        mgr.load("audio/ball-hits-peg_mouth.wav", Sound.class);
+        mgr.load("audio/ball-hits-spinner_mouth.wav", Sound.class);
+        mgr.load("audio/ball-hits-arena_mouth.wav", Sound.class);
+        mgr.load("audio/click_mouth.mp3", Sound.class);
+
         mgr.load("images/badlogic.jpg", Texture.class);
         mgr.load("images/line-a_1.png", Texture.class);
         mgr.load("images/line-a_2.png", Texture.class);
@@ -152,12 +166,20 @@ public class Assets {
         initialized = true;
 
         music = mgr.get("audio/fancyloop.wav", Music.class);
+        musicMouth = mgr.get("audio/fancyloop.wav", Music.class);
+
 
         ballHitsBumper = mgr.get("audio/ball-hits-bumper.wav", Sound.class);
         ballHitsPeg = mgr.get("audio/ball-hits-peg.wav", Sound.class);
         ballHitsSpinner = mgr.get("audio/ball-hits-spinner.wav", Sound.class);
         ballHitsArena = mgr.get("audio/ball-hits-arena.wav", Sound.class);
         click = mgr.get("audio/click.mp3", Sound.class);
+
+        ballHitsBumperMouth = mgr.get("audio/ball-hits-bumper_mouth.wav", Sound.class);
+        ballHitsPegMouth = mgr.get("audio/ball-hits-peg_mouth.wav", Sound.class);
+        ballHitsSpinnerMouth = mgr.get("audio/ball-hits-spinner_mouth.wav", Sound.class);
+        ballHitsArenaMouth = mgr.get("audio/ball-hits-arena_mouth.wav", Sound.class);
+        clickMouth = mgr.get("audio/click_mouth.mp3", Sound.class);
 
         pixel = mgr.get(pixelTextureAsset);
         gridPaper = mgr.get(gridpaperTextureAsset);

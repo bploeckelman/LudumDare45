@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Align;
+import lando.systems.ld45.audio.AudioManager;
 import lando.systems.ld45.screens.BaseScreen;
 import lando.systems.ld45.screens.GameScreen;
 import lando.systems.ld45.screens.WinnerScreen;
@@ -454,12 +455,14 @@ public class UpgradePanel extends Panel {
             screen.player.score -= button.props.getCurrentCost();
             if (screen.player.soundPack == 0) {
                 screen.player.upgradeSound();
+                screen.game.audio.playMusic(AudioManager.Musics.mainTheme);
                 button.props.nextDescription();
                 button.addClickParticles();
                 // TODO: subtract cost
             } else if (screen.player.soundPack == 1) {
                 screen.player.upgradeSound();
                 button.props.nextDescription();
+                screen.game.audio.playMusic(AudioManager.Musics.mainTheme);
                 button.addClickParticles();
                 // TODO: subtract cost
                 button.isDisabled = true;
