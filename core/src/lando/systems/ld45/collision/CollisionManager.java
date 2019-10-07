@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld45.Config;
+import lando.systems.ld45.audio.AudioManager;
 import lando.systems.ld45.objects.*;
 import lando.systems.ld45.screens.GameScreen;
 import lando.systems.ld45.utils.Utils;
@@ -11,9 +12,17 @@ import lando.systems.ld45.utils.Utils;
 public class CollisionManager {
 
     GameScreen screen;
+    float lastArenaHitSound;
+    float lastBumperHitSound;
+    float lastSpinnerHitSound;
+    float lastPegHitSound;
 
     public CollisionManager(GameScreen screen) {
         this.screen = screen;
+        lastArenaHitSound = 0;
+        lastBumperHitSound = 0;
+        lastPegHitSound = 0;
+        lastSpinnerHitSound =0;
     }
 
 
@@ -29,6 +38,11 @@ public class CollisionManager {
     Vector2 normal = new Vector2();
     Vector2 incomingVector = new Vector2();
     public void solve(float dt){
+        lastArenaHitSound -= dt;
+        lastPegHitSound -= dt;
+        lastSpinnerHitSound -= dt;
+        lastBumperHitSound -= dt;
+
         for (Ball b : screen.balls){
             b.dtLeft = dt;
         }
@@ -193,6 +207,10 @@ public class CollisionManager {
                                     b.vel.add(normal.x * 100, normal.y * 100);
 
                                     long points = Bumper.SCORE_VALUE * screen.player.cashMultiplier;
+                                    if (lastBumperHitSound < 0) {
+                                        screen.game.audio.playSound(AudioManager.Sounds.hit_bumper);
+                                        lastBumperHitSound = .2f;
+                                    }
                                     screen.player.addScore(points);
                                     screen.particle.addPointsParticles(points, b.bounds.x, b.bounds.y + 5f);
                                 }
@@ -202,12 +220,20 @@ public class CollisionManager {
                                     b.vel.add(normal.x * 400, normal.y * 400);
 
                                     long points = Spinner.SCORE_VALUE * screen.player.cashMultiplier;
+                                    if (lastSpinnerHitSound< 0) {
+                                        screen.game.audio.playSound(AudioManager.Sounds.hit_spinner);
+                                        lastSpinnerHitSound = .2f;
+                                    }
                                     screen.player.addScore(points);
                                     screen.particle.addPointsParticles(points, b.bounds.x, b.bounds.y + 5f);
                                 }
                                 if (obj instanceof Peg){
                                     long points = Peg.SCORE_VALUE * screen.player.cashMultiplier;
                                     screen.player.addScore(points);
+                                    if (lastPegHitSound < 0) {
+                                        screen.game.audio.playSound(AudioManager.Sounds.hit_peg);
+                                        lastPegHitSound = .1f;
+                                    }
                                     screen.particle.addPointsParticles(points, b.bounds.x, b.bounds.y + 5f);
                                 }
                                 b.dtLeft -= time * b.dtLeft;
@@ -278,6 +304,10 @@ public class CollisionManager {
                             b.causeExplosion(5);
 
                             screen.addShake(.1f);
+                            if (lastArenaHitSound < 0) {
+                                screen.game.audio.playSound(AudioManager.Sounds.hit_arena);
+                                lastArenaHitSound = .1f;
+                            }
                             b.vel.scl(.8f);
                             if (nearest2.epsilonEquals(segment.start) || nearest2.epsilonEquals(segment.end)){
                                 normal.set(nearest2).sub(frameEndPos).nor();

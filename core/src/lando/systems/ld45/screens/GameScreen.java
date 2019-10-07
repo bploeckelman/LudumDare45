@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld45.Game;
+import lando.systems.ld45.audio.AudioManager;
 import lando.systems.ld45.backgrounds.*;
 import lando.systems.ld45.collision.CollisionManager;
 import lando.systems.ld45.objects.*;
@@ -45,6 +46,7 @@ public class GameScreen extends BaseScreen {
 
     public GameScreen(Game game, boolean editMode) {
         super(game);
+        game.audio.playMusic(AudioManager.Musics.mainTheme);
         this.editMode = editMode;
         game.particle.clearAll();
         gameObjects = game.player.gameObjects;

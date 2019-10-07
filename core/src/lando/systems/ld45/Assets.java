@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
@@ -33,6 +34,10 @@ public class Assets {
     private final AssetDescriptor<BitmapFont> fontArtPackAssetD = new AssetDescriptor<>("fonts/destructobeam.fnt", BitmapFont.class);
 
     public Music music;
+    public Sound ballHitsBumper;
+    public Sound ballHitsPeg;
+    public Sound ballHitsSpinner;
+    public Sound ballHitsArena;
 
     public SpriteBatch batch;
     public GlyphLayout layout;
@@ -115,7 +120,11 @@ public class Assets {
         mgr.load(linedAsset);
 
 
-        mgr.load("audio/music.mp3", Music.class);
+        mgr.load("audio/fancyloop.wav", Music.class);
+        mgr.load("audio/ball-hits-bumper.wav", Sound.class);
+        mgr.load("audio/ball-hits-peg.wav", Sound.class);
+        mgr.load("audio/ball-hits-spinner.wav", Sound.class);
+        mgr.load("audio/ball-hits-arena.wav", Sound.class);
 
         mgr.load("images/badlogic.jpg", Texture.class);
         mgr.load("images/line-a_1.png", Texture.class);
@@ -136,7 +145,12 @@ public class Assets {
 
         initialized = true;
 
-        music = mgr.get("audio/music.mp3", Music.class);
+        music = mgr.get("audio/fancyloop.wav", Music.class);
+
+        ballHitsBumper = mgr.get("audio/ball-hits-bumper.wav", Sound.class);
+        ballHitsPeg = mgr.get("audio/ball-hits-peg.wav", Sound.class);
+        ballHitsSpinner = mgr.get("audio/ball-hits-spinner.wav", Sound.class);
+        ballHitsArena = mgr.get("audio/ball-hits-arena.wav", Sound.class);
 
         pixel = mgr.get(pixelTextureAsset);
         gridPaper = mgr.get(gridpaperTextureAsset);

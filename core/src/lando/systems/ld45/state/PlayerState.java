@@ -23,6 +23,7 @@ public class PlayerState {
     public int bumpers = 0;
     public int balls = 5;
     public ArtPack artPack;
+    public int soundPack = 2;
 
     public boolean hasEffectParticles   = false;
     public boolean hasEffectTrails      = false;
@@ -42,6 +43,11 @@ public class PlayerState {
         // NOTE: cashMultiplier is added outside here so that the score particle number is updated too
         score += value;
         totalScore += value;
+    }
+
+    public void upgradeSound(){
+        soundPack = Math.min(soundPack++, 2);
+        // Call play music after this is called
     }
 
     public long getTotalScore() {
