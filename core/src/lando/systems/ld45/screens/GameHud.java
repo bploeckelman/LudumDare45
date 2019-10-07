@@ -16,9 +16,15 @@ public class GameHud {
     private HudBox scoreBox;
     private HudBox timeBox;
 
-    private Button startButton;
+    // non edit
+    private Button playAgainButton;
     private Button editButton;
     private Button upgradeButton;
+
+    // edit buttons
+    private Button playButton;
+    private Button clearButton;
+    private Button toyBoxButton;
 
     public GameHud(GameScreen gameScreen) {
 
@@ -29,20 +35,35 @@ public class GameHud {
         scoreBox = new HudBox(10, 10, 160, 40);
         timeBox = new HudBox(Config.gameWidth - 10 - 160, 10, 160, 40);
 
-        startButton = new Button(screen, screen.hudCamera, screen.assets.whitePixel, 250, 105, 300f, 50f);
-        startButton.setText("PLAY AGAIN");
-        startButton.addClickHandler(() -> restart());
-        screen.addUIElement(startButton);
+        playAgainButton = new Button(screen, screen.hudCamera, screen.assets.whitePixel, 250, 210, 300f, 50f);
+        playAgainButton.setText("PLAY AGAIN");
+        playAgainButton.addClickHandler(() -> restart());
+        screen.addUIElement(playAgainButton);
 
-        editButton = new Button(screen, screen.hudCamera, screen.assets.whitePixel, 450, 375, 300f, 50f);
+        editButton = new Button(screen, screen.hudCamera, screen.assets.whitePixel, 450, 340, 300f, 50f);
         editButton.setText("EDIT");
         editButton.addClickHandler(() -> screen.editGame());
         screen.addUIElement(editButton);
 
-        upgradeButton = new Button(screen, screen.hudCamera, screen.assets.whitePixel, 50, 375, 300f, 50f);
+        upgradeButton = new Button(screen, screen.hudCamera, screen.assets.whitePixel, 50, 340, 300f, 50f);
         upgradeButton.setText("UPGRADE");
         upgradeButton.addClickHandler(() -> { screen.game.setScreen(new UpgradeScreen(screen.game)); });
         screen.addUIElement(upgradeButton);
+
+        playButton = new Button(screen, screen.hudCamera, screen.assets.whitePixel, 50, 110, 200f, 50f);
+        playButton.setText("PLAY");
+        playButton.addClickHandler(() -> restart());
+        screen.addUIElement(playButton);
+
+        clearButton = new Button(screen, screen.hudCamera, screen.assets.whitePixel, 300, 110, 200f, 50f);
+        clearButton.setText("CLEAR");
+        clearButton.addClickHandler(() -> screen.clearGameObjects());
+        screen.addUIElement(clearButton);
+
+        toyBoxButton = new Button(screen, screen.hudCamera, screen.assets.whitePixel, 550, 110, 200f, 50f);
+        toyBoxButton.setText("OPEN");
+        toyBoxButton.addClickHandler(() -> screen.toggleToyBox());
+        screen.addUIElement(toyBoxButton);
     }
 
     private void restart() {
@@ -58,9 +79,10 @@ public class GameHud {
             timeBox.update(dt);
         }
 
-        editButton.isVisible = upgradeButton.isVisible = screen.gameOver && !screen.editMode;
-        startButton.isVisible = screen.gameOver || screen.editMode;
-
+        editButton.isVisible = upgradeButton.isVisible = playAgainButton.isVisible = screen.gameOver && !screen.editMode;
+        playButton.isVisible = clearButton.isVisible = screen.gameOver && screen.editMode;
+        toyBoxButton.isVisible = playButton.isVisible && !(screen.toyChestPanel.isAnimating() || screen.toyChestPanel.isVisible());
+        
         scoreValue = MathUtils.lerp(scoreValue, screen.player.score, dt);
 
         scoreBox.setText("$" + (long)scoreValue);

@@ -37,7 +37,7 @@ public class GameScreen extends BaseScreen {
     public Vector3 projection = new Vector3();
     public Vector2 mousePosition = new Vector2();
 
-    private Panel toyChestPanel;
+    public Panel toyChestPanel;
 
     public boolean gameOver = false;
 
@@ -145,15 +145,20 @@ public class GameScreen extends BaseScreen {
         particle.update(dt);
 
         toyChestPanel.update(dt);
-        if (Gdx.input.isKeyJustPressed(Input.Keys.TAB)) {
-            toyChestPanel.toggle(worldCamera);
-        }
 
         if (isGameOver()) {
             endGame();
         }
 
         hud.update(dt);
+    }
+
+    public void toggleToyBox() {
+        toyChestPanel.toggle(worldCamera);
+    }
+
+    public void clearGameObjects() {
+        gameObjects.clear();
     }
 
     private void endGame() {

@@ -49,7 +49,7 @@ public class Hopper {
 
     public void dropBall(float dt) {
         if (dropTime < 0) {
-            dropTime = 0.5f;
+            dropTime = 0.2f;
 
             Ball ball = new Ball(screen, 5);
             screen.shaker.addDamage(1f);
