@@ -17,15 +17,20 @@ public class UpgradePanel extends Panel {
     private static final float CONTENT_MARGIN = 10f;
 
     private static final String DEFAULT_DESCRIPTION = ""
-        + "{SPEED=5} "
-        + "{RAINBOW}Shop for upgrades!{ENDRAINBOW} \n\n"
+        + "{SPEED=8} "
+        + "{RAINBOW}Shop for upgrades!{ENDRAINBOW} \n"
         + "{GRADIENT=red;blue}    Hover over buttons to see descriptions{ENDGRADIENT} \n"
-        + "{GRADIENT=goldenrod;dark_gray}    Click to upgrade (if you can afford it)!{ENDGRADIENT} \n"
-        + "{GRADIENT=forest;olive}    Press 'Start Game' to go back to the game.{ENDGRADIENT} ";
+        + "{GRADIENT=goldenrod;dark_gray}    Click to upgrade, if you can afford it!{ENDGRADIENT} \n"
+        + "{GRADIENT=slate;purple}    Press 'Start Editing' to edit the game board{ENDGRADIENT} \n"
+        + "{GRADIENT=forest;olive}    Press 'Start Playing' to go back to the game{ENDGRADIENT} ";
+    private static final String DEFAULT_COST_TEXT = "{SPEED=8}{GRADIENT=black;dark_gray}Hover an upgrade to see costs...{ENDGRADIENT}";
 
     private Rectangle descriptionBounds;
     private Rectangle buttonGridBounds;
+    private Rectangle costTextBounds;
+
     private HudBox descriptionBox;
+    private HudBox costTextBox;
 
     private UpgradeButton buyEffectsButton;
     private UpgradeButton buyPegGizmosButton;
@@ -43,8 +48,12 @@ public class UpgradePanel extends Panel {
 
     private Vector3 mousePos;
     private UpgradeButton hoveredButton;
+
     private String descriptionText;
     private TypingLabel descriptionLabel;
+
+    private String costText;
+    private TypingLabel costLabel;
 
     public UpgradePanel(BaseScreen screen, UIAssetType uiAssetTypePanel, UIAssetType uiAssetTypePanelInset) {
         super(screen, uiAssetTypePanel, uiAssetTypePanelInset);
@@ -52,7 +61,10 @@ public class UpgradePanel extends Panel {
 
         this.descriptionBounds = new Rectangle();
         this.buttonGridBounds = new Rectangle();
+        this.costTextBounds = new Rectangle();
+
         this.descriptionBox = new HudBox(0f, 0f, 0f, 0f);
+        this.costTextBox = new HudBox(0f, 0f, 0f, 0f);
 
         this.buyEffectsButton            = new UpgradeButton(this, UpgradeProps.special_effects);
         this.buyPegGizmosButton          = new UpgradeButton(this, UpgradeProps.pegs);
@@ -90,6 +102,12 @@ public class UpgradePanel extends Panel {
         this.descriptionLabel.setWidth(screen.worldCamera.viewportWidth - 4f * INSET_MARGIN);
         this.descriptionLabel.setText(descriptionText);
 
+        this.costText = DEFAULT_COST_TEXT;
+        this.costLabel = new TypingLabel(screen.assets, costText, 0f, 30f);
+        this.costLabel.setLineAlign(Align.center);
+        this.costLabel.setWidth(screen.worldCamera.viewportWidth - 4f * INSET_MARGIN);
+        this.costLabel.setText(costText);
+
         initializeButtons();
     }
 
@@ -105,12 +123,19 @@ public class UpgradePanel extends Panel {
                 bounds.y + bounds.height - INSET_MARGIN - CONTENT_MARGIN - descriptionHeight + 20f,
                 bounds.width - 2f * INSET_MARGIN - 2f * CONTENT_MARGIN,
                 descriptionHeight);
-
         descriptionBox.reset(descriptionBounds.x, descriptionBounds.y, descriptionBounds.width, descriptionBounds.height);
+
+        float costTextBoundsHeight = 40f;
+        costTextBounds.set(
+                bounds.x + INSET_MARGIN + CONTENT_MARGIN,
+                descriptionBounds.y - costTextBoundsHeight - INSET_MARGIN * (2f / 4f),
+                bounds.width - 2f * INSET_MARGIN - 2f * CONTENT_MARGIN,
+                costTextBoundsHeight);
+        costTextBox.reset(costTextBounds.x, costTextBounds.y, costTextBounds.width, costTextBounds.height);
 
         buttonGridBounds.set(
                 bounds.x + INSET_MARGIN + CONTENT_MARGIN,
-                bounds.y + INSET_MARGIN + CONTENT_MARGIN + 20f,
+                bounds.y + INSET_MARGIN + CONTENT_MARGIN - INSET_MARGIN,
                 bounds.width - 2f * INSET_MARGIN - 2f * CONTENT_MARGIN,
                 (2f / 3f) * contentHeight);
 
@@ -146,7 +171,8 @@ public class UpgradePanel extends Panel {
         startEditingButton            .setHudBox(x, y, buttonWidth, rowHeight); x += buttonWidth;
         startPlayingButton            .setHudBox(x, y, buttonWidth, rowHeight); x += buttonWidth;
 
-        descriptionBox               .update(dt);
+        descriptionBox.update(dt);
+        costTextBox.update(dt);
 
         // TODO: determine what to disable based on already purchased stuff and current cash money
         // TODO: if we've already purchased everything for one upgrade type, set to 'sold out' status
@@ -196,7 +222,6 @@ public class UpgradePanel extends Panel {
 
         descriptionLabel.setX(descriptionBounds.x + INSET_MARGIN);
         descriptionLabel.setY(descriptionBounds.y + descriptionBounds.height - INSET_MARGIN);
-
         String prevDescriptionText = descriptionText;
         descriptionText = (hoveredButton != null) ? hoveredButton.getDescription() : DEFAULT_DESCRIPTION;
         if (!prevDescriptionText.equals(descriptionText)) {
@@ -204,9 +229,14 @@ public class UpgradePanel extends Panel {
         }
         descriptionLabel.update(dt);
 
-//        startPlayingButton.setHudBox(bounds.x + bounds.width / 2f - startPlayingButton.bounds.width / 2f,
-//                                     bounds.y + 10f, startPlayingButton.bounds.width, startPlayingButton.bounds.height);
-//        startPlayingButton.update(dt);
+        costLabel.setX(costTextBounds.x + INSET_MARGIN);
+        costLabel.setY(costTextBounds.y + costTextBounds.height - INSET_MARGIN / 2f);
+        String prevCostText = costText;
+        costText = (hoveredButton != null) ? getCostTextForButton(hoveredButton) : DEFAULT_COST_TEXT;
+        if (!prevCostText.equals(costText)) {
+            costLabel.restart(costText);
+        }
+        costLabel.update(dt);
     }
 
     @Override
@@ -215,6 +245,9 @@ public class UpgradePanel extends Panel {
 
         descriptionBox.render(batch);
         descriptionLabel.render(batch);
+
+        costTextBox.render(batch);
+        costLabel.render(batch);
 
         buyEffectsButton             .render(batch);
         buyCashMultiplierButton      .render(batch);
@@ -226,9 +259,9 @@ public class UpgradePanel extends Panel {
         buyBumperGizmosButton        .render(batch);
         buyRightSpinnerGizmosButton  .render(batch);
 
-       buyWinGameUpgradeButton.render(batch);
-       startEditingButton.render(batch);
-       startPlayingButton.render(batch);
+        buyWinGameUpgradeButton.render(batch);
+        startEditingButton.render(batch);
+        startPlayingButton.render(batch);
     }
 
     private void initializeButtons() {
@@ -448,6 +481,10 @@ public class UpgradePanel extends Panel {
                 descriptionLabel.setLineAlign(Align.left);
                 descriptionLabel.setWidth(screen.worldCamera.viewportWidth - 4f * INSET_MARGIN);
                 descriptionLabel.setText(descriptionText);
+                costLabel = new TypingLabel(screen.assets, costText, 0f, 300f);
+                costLabel.setLineAlign(Align.center);
+                costLabel.setWidth(screen.worldCamera.viewportWidth - 4f * INSET_MARGIN);
+                costLabel.setText(costText);
                 button.addClickParticles();
                 // TODO: subtract cost
             } else if (screen.player.artPack == ArtPack.b) {
@@ -457,6 +494,10 @@ public class UpgradePanel extends Panel {
                 descriptionLabel.setLineAlign(Align.left);
                 descriptionLabel.setWidth(screen.worldCamera.viewportWidth - 4f * INSET_MARGIN);
                 descriptionLabel.setText(descriptionText);
+                costLabel = new TypingLabel(screen.assets, costText, 0f, 300f);
+                costLabel.setLineAlign(Align.center);
+                costLabel.setWidth(screen.worldCamera.viewportWidth - 4f * INSET_MARGIN);
+                costLabel.setText(costText);
                 button.addClickParticles();
                 // TODO: subtract cost
             } else if (screen.player.artPack == ArtPack.c) {
@@ -466,6 +507,10 @@ public class UpgradePanel extends Panel {
                 descriptionLabel.setLineAlign(Align.left);
                 descriptionLabel.setWidth(screen.worldCamera.viewportWidth - 4f * INSET_MARGIN);
                 descriptionLabel.setText(descriptionText);
+                costLabel = new TypingLabel(screen.assets, costText, 0f, 300f);
+                costLabel.setLineAlign(Align.center);
+                costLabel.setWidth(screen.worldCamera.viewportWidth - 4f * INSET_MARGIN);
+                costLabel.setText(costText);
                 button.addClickParticles();
                 // TODO: subtract cost
                 button.isDisabled = true;
@@ -477,6 +522,10 @@ public class UpgradePanel extends Panel {
             button.addClickParticles();
             screen.game.setScreen(new WinnerScreen(screen.game));
         });
+    }
+
+    private String getCostTextForButton(UpgradeButton button) {
+        return "{GRADIENT=red;blue}FUCK, MAKE FUNC TO CALC FOR HOVERED BUTTON{ENDGRADIENT} ";
     }
 
 }
