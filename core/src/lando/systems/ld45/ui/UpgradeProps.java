@@ -1,5 +1,7 @@
 package lando.systems.ld45.ui;
 
+import lando.systems.ld45.utils.ArtPack;
+
 public enum UpgradeProps {
       special_effects(3, "Buy Special Effects",
                       "{SPEED=5}{GRADIENT=black;gray}Purchase special effects:\n\nParticles, Ball trails, Screenshake{ENDGRADIENT}"
@@ -28,8 +30,13 @@ public enum UpgradeProps {
     , audio_packs(2, "Buy Audio",
                   "{SPEED=5}{GRADIENT=black;gray}Purchase audio:\n\nIt's like graphics, but for your ears!\nUnlock placeholder pack, then final version{ENDGRADIENT}"
     )
+    // NOTE: can't use ArtPack.foo.niceName here because enum initializer order I guess?
     , art_packs(4, "Buy Art Packs",
-                "{SPEED=5}{GRADIENT=black;gray}Purchase art:\n\nIt's like audio, but for your eyes!\nHire and artist and move through four distinct art packs!{ENDGRADIENT}"
+//                "{SPEED=5}{GRADIENT=black;gray}Purchase art:\n\nIt's like audio, but for your eyes!\nHire an artist & upgrade through four distinct art packs!\n    Pencil sketch, Flat colors, Simple pixels, HD pixels {ENDGRADIENT}"
+                  "{SPEED=5}{GRADIENT=black;gray}Purchase art:\n\nIt's like audio, but for your eyes!\nHire an artist & upgrade through four distinct art packs!{ENDGRADIENT}\n {GRADIENT=forest;olive}   Pencil sketch, {ENDGRADIENT}{GRADIENT=black;gray} Flat colors, Simple pixels, HD pixels {ENDGRADIENT} "
+                , "{SPEED=5}{GRADIENT=black;gray}Purchase art:\n\nIt's like audio, but for your eyes!\nHire an artist & upgrade through four distinct art packs!{ENDGRADIENT}\n {GRADIENT=forest;olive}   Pencil sketch, Flat colors, {ENDGRADIENT}{GRADIENT=black;gray} Simple pixels, HD pixels {ENDGRADIENT} "
+                , "{SPEED=5}{GRADIENT=black;gray}Purchase art:\n\nIt's like audio, but for your eyes!\nHire an artist & upgrade through four distinct art packs!{ENDGRADIENT}\n {GRADIENT=forest;olive}   Pencil sketch, Flat colors, Simple pixels, {ENDGRADIENT}{GRADIENT=black;gray} HD pixels {ENDGRADIENT} "
+                , "{SPEED=5}{GRADIENT=black;gray}Purchase art: {ENDGRADIENT} {RAINBOW} COMPLETE {ENDRAINBOW} \n\n{GRADIENT=black;gray}It's like audio, but for your eyes!\nHire an artist & upgrade through four distinct art packs!{ENDGRADIENT}\n {GRADIENT=forest;olive}   Pencil sketch, Flat colors, Simple pixels, HD pixels {ENDGRADIENT} "
     )
     ;
 

@@ -1,12 +1,12 @@
 package lando.systems.ld45.utils;
 
 public enum ArtPack {
-      a("pencil-sketch")
-    , b("flat-color")
-    , c("simple-pixel")
-    , d("high-quality")
+      a("Pencil sketch")
+    , b("Flat colors")
+    , c("Simple pixel")
+    , d("HD pixel")
     ;
-    private final String niceName;
+    public final String niceName;
     ArtPack(String niceName) {
         this.niceName = niceName;
     }

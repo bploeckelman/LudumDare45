@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Align;
 import lando.systems.ld45.screens.BaseScreen;
 import lando.systems.ld45.screens.GameScreen;
 import lando.systems.ld45.ui.typinglabel.TypingLabel;
+import lando.systems.ld45.utils.ArtPack;
 import lando.systems.ld45.utils.UIAssetType;
 
 public class UpgradePanel extends Panel {
@@ -239,6 +240,20 @@ public class UpgradePanel extends Panel {
         buyArtPackButton.addClickHandler(() -> {
             UpgradeButton button = buyArtPackButton;
             Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
+            if (screen.player.artPack == ArtPack.a) {
+                screen.player.artPack= ArtPack.b;
+                button.props.nextDescription();
+                // TODO: subtract cost
+            } else if (screen.player.artPack == ArtPack.b) {
+                screen.player.artPack = ArtPack.c;
+                button.props.nextDescription();
+                // TODO: subtract cost
+            } else if (screen.player.artPack == ArtPack.c) {
+                screen.player.artPack = ArtPack.d;
+                button.props.nextDescription();
+                // TODO: subtract cost
+                // TODO: disable as 'sold out'
+            }
         });
     }
 
