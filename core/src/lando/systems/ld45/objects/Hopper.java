@@ -52,7 +52,6 @@ public class Hopper {
             dropTime = 0.2f;
 
             Ball ball = new Ball(screen, 5);
-            screen.shaker.addDamage(1f);
             ball.initialize(position, new Vector2(velocity.x / 2, -99));
             screen.balls.add(ball);
 

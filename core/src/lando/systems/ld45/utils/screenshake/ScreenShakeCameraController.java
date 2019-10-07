@@ -12,7 +12,7 @@ public class ScreenShakeCameraController {
 
     public float maxXOffset = 40;
     public float maxYOffset = 40;
-    public float maxAngleDegrees = 5;
+    public float maxAngleDegrees = 2;
 
     public float xOffsetSpeed = 3f;
     public float yOffsetSpeed = 3f;

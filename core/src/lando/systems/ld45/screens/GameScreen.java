@@ -298,4 +298,10 @@ public class GameScreen extends BaseScreen {
             game.setScreen(new WinnerScreen(game));
         }
     }
+
+    public void addShake(float amount){
+        if (player.screenShakeUnlocked){
+            shaker.addDamage(amount);
+        }
+    }
 }

@@ -22,6 +22,7 @@ public class PlayerState {
     public int rightSpinners = 10;
     public int bumpers = 0;
     public int balls = 5;
+    public boolean screenShakeUnlocked = true;
     public ArtPack artPack;
 
     public Array<GameObject> gameObjects;
