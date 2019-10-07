@@ -19,6 +19,8 @@ public class GameHud {
     private Button timeButton;
     private Button ballDropButton;
 
+    private HudBox ballBox;
+
     // non edit
     private Button playAgainButton;
     private Button editButton;
@@ -40,17 +42,20 @@ public class GameHud {
 
         float viewWidth = screen.hudCamera.viewportWidth;
 
-        scoreBox = new HudBox(10, 10, 110, 40);
-        timeBox = new HudBox(viewWidth - 120, 10, 110, 40);
-        timeButton = new Button(screen, screen.hudCamera,viewWidth - 235, 10, 100, 40);
+        scoreBox = new HudBox(10, 10, 200, 30);
+        timeBox = new HudBox(10, 55, 80, 30);
+
+        timeButton = new Button(screen, screen.hudCamera,viewWidth - 90, 55, 80, 30);
         timeButton.addClickHandler(() -> setSpeed());
         screen.addUIElement(timeButton);
         resetSpeed();
 
-        ballDropButton = new Button(screen, screen.hudCamera, 135, 10, 100, 40);
+        ballDropButton = new Button(screen, screen.hudCamera, viewWidth - 120, 10, 110, 30);
         ballDropButton.setText("DROP");
         ballDropButton.addClickHandler(() -> dropBalls());
         screen.addUIElement(ballDropButton);
+
+        ballBox = new HudBox(viewWidth - 230, 10, 100, 30);
 
         playAgainButton = new Button(screen, screen.hudCamera, 250, 210, 300f, 50f);
         playAgainButton.setText("PLAY AGAIN");
@@ -127,12 +132,14 @@ public class GameHud {
 
         if (!screen.gameOver) {
             timeBox.setText(toTimeString(time));
+            ballBox.setText(screen.balls.size + " B");
         }
 
         scoreBox.setText("$" + (long)scoreValue);
         scoreBox.update(dt);
 
         timeBox.update(dt);
+        ballBox.update(dt);
 
         timeButton.isVisible = ballDropButton.isVisible = !(screen.gameOver || screen.editMode);
         editButton.isVisible = upgradeButton.isVisible = playAgainButton.isVisible = screen.gameOver && !screen.editMode;
@@ -146,6 +153,7 @@ public class GameHud {
         if (!screen.editMode) {
             scoreBox.render(batch);
             timeBox.render(batch);
+            ballBox.render(batch);
         }
         screen.renderUIElements(batch);
     }
@@ -156,6 +164,10 @@ public class GameHud {
         sb.setLength(0);
         int minutes = (int)time / 60;
         int seconds = (int)time % 60;
+        // just won't show, it'll still keep track
+        if (minutes > 9) {
+            minutes = 0;
+        }
         sb.append(minutes);
         sb.append(":");
         if (seconds < 10) {
