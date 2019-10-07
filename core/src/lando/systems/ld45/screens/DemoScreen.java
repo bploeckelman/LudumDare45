@@ -2,7 +2,6 @@ package lando.systems.ld45.screens;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld45.Config;
 import lando.systems.ld45.Game;
 import lando.systems.ld45.objects.Ball;
@@ -26,7 +25,7 @@ public class DemoScreen extends BaseScreen {
 
         float width = 500f;
         float height = 50f;
-        upgradeButton = new Button(this, hudCamera, assets.whitePixel, hudCamera.viewportWidth / 2f - width / 2f, height, width, height);
+        upgradeButton = new Button(this, hudCamera,hudCamera.viewportWidth / 2f - width / 2f, height, width, height);
         upgradeButton.setText("Buy Upgrade Menu: $1");
         upgradeButton.set(this);
         upgradeButton.addClickHandler(() -> game.setScreen(new UpgradeScreen(game)) );
@@ -55,6 +54,11 @@ public class DemoScreen extends BaseScreen {
     @Override
     public void render(SpriteBatch batch) {
         batch.begin();
+
+        batch.setColor(Color.DARK_GRAY);
+        batch.draw(assets.whitePixel, 0, 0, worldCamera.viewportWidth, worldCamera.viewportHeight);
+
+        batch.setColor(Color.WHITE);
 
         particle.renderBackgroundParticles(batch);
         if (ball != null) {

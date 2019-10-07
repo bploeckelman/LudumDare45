@@ -35,32 +35,32 @@ public class GameHud {
         scoreBox = new HudBox(10, 10, 160, 40);
         timeBox = new HudBox(Config.gameWidth - 10 - 160, 10, 160, 40);
 
-        playAgainButton = new Button(screen, screen.hudCamera, screen.assets.whitePixel, 250, 210, 300f, 50f);
+        playAgainButton = new Button(screen, screen.hudCamera, 250, 210, 300f, 50f);
         playAgainButton.setText("PLAY AGAIN");
         playAgainButton.addClickHandler(() -> restart());
         screen.addUIElement(playAgainButton);
 
-        editButton = new Button(screen, screen.hudCamera, screen.assets.whitePixel, 450, 340, 300f, 50f);
+        editButton = new Button(screen, screen.hudCamera, 450, 340, 300f, 50f);
         editButton.setText("EDIT");
         editButton.addClickHandler(() -> screen.editGame());
         screen.addUIElement(editButton);
 
-        upgradeButton = new Button(screen, screen.hudCamera, screen.assets.whitePixel, 50, 340, 300f, 50f);
+        upgradeButton = new Button(screen, screen.hudCamera, 50, 340, 300f, 50f);
         upgradeButton.setText("UPGRADE");
         upgradeButton.addClickHandler(() -> { screen.game.setScreen(new UpgradeScreen(screen.game)); });
         screen.addUIElement(upgradeButton);
 
-        playButton = new Button(screen, screen.hudCamera, screen.assets.whitePixel, 50, 110, 200f, 50f);
+        playButton = new Button(screen, screen.hudCamera, 50,110, 200f, 50f);
         playButton.setText("PLAY");
         playButton.addClickHandler(() -> restart());
         screen.addUIElement(playButton);
 
-        clearButton = new Button(screen, screen.hudCamera, screen.assets.whitePixel, 300, 110, 200f, 50f);
+        clearButton = new Button(screen, screen.hudCamera, 300, 110, 200f, 50f);
         clearButton.setText("CLEAR");
         clearButton.addClickHandler(() -> screen.clearGameObjects());
         screen.addUIElement(clearButton);
 
-        toyBoxButton = new Button(screen, screen.hudCamera, screen.assets.whitePixel, 550, 110, 200f, 50f);
+        toyBoxButton = new Button(screen, screen.hudCamera, 550, 110, 200f, 50f);
         toyBoxButton.setText("OPEN");
         toyBoxButton.addClickHandler(() -> screen.toggleToyBox());
         screen.addUIElement(toyBoxButton);

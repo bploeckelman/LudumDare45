@@ -7,15 +7,15 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld45.Assets;
-import lando.systems.ld45.Config;
 import lando.systems.ld45.Game;
 import lando.systems.ld45.collision.Segment2D;
-import lando.systems.ld45.ui.typinglabel.TypingLabel;
 import lando.systems.ld45.utils.AssetType;
 
 public class HudBox  {
 
     public float width = 10;
+    public int align = Align.right;
+    public boolean wrap = false;
 
     private Assets assets = Game.getAssets();
 
@@ -57,7 +57,7 @@ public class HudBox  {
 
         if (text != null) {
             font.setColor(textColor);
-            font.draw(batch, text, bounds.x, textY, bounds.width - 10, Align.right, false);
+            font.draw(batch, text, bounds.x, textY, bounds.width - 10, align, wrap);
             font.setColor(Color.WHITE);
         }
     }
