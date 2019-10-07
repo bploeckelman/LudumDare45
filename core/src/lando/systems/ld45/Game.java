@@ -6,6 +6,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -18,8 +19,11 @@ import lando.systems.ld45.screens.BaseScreen;
 import lando.systems.ld45.screens.TitleScreen;
 import lando.systems.ld45.state.PlayerState;
 import lando.systems.ld45.utils.ArtPack;
+import lando.systems.ld45.utils.AssetType;
 
 public class Game extends ApplicationAdapter {
+
+	public static Game game;
 
 	public Pool<Vector2> vector2Pool = Pools.get(Vector2.class);
 	public Pool<Color>   colorPool   = Pools.get(Color.class);
@@ -33,6 +37,10 @@ public class Game extends ApplicationAdapter {
 	public ArtPack artPack = ArtPack.a;
 
 	BaseScreen currentScreen;
+
+	public Game() {
+		this.game = this;
+	}
 
 	@Override
 	public void create () {
@@ -92,4 +100,11 @@ public class Game extends ApplicationAdapter {
 		return currentScreen;
 	}
 
+	public static Assets getAssets() {
+		return game.assets;
+	}
+
+	public static TextureRegion getAsset(AssetType assetType, float time) {
+		return game.assets.assetMap.get(game.artPack).get(assetType).getKeyFrame(time);
+	}
 }
