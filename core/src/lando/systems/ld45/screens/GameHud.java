@@ -42,9 +42,18 @@ public class GameHud {
         timeBox.render(batch);
     }
 
-    private static String toTimeString(float time) {
+    private StringBuilder sb = new StringBuilder(15);
+
+    private String toTimeString(float time) {
+        sb.setLength(0);
         int minutes = (int)time / 60;
         int seconds = (int)time % 60;
-        return String.format("%d : %02d", minutes, seconds);
+        sb.append(minutes);
+        sb.append(" : ");
+        if (seconds < 10) {
+            sb.append("0");
+        }
+        sb.append(seconds);
+        return sb.toString();
     }
 }
