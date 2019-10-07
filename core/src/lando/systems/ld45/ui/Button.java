@@ -53,6 +53,7 @@ public class Button extends UIElement {
 
     public void setHudBox(float x, float y, float width, float height) {
         box.reset(x, y, width, height);
+        bounds.set(x, y, width, height);
     }
 
     public void addClickHandler(ClickHandler clickHandler) {
