@@ -128,6 +128,14 @@ public class UpgradePanel extends Panel {
 
         descriptionBox               .update(dt);
 
+        buyCashMultiplierButton.isDisabled       = true;
+        buyBallMultiplierButton.isDisabled       = true;
+        buyPegGizmosButton.isDisabled            = true;
+        buyAudioButton.isDisabled                = true;
+        buyLeftSpinnerGizmosButton.isDisabled    = true;
+        buyRightSpinnerGizmosButton.isDisabled   = true;
+        buyBumperGizmosButton.isDisabled         = true;
+
         buyEffectsButton             .update(dt);
         buyCashMultiplierButton      .update(dt);
         buyBallMultiplierButton      .update(dt);

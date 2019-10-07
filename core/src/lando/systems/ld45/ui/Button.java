@@ -28,11 +28,11 @@ public class Button extends UIElement {
     public boolean isDisabled = false;
 
     public Color backgroundColor = Color.WHITE;
-    public Color backgroundHoverColor = Color.SALMON;
-    public Color backgroundDisabledColor = Color.LIGHT_GRAY;
+    public Color backgroundHoverColor = Color.GOLD;
+    public Color backgroundDisabledColor = Color.DARK_GRAY;
 
     public Color textColor = Color.BLACK;
-    public Color textHoverColor = Color.WHITE;
+    public Color textHoverColor = Color.BLUE;
     public Color textDisabledColor = Color.GRAY;
 
     public Button(BaseScreen screen, OrthographicCamera camera, TextureRegion texture, float x, float y) {
