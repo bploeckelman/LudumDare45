@@ -278,15 +278,27 @@ public class UpgradePanel extends Panel {
             Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
             if (screen.player.artPack == ArtPack.a) {
                 screen.player.artPack= ArtPack.b;
-                button.props.nextDescription();
+                descriptionText = button.props.nextDescription();
+                descriptionLabel = new TypingLabel(screen.assets, descriptionText, 0f, 300f);
+                descriptionLabel.setLineAlign(Align.left);
+                descriptionLabel.setWidth(screen.worldCamera.viewportWidth - 4f * INSET_MARGIN);
+                descriptionLabel.setText(descriptionText);
                 // TODO: subtract cost
             } else if (screen.player.artPack == ArtPack.b) {
                 screen.player.artPack = ArtPack.c;
-                button.props.nextDescription();
+                descriptionText = button.props.nextDescription();
+                descriptionLabel = new TypingLabel(screen.assets, descriptionText, 0f, 300f);
+                descriptionLabel.setLineAlign(Align.left);
+                descriptionLabel.setWidth(screen.worldCamera.viewportWidth - 4f * INSET_MARGIN);
+                descriptionLabel.setText(descriptionText);
                 // TODO: subtract cost
             } else if (screen.player.artPack == ArtPack.c) {
                 screen.player.artPack = ArtPack.d;
-                button.props.nextDescription();
+                descriptionText = button.props.nextDescription();
+                descriptionLabel = new TypingLabel(screen.assets, descriptionText, 0f, 300f);
+                descriptionLabel.setLineAlign(Align.left);
+                descriptionLabel.setWidth(screen.worldCamera.viewportWidth - 4f * INSET_MARGIN);
+                descriptionLabel.setText(descriptionText);
                 // TODO: subtract cost
                 // TODO: disable as 'sold out'
                 button.isDisabled = true;
