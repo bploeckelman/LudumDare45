@@ -19,12 +19,12 @@ public class Boundary {
     public Boundary(GameScreen screen){
         this.screen = screen;
         segments = new Array<>();
-        segments.add(new Segment2D(margin, 90, margin, screen.worldCamera.viewportHeight - margin));
+        segments.add(new Segment2D(margin, 110, margin, screen.worldCamera.viewportHeight - margin));
         segments.add(new Segment2D(margin, screen.worldCamera.viewportHeight - margin, screen.worldCamera.viewportWidth-margin, screen.worldCamera.viewportHeight - margin));
-        segments.add(new Segment2D(screen.worldCamera.viewportWidth - margin, screen.worldCamera.viewportHeight- margin, screen.worldCamera.viewportWidth - margin, 90));
-        segments.add(new Segment2D(screen.worldCamera.viewportWidth- margin, 90, screen.worldCamera.viewportWidth/2f + 50, 20));
-        segments.add(new Segment2D(screen.worldCamera.viewportWidth/2f - 50, 20, margin, 90));
-        buildArea = new Rectangle(90, 180, (int)screen.worldCamera.viewportWidth-180, (int)screen.worldCamera.viewportHeight-270);
+        segments.add(new Segment2D(screen.worldCamera.viewportWidth - margin, screen.worldCamera.viewportHeight- margin, screen.worldCamera.viewportWidth - margin, 110));
+        segments.add(new Segment2D(screen.worldCamera.viewportWidth- margin, 110, screen.worldCamera.viewportWidth/2f + 50, 40));
+        segments.add(new Segment2D(screen.worldCamera.viewportWidth/2f - 50, 40, margin, 110));
+        buildArea = new Rectangle(90, 200, (int)screen.worldCamera.viewportWidth-180, (int)screen.worldCamera.viewportHeight-290);
     }
 
     public void update(float dt){
