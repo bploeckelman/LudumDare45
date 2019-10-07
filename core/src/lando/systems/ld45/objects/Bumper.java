@@ -1,12 +1,13 @@
 package lando.systems.ld45.objects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld45.Config;
+import lando.systems.ld45.Game;
 import lando.systems.ld45.screens.GameScreen;
+import lando.systems.ld45.utils.ArtPack;
 import lando.systems.ld45.utils.AssetType;
 
 public class Bumper extends GameObject {
@@ -22,7 +23,7 @@ public class Bumper extends GameObject {
     }
 
     public Bumper(GameScreen screen, float size) {
-        super(screen, screen.assets.assetMap.get(screen.game.player.artPack).get(AssetType.bumper).getKeyFrames()[0], size, size);
+        super(screen, Game.getAsset(AssetType.bumper,0), size, size);
 
         this.bumperSize = this.currentBumperSize = size;
 
@@ -35,7 +36,11 @@ public class Bumper extends GameObject {
     public void update(float dt, Vector2 mousePosition) {
         super.update(dt, mousePosition);
 
-        image = screen.assets.assetMap.get(screen.game.player.artPack).get(AssetType.bumper).getKeyFrame(artAccum);
+        float adjust = 1f;
+        if (screen.game.player.artPack == ArtPack.b) {
+            adjust = 0.2f;
+        }
+        image = Game.getAsset(AssetType.bumper, artAccum * adjust);
 
         if (currentHitTime > 0) {
             if (currentBumperSize > (hitTime / 2)) {

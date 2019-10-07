@@ -21,7 +21,7 @@ public class Spinner extends GameObject {
     }
 
     public Spinner(GameScreen screen, float size) {
-        super(screen, screen.assets.assetMap.get(screen.game.player.artPack).get(AssetType.spinner).getKeyFrames()[0], size, size);
+        super(screen, Game.getAsset(AssetType.spinner, 0), size, size);
         setCircleBounds(-10, -10, size/2f);
     }
 
@@ -29,8 +29,7 @@ public class Spinner extends GameObject {
     public void update(float dt, Vector2 mousePosition) {
         super.update(dt, mousePosition);
 
-        image = screen.assets.assetMap.get(screen.game.player.artPack).get(AssetType.spinner).getKeyFrames()[0];
-
+        image = Game.getAsset(AssetType.spinner, artAccum);
         float dr = 200 * dt;
         if (currentHitTime > 0) {
             dr = 460*dt;
@@ -56,7 +55,7 @@ public class Spinner extends GameObject {
 
         if (Game.isFancyPantsPack()) {
             batch.draw(screen.assets.spinnerCover, pos.x - half, pos.y - half, half, half,
-                    size.x, size.y, (left) ? 1 : -1, 1, 0);
+                    size.x, size.y, (left) ? 1 : -1, 1, -rotation);
         }
     }
 }
