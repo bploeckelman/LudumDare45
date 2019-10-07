@@ -122,8 +122,8 @@ public class UpgradePanel extends Panel {
 
         // first (top) row
         buyEffectsButton              .setHudBox(x, y, buttonWidth, rowHeight); x += buttonWidth;
-        buyCashMultiplierButton       .setHudBox(x, y, buttonWidth, rowHeight); x += buttonWidth;
         buyBallMultiplierButton       .setHudBox(x, y, buttonWidth, rowHeight); x += buttonWidth;
+        buyCashMultiplierButton       .setHudBox(x, y, buttonWidth, rowHeight); x += buttonWidth;
 
         // second (middle) row
         y -= rowHeight;
@@ -150,8 +150,7 @@ public class UpgradePanel extends Panel {
 
         // TODO: determine what to disable based on already purchased stuff and current cash money
         // TODO: if we've already purchased everything for one upgrade type, set to 'sold out' status
-        buyAudioButton.isDisabled                = true;
-        buyWinGameUpgradeButton.isDisabled       = true;
+        buyWinGameUpgradeButton.isDisabled = true;
 
         buyEffectsButton             .update(dt);
         buyCashMultiplierButton      .update(dt);
@@ -405,6 +404,18 @@ public class UpgradePanel extends Panel {
 
         buyAudioButton.addClickHandler(() -> {
             UpgradeButton button = buyAudioButton;
+            if (screen.player.soundPack == 0) {
+                screen.player.upgradeSound();
+                button.props.nextDescription();
+                button.addClickParticles();
+                // TODO: subtract cost
+            } else if (screen.player.soundPack == 1) {
+                screen.player.upgradeSound();
+                button.props.nextDescription();
+                button.addClickParticles();
+                // TODO: subtract cost
+                button.isDisabled = true;
+            }
         });
 
         buyArtPackButton.addClickHandler(() -> {

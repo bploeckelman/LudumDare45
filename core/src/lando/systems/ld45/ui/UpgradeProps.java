@@ -36,11 +36,11 @@ public enum UpgradeProps {
             , "{SPEED=7}{GRADIENT=black;gray}Purchase spinners (rotating right): {ENDGRADIENT} {RAINBOW} COMPLETE {ENDRAINBOW} \n\n{GRADIENT=black;gray}Spinners send balls flying in their rotation direction.\nBuy more of them to place! {ENDGRADIENT} \n    {GRADIENT=forest;olive}     1x, 4x, 8x, 10x{ENDGRADIENT}"
     )
     , cash_multipliers(4,"Buy Cash Multiplier", new Integer[]{0, 100, 500, 1000}
-            ,"{SPEED=7}{GRADIENT=black;gray}Purchase cash multiplier:\n\nIncrease the amount of money you earn for everything; {ENDGRADIENT} \n {GRADIENT=forest;olive}         1x, {ENDGRADIENT} {GRADIENT=black;gray} 2x, 4x, 8x, 16x{ENDGRADIENT}"
-            , "{SPEED=7}{GRADIENT=black;gray}Purchase cash multiplier:\n\nIncrease the amount of money you earn for everything; {ENDGRADIENT} \n {GRADIENT=forest;olive}         1x, 2x, {ENDGRADIENT} {GRADIENT=black;gray} 4x, 8x, 16x{ENDGRADIENT}"
-            , "{SPEED=7}{GRADIENT=black;gray}Purchase cash multiplier:\n\nIncrease the amount of money you earn for everything; {ENDGRADIENT} \n {GRADIENT=forest;olive}         1x, 2x, 4x, {ENDGRADIENT} {GRADIENT=black;gray} 8x, 16x{ENDGRADIENT}"
-            , "{SPEED=7}{GRADIENT=black;gray}Purchase cash multiplier:\n\nIncrease the amount of money you earn for everything; {ENDGRADIENT} \n {GRADIENT=forest;olive}         1x, 2x, 4x, 8x, {ENDGRADIENT} {GRADIENT=black;gray} 16x{ENDGRADIENT}"
-            , "{SPEED=7}{GRADIENT=black;gray}Purchase cash multiplier: {ENDGRADIENT} {RAINBOW} COMPLETE {ENDRAINBOW} \n\n{GRADIENT=black;gray}Increase the amount of money you earn for everything; {ENDGRADIENT} \n {GRADIENT=forest;olive}         1x, 2x, 4x, 8x, 16x{ENDGRADIENT}"
+            ,"{SPEED=7}{GRADIENT=black;gray}Purchase cash multiplier:\n\nIncrease the amount of money you earn for things; {ENDGRADIENT} \n {GRADIENT=forest;olive}         1x, {ENDGRADIENT} {GRADIENT=black;gray} 2x, 4x, 8x, 16x{ENDGRADIENT}"
+            , "{SPEED=7}{GRADIENT=black;gray}Purchase cash multiplier:\n\nIncrease the amount of money you earn for things; {ENDGRADIENT} \n {GRADIENT=forest;olive}         1x, 2x, {ENDGRADIENT} {GRADIENT=black;gray} 4x, 8x, 16x{ENDGRADIENT}"
+            , "{SPEED=7}{GRADIENT=black;gray}Purchase cash multiplier:\n\nIncrease the amount of money you earn for things; {ENDGRADIENT} \n {GRADIENT=forest;olive}         1x, 2x, 4x, {ENDGRADIENT} {GRADIENT=black;gray} 8x, 16x{ENDGRADIENT}"
+            , "{SPEED=7}{GRADIENT=black;gray}Purchase cash multiplier:\n\nIncrease the amount of money you earn for things; {ENDGRADIENT} \n {GRADIENT=forest;olive}         1x, 2x, 4x, 8x, {ENDGRADIENT} {GRADIENT=black;gray} 16x{ENDGRADIENT}"
+            , "{SPEED=7}{GRADIENT=black;gray}Purchase cash multiplier: {ENDGRADIENT} {RAINBOW} COMPLETE {ENDRAINBOW} \n\n{GRADIENT=black;gray}Increase the amount of money you earn for things; {ENDGRADIENT} \n {GRADIENT=forest;olive}         1x, 2x, 4x, 8x, 16x{ENDGRADIENT}"
     )
     , ball_multipliers(5, "Buy More Balls", new Integer[]{0, 100, 500, 1000}
            , "{SPEED=7}{GRADIENT=black;gray}Purchase more balls:\n\nDrop more balls each playthrough...{ENDGRADIENT} \n    {GRADIENT=forest;olive}+5, {ENDGRADIENT} {GRADIENT=black;gray}+10, +25, +50, +100, +200{ENDGRADIENT}"
@@ -51,8 +51,9 @@ public enum UpgradeProps {
            , "{SPEED=7}{GRADIENT=black;gray}Purchase more balls: {ENDGRADIENT} {RAINBOW} COMPLETE {ENDRAINBOW} \n\n{GRADIENT=black;gray}Drop more balls each playthrough...{ENDGRADIENT} \n    {GRADIENT=forest;olive}+5, +10, +25, +50, +100, +200 {ENDGRADIENT} "
     )
     , audio_packs(2, "Buy Audio", new Integer[]{0, 100, 1000}
-                  ,"{SPEED=7}{GRADIENT=black;gray}Purchase audio:\n\nIt's like graphics, but for your ears!\nUnlock placeholder pack, then final version{ENDGRADIENT}"
-                  , "{SPEED=7}{GRADIENT=black;gray}Purchase audio:\n\nIt's like graphics, but for your ears!\nUnlock placeholder pack, then final version{ENDGRADIENT}"
+           ,"{SPEED=7}{GRADIENT=black;gray}Purchase audio:\n\nIt's like graphics, but for your ears!{ENDGRADIENT} \n\n {GRADIENT=forest;olive}    No sounds, {ENDGRADIENT} {GRADIENT=black;gray} Placeholder sounds, Final sounds{ENDGRADIENT}"
+           , "{SPEED=7}{GRADIENT=black;gray}Purchase audio:\n\nIt's like graphics, but for your ears!{ENDGRADIENT} \n\n {GRADIENT=forest;olive}    No sounds, Placeholder sounds, {ENDGRADIENT} {GRADIENT=black;gray} Final sounds{ENDGRADIENT}"
+           , "{SPEED=7}{GRADIENT=black;gray}Purchase audio: {ENDGRADIENT} {RAINBOW} COMPLETE {ENDRAINBOW} \n\n{GRADIENT=black;gray}It's like graphics, but for your ears!{ENDGRADIENT} \n\n {GRADIENT=forest;olive}    No sounds, Placeholder sounds, Final sounds{ENDGRADIENT}"
     )
     // NOTE: can't use ArtPack.foo.niceName here because enum initializer order I guess?
     , art_packs(4, "Buy Art Packs", new Integer[]{0, 100, 500, 1000, 10000}
@@ -61,9 +62,9 @@ public enum UpgradeProps {
            , "{SPEED=7}{GRADIENT=black;gray}Purchase art:\n\nIt's like audio, but for your eyes... Hire an artist\nUpgrade through four distinct art packs!{ENDGRADIENT}\n {GRADIENT=forest;olive}   Pencil sketch, Flat colors, Simple pixels, {ENDGRADIENT}{GRADIENT=black;gray} HD pixels {ENDGRADIENT} "
            , "{SPEED=7}{GRADIENT=black;gray}Purchase art: {ENDGRADIENT} {RAINBOW} COMPLETE {ENDRAINBOW} \n\n{GRADIENT=black;gray}It's like audio, but for your eyes... Hire an artist!\nUpgrade through four distinct art packs!{ENDGRADIENT}\n {GRADIENT=forest;olive}   Pencil sketch, Flat colors, Simple pixels, HD pixels {ENDGRADIENT} "
     )
-    , win_game(1, "* Win the game *", new Integer[]{0, 50000}
-            , "{SPEED=7}{GRADIENT=gold;tan}Pay to win the game!{ENDGRADIENT} \n\n{GRADIENT=black;gray}Some people say paying to win is bad...\nThis is the ultimate {ENDGRADIENT}{WAVE}{RAINBOW}BALL OF DUTY{ENDRAINBOW}{ENDWAVE} "
-            , "{SPEED=10}{RAINBOW}YOU DID IT!{ENDRAINBOW} \n\n{GRADIENT=black;gray}Some people say paying to win is bad...\nThis is the ultimate {ENDGRADIENT}{WAVE}{RAINBOW}BALL OF DUTY{ENDRAINBOW}{ENDWAVE} "
+    , win_game(1, "Win the game", new Integer[]{0, 50000}
+            , "{SPEED=7}{GRADIENT=gold;tan}Pay to win the game!{ENDGRADIENT} \n\n{GRADIENT=black;gray}Some people say paying to win is bad...\n\nbut this is the ultimate {ENDGRADIENT}{WAVE}{RAINBOW}BALL OF DUTY{ENDRAINBOW}{ENDWAVE} "
+            , "{SPEED=10}{RAINBOW}YOU DID IT!{ENDRAINBOW} \n\n{GRADIENT=black;gray}Some people say paying to win is bad...\n\nbut this is the ultimate {ENDGRADIENT}{WAVE}{RAINBOW}BALL OF DUTY{ENDRAINBOW}{ENDWAVE} "
     )
     ;
 
