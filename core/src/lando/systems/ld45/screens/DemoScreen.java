@@ -24,8 +24,10 @@ public class DemoScreen extends BaseScreen {
         ball.color.set(Color.WHITE);
         ball.initialize(Config.gameWidth / 2, Config.initialBallY, 0, -99);
 
-        upgradeButton = new Button(this, hudCamera, assets.whitePixel, Config.gameWidth - 200, 50, 180, 50);
-        upgradeButton.setText("UPGRADE");
+        float width = 400f;
+        float height = 50f;
+        upgradeButton = new Button(this, hudCamera, assets.whitePixel, hudCamera.viewportWidth - width - height, height, width, height);
+        upgradeButton.setText("Buy Upgrade Menu: 1¥");
         upgradeButton.set(this);
         upgradeButton.addClickHandler(() -> game.setScreen(new UpgradeScreen(game)) );
     }
