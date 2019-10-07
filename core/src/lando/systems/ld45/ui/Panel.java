@@ -25,7 +25,7 @@ public class Panel {
     protected NinePatch inset;
     protected BaseScreen screen;
 
-    protected final float insetMargin = 20f;
+    protected final float INSET_MARGIN = 20f;
 
     public boolean horizontal = true;
 
@@ -52,9 +52,9 @@ public class Panel {
     public void render(SpriteBatch batch) {
         if (!visible) return;
         panel.draw(batch, bounds.x, bounds.y, bounds.width, bounds.height);
-        inset.draw(batch, bounds.x + insetMargin, bounds.y + insetMargin,
-                   bounds.width - 2f * insetMargin,
-                   bounds.height - 2f * insetMargin);
+        inset.draw(batch, bounds.x + INSET_MARGIN, bounds.y + INSET_MARGIN,
+                   bounds.width - 2f * INSET_MARGIN,
+                   bounds.height - 2f * INSET_MARGIN);
     }
 
     public void show(OrthographicCamera camera) {
