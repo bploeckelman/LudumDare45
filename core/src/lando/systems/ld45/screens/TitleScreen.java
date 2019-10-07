@@ -36,8 +36,8 @@ public class TitleScreen extends BaseScreen {
     public void render(SpriteBatch batch) {
         batch.begin();
         batch.setProjectionMatrix(worldCamera.combined);
-        batch.setColor(Color.BLACK);
-        batch.draw(assets.whitePixel, 0,0, worldCamera.viewportWidth, worldCamera.viewportHeight);
+        batch.setColor(Color.WHITE);
+        batch.draw(assets.title, 0,0, worldCamera.viewportWidth, worldCamera.viewportHeight);
         batch.setColor(Color.WHITE);
 
         label.render(batch);

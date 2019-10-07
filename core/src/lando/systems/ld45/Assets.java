@@ -17,6 +17,7 @@ import lando.systems.ld45.utils.UIAssetType;
 
 public class Assets {
 
+    private final AssetDescriptor<Texture> titleTextureAsset = new AssetDescriptor<>("images/title-screen.png", Texture.class);
     private final AssetDescriptor<Texture> pixelTextureAsset = new AssetDescriptor<>("images/pixel.png", Texture.class);
     private final AssetDescriptor<Texture> gridpaperTextureAsset = new AssetDescriptor<>("images/gridpaper.png", Texture.class);
     private final AssetDescriptor<Texture> pathGradientTextureAsset = new AssetDescriptor<>("images/path-gradient.png", Texture.class);
@@ -52,6 +53,7 @@ public class Assets {
     public AssetManager mgr;
     public TextureAtlas atlas;
 
+    public Texture title;
     public Texture debugTexture;
     public Texture pixel;
     public Animation<Texture> lineAAnimation;
@@ -117,6 +119,7 @@ public class Assets {
 
         mgr = new AssetManager();
         mgr.load(atlasAsset);
+        mgr.load(titleTextureAsset);
         mgr.load(pixelTextureAsset);
         mgr.load(pathGradientTextureAsset);
         mgr.load(crosshatchGradientTextureAsset);
@@ -181,6 +184,7 @@ public class Assets {
         ballHitsArenaMouth = mgr.get("audio/ball-hits-arena_mouth.wav", Sound.class);
         clickMouth = mgr.get("audio/click_mouth.mp3", Sound.class);
 
+        title = mgr.get(titleTextureAsset);
         pixel = mgr.get(pixelTextureAsset);
         gridPaper = mgr.get(gridpaperTextureAsset);
         gridPaper.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
