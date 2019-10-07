@@ -25,7 +25,7 @@ public class DemoScreen extends BaseScreen {
 
         float width = 500f;
         float height = 50f;
-        upgradeButton = new Button(this, hudCamera,hudCamera.viewportWidth / 2f - width / 2f, height, width, height);
+        upgradeButton = new Button(this, hudCamera,hudCamera.viewportWidth / 2f - width / 2f, hudCamera.viewportHeight / 2f - height / 2f, width, height);
         upgradeButton.setText("Buy Upgrade Menu: $1");
         upgradeButton.set(this);
         upgradeButton.addClickHandler(() -> game.setScreen(new UpgradeScreen(game), game.assets.pizelizeShader, 1f) );
