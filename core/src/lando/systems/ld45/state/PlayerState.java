@@ -18,8 +18,8 @@ public class PlayerState {
     public long totalTime = 0;
 
     public int pegs = 0;
-    public int leftSpinners = 10;
-    public int rightSpinners = 10;
+    public int leftSpinners = 0;
+    public int rightSpinners = 0;
     public int bumpers = 0;
     public int balls = 5;
     public ArtPack artPack;

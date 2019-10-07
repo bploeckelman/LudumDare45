@@ -131,7 +131,6 @@ public class UpgradePanel extends Panel {
         // TODO: determine what to disable based on already purchased stuff and current cash money
         // TODO: if we've already purchased everything for one upgrade type, set to 'sold out' status
         buyCashMultiplierButton.isDisabled       = true;
-        buyPegGizmosButton.isDisabled            = true;
         buyAudioButton.isDisabled                = true;
         buyLeftSpinnerGizmosButton.isDisabled    = true;
         buyRightSpinnerGizmosButton.isDisabled   = true;
@@ -222,19 +221,42 @@ public class UpgradePanel extends Panel {
         buyPegGizmosButton.addClickHandler(() -> {
             UpgradeButton button = buyPegGizmosButton;
             Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
+            if (screen.player.pegs == 0) {
+                screen.player.pegs = 1;
+                button.props.nextDescription();
+                // TODO: subtract cost
+            } else if (screen.player.pegs == 1) {
+                screen.player.pegs = 4;
+                button.props.nextDescription();
+                // TODO: subtract cost
+            } else if (screen.player.pegs == 4) {
+                screen.player.pegs = 8;
+                button.props.nextDescription();
+                // TODO: subtract cost
+            } else if (screen.player.pegs == 8) {
+                screen.player.pegs = 10;
+                button.props.nextDescription();
+                // TODO: subtract cost
+                // TODO: disable as 'sold out'
+                button.isDisabled = true;
+            }
         });
+
         buyBumperGizmosButton.addClickHandler(() -> {
             UpgradeButton button = buyBumperGizmosButton;
             Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
         });
+
         buyLeftSpinnerGizmosButton.addClickHandler(() -> {
             UpgradeButton button = buyLeftSpinnerGizmosButton;
             Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
         });
+
         buyRightSpinnerGizmosButton.addClickHandler(() -> {
             UpgradeButton button = buyRightSpinnerGizmosButton;
             Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
         });
+
         buyCashMultiplierButton.addClickHandler(() -> {
             UpgradeButton button = buyCashMultiplierButton;
             Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
