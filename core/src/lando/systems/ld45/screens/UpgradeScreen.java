@@ -1,6 +1,5 @@
 package lando.systems.ld45.screens;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import lando.systems.ld45.Game;
 import lando.systems.ld45.ui.UpgradePanel;
@@ -31,7 +30,6 @@ public class UpgradeScreen extends  BaseScreen {
         batch.begin();
         batch.setProjectionMatrix(worldCamera.combined);
         {
-            batch.setColor(Color.WHITE);
             upgradePanel.render(batch);
         }
         batch.end();

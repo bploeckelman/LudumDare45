@@ -41,7 +41,7 @@ public class DemoScreen extends BaseScreen {
             if (ball.isOffscreen()) {
                 long points = 1;
                 game.player.addScore(points);
-                particle.addPointsParticles(points, ball.bounds.x, 10f);
+                particle.addPointsParticles(points, ball.bounds.x, 10f, 75f);
                 ball = null;
                 showUpgrade = true;
             }
