@@ -25,7 +25,6 @@ public class Assets {
     private final AssetDescriptor<Texture> crosshatchGradientTextureAsset = new AssetDescriptor<>("images/crosshatch-gradient.png", Texture.class);
     private final AssetDescriptor<Texture> laserTextureAsset = new AssetDescriptor<>("images/laser.png", Texture.class);
     private final AssetDescriptor<TextureAtlas> atlasAsset = new AssetDescriptor<>("images/sprites.atlas", TextureAtlas.class);
-    private final AssetDescriptor<BitmapFont> pixelFont16Asset = new AssetDescriptor<>("fonts/chevyray-column-16.fnt", BitmapFont.class);
     private final AssetDescriptor<BitmapFont> fontArtPackAssetA = new AssetDescriptor<>("fonts/blahblahblah.fnt", BitmapFont.class);
     private final AssetDescriptor<BitmapFont> fontArtPackAssetB = new AssetDescriptor<>("fonts/chevyray-bubble-time.fnt", BitmapFont.class);
     private final AssetDescriptor<BitmapFont> fontArtPackAssetC = new AssetDescriptor<>("fonts/dignity-of-labor.fnt", BitmapFont.class);
@@ -35,7 +34,6 @@ public class Assets {
 
     public SpriteBatch batch;
     public GlyphLayout layout;
-    public BitmapFont font;
     public AssetManager mgr;
     public TextureAtlas atlas;
 
@@ -82,7 +80,6 @@ public class Assets {
         mgr.load(pathGradientTextureAsset);
         mgr.load(crosshatchGradientTextureAsset);
         mgr.load(laserTextureAsset);
-        mgr.load(pixelFont16Asset);
         mgr.load(fontArtPackAssetA);
         mgr.load(fontArtPackAssetB);
         mgr.load(fontArtPackAssetC);
@@ -112,8 +109,6 @@ public class Assets {
         crossHatchGradientTexture = mgr.get(crosshatchGradientTextureAsset);
         ballTrailTexture = mgr.get(laserTextureAsset);
         debugTexture = mgr.get("images/badlogic.jpg", Texture.class);
-
-        font = mgr.get(pixelFont16Asset);
 
         atlas = mgr.get(atlasAsset);
         whitePixel = atlas.findRegion("white-pixel");

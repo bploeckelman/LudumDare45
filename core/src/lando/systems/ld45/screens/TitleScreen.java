@@ -14,7 +14,7 @@ public class TitleScreen extends BaseScreen {
     public TitleScreen(Game game) {
         super(game);
 
-        this.label = new TypingLabel(assets.font,
+        this.label = new TypingLabel(Game.getCurrentFont(),
                 "{JUMP=.2}{WAVE=0.9;1.2;1.75}{GRADIENT=red;blue}{RAINBOW}CLICK TO START{ENDRAINBOW}{ENDGRADIENT}{ENDWAVE}{ENDJUMP}",
                 0f, 0f);
         this.label.setWidth(Config.gameWidth);

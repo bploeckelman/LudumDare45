@@ -31,12 +31,12 @@ public class WinnerScreen extends BaseScreen {
 
     public WinnerScreen(Game game) {
         super(game);
-        titleLabel = new TypingLabel(assets.font, title, 0f, 0f);
+        titleLabel = new TypingLabel(Game.getCurrentFont(), title, 0f, 0f);
         titleLabel.setWidth(Config.gameWidth);
         titleLabel.setFontScale(2f);
         titleLabel.setY(Config.gameHeight / 2f + 280f);
 
-        themeLabel = new TypingLabel(assets.font, theme, 0f, 0f);
+        themeLabel = new TypingLabel(Game.getCurrentFont(), theme, 0f, 0f);
         themeLabel.setWidth(Config.gameWidth);
         themeLabel.setFontScale(1.5f);
         themeLabel.setY(Config.gameHeight / 2f + 230f);
@@ -67,7 +67,7 @@ public class WinnerScreen extends BaseScreen {
     }
 
     private void renderTextWithBorder(String string, float scale, float width, float x, float y) {
-        BitmapFont font = assets.font;
+        BitmapFont font = Game.getCurrentFont();
         GlyphLayout layout = assets.layout;
         font.getData().setScale(scale);
 

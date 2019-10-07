@@ -13,7 +13,7 @@ public class UpgradePanel extends Panel {
         super(screen, uiAssetTypePanel, uiAssetTypePanelInset);
         horizontal = false;
 
-        this.startGameButton = new Button(screen, screen.worldCamera, screen.assets.whitePixel, 0f, 0f, 200f, 50f);
+        this.startGameButton = new Button(screen, screen.worldCamera, screen.assets.whitePixel, 0f, 0f, 300f, 50f);
         this.startGameButton.setText("Start Game");
         this.startGameButton.addClickHandler(() -> {
             if (isVisible() && !isAnimating()) {

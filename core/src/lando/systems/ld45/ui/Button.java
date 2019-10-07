@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import lando.systems.ld45.Config;
+import lando.systems.ld45.Game;
 import lando.systems.ld45.screens.BaseScreen;
 import lando.systems.ld45.ui.typinglabel.TypingLabel;
 
@@ -66,7 +67,7 @@ public class Button extends UIElement {
     }
 
     protected TypingLabel createLabel() {
-        TypingLabel label = new TypingLabel(screen.assets.font, text,0f, 0f);
+        TypingLabel label = new TypingLabel(Game.getCurrentFont(), text,0f, 0f);
 
         label.setWidth(bounds.width);
         label.setFontScale(2f);

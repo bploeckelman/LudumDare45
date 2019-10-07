@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.StringBuilder;
 import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import lando.systems.ld45.Assets;
+import lando.systems.ld45.Game;
 
 public class TypingLabel {
     static private final Color tempColor = new Color();
@@ -63,7 +64,7 @@ public class TypingLabel {
     float height;
 
     public TypingLabel(Assets assets, CharSequence text, float x, float y) {
-        this(assets.font, text, x, y);
+        this(Game.getCurrentFont(), text, x, y);
     }
 
     public TypingLabel(BitmapFont font, CharSequence text, float x, float y) {
