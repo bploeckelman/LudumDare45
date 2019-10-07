@@ -273,32 +273,6 @@ public class GameScreen extends BaseScreen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
-            game.player.artPack = game.player.artPack.getNext();
-        }
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
-            for (int i  = 0; i < 20; i++) {
-                Ball ball = new Ball(this, 5f);
-                ball.initialize(worldCamera.viewportWidth / 2f + MathUtils.random(-10f, 10f),
-                                worldCamera.viewportHeight - 100f + MathUtils.random(-10f, 10f),
-                                MathUtils.random(-100f, 100f), MathUtils.random(-5f, -50f));
-                balls.add(ball);
-            }
-        }
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-            editMode = !editMode;
-        }
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.C)) {
-            balls.clear();
-        }
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
-            game.setScreen(new WinnerScreen(game));
-        }
     }
 
     public void addShake(float amount){

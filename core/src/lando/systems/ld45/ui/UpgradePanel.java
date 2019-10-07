@@ -79,6 +79,7 @@ public class UpgradePanel extends Panel {
 
         this.startPlayingButton = new Button(screen, screen.worldCamera, 0f, 0f, 300f, 50f);
         this.startPlayingButton.setText("Start Playing");
+        this.startPlayingButton.setHighlight(true);
         this.startPlayingButton.addClickHandler(() -> {
             if (isVisible() && !isAnimating()) {
                 hide(screen.worldCamera, 0.5f, (params) -> screen.game.setScreen(new GameScreen(screen.game, false)));
