@@ -1,7 +1,5 @@
 package lando.systems.ld45.objects;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -40,24 +38,25 @@ public class Hopper {
         inputDelay = .2f;
     }
 
+    public void dropBalls() {
+        droppingBalls = true;
+    }
+
     public void update(float dt) {
         if (availableBalls == 0) return;
         inputDelay -= dt;
 
         dropTime -= dt;
-        if (inputDelay <= 0 && Gdx.input.justTouched()) {
-            droppingBalls = true;
-        }
 
         if (droppingBalls){
-            dropBall(dt);
+            timeDrop();
         }
         move(dt);
 
     }
 
     Vector2 tempVector2 = new Vector2();
-    public void dropBall(float dt) {
+    public void timeDrop() {
         if (dropTime < 0) {
             dropTime = 0.5f;
             int ballsToDrop = (screen.game.player.balls / 5) + 1;

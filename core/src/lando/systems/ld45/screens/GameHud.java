@@ -17,6 +17,7 @@ public class GameHud {
     private HudBox timeBox;
 
     private Button timeButton;
+    private Button ballDropButton;
 
     // non edit
     private Button playAgainButton;
@@ -39,12 +40,17 @@ public class GameHud {
 
         float viewWidth = screen.hudCamera.viewportWidth;
 
-        scoreBox = new HudBox(10, 10, 160, 40);
+        scoreBox = new HudBox(10, 10, 110, 40);
         timeBox = new HudBox(viewWidth - 120, 10, 110, 40);
         timeButton = new Button(screen, screen.hudCamera,viewWidth - 230, 10, 100, 40);
         timeButton.addClickHandler(() -> setSpeed());
         screen.addUIElement(timeButton);
         resetSpeed();
+
+        ballDropButton = new Button(screen, screen.hudCamera, 130, 10, 100, 40);
+        ballDropButton.setText("DROP");
+        ballDropButton.addClickHandler(() -> dropBalls());
+        screen.addUIElement(ballDropButton);
 
         playAgainButton = new Button(screen, screen.hudCamera, 250, 210, 300f, 50f);
         playAgainButton.setText("PLAY AGAIN");
@@ -101,8 +107,14 @@ public class GameHud {
         screen.game.setSpeedModifier(speedModifier);
     }
 
+    private void dropBalls() {
+        ballDropButton.isDisabled = true;
+        screen.hopper.dropBalls();
+    }
+
     private void restart() {
         time = 0;
+        ballDropButton.isDisabled = false;
         screen.startGame();
     }
 
@@ -118,7 +130,7 @@ public class GameHud {
             resetSpeed();
         }
 
-        timeButton.isVisible = !(screen.gameOver || screen.editMode);
+        timeButton.isVisible = ballDropButton.isVisible = !(screen.gameOver || screen.editMode);
         editButton.isVisible = upgradeButton.isVisible = playAgainButton.isVisible = screen.gameOver && !screen.editMode;
         playButton.isVisible = clearButton.isVisible = screen.gameOver && screen.editMode;
         toyBoxButton.isVisible = playButton.isVisible && !(screen.toyChestPanel.isAnimating() || screen.toyChestPanel.isVisible());
