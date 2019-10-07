@@ -17,7 +17,7 @@ import lando.systems.ld45.utils.Utils;
 
 public class Ball {
 
-    public static float MAXSPEED = 500f;
+    public static float MAXSPEED = 800f;
 
     public Circle bounds = new Circle();
     public Vector2 vel = new Vector2();
@@ -74,7 +74,7 @@ public class Ball {
         lastExposion = Math.max(0, lastExposion-dt);
         accum += dt;
         vel.y -= Config.gravity * dt;
-        vel.scl(.999f);
+        vel.scl((float)Math.pow(.9f, dt));
 
         if (vel.len() > MAXSPEED){
             vel.nor().scl(MAXSPEED);

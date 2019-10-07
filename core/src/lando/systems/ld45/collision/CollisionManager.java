@@ -193,7 +193,7 @@ public class CollisionManager {
                                 b.vel.scl(.8f);
                                 normal.set(frameEndPos).sub(tempStart2).nor();
                                 if (obj instanceof Bumper) {
-                                    b.vel.add(normal.x * 4000 * dt, normal.y * 4000 * dt);
+                                    b.vel.add(normal.x * 100, normal.y * 100);
 
                                     long points = Bumper.SCORE_VALUE;
                                     screen.player.addScore(points);
@@ -202,7 +202,7 @@ public class CollisionManager {
                                 if (obj instanceof Spinner){
                                     Spinner spin = (Spinner) obj;
                                     normal.rotate90(spin.left ? 1 : -1);
-                                    b.vel.add(normal.x * 10000 * dt, normal.y * 10000 * dt);
+                                    b.vel.add(normal.x * 400, normal.y * 400);
 
                                     long points = Spinner.SCORE_VALUE;
                                     screen.player.addScore(points);
@@ -283,7 +283,7 @@ public class CollisionManager {
                             } else {
                                 normal.set(segment.end).sub(segment.start).nor().rotate90(1);
                                 b.vel.set(Utils.reflectVector(incomingVector.set(b.vel), normal));
-                                b.vel.add(-normal.x * 400 * dt, -normal.y * 400 * dt);
+                                b.vel.add(-normal.x * 20, -normal.y * 20);
                             }
 
 
