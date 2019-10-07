@@ -56,15 +56,22 @@ public class Hopper {
 
     }
 
+    Vector2 tempVector2 = new Vector2();
     public void dropBall(float dt) {
         if (dropTime < 0) {
-            dropTime = 0.2f;
+            dropTime = 0.5f;
+            int ballsToDrop = (screen.game.player.balls / 5) + 1;
+            ballsToDrop = Math.min(Math.min(ballsToDrop, availableBalls), 10);
+            float angle = 170f / (ballsToDrop+1);
+            for(int i = 0; i < ballsToDrop; i++) {
+                float dir = angle*(i+1)-85 - 90;
+                Ball ball = new Ball(screen, 5);
+                ball.initialize(tempVector2.set(position).add(MathUtils.cosDeg(dir) * 40 * 2f, MathUtils.sinDeg(dir) * 40 / 2f),
+                                new Vector2(velocity.x / 2 + MathUtils.cosDeg(dir)*10, MathUtils.sinDeg(dir) * 10));
+                screen.balls.add(ball);
+            }
 
-            Ball ball = new Ball(screen, 5);
-            ball.initialize(position, new Vector2(velocity.x / 2, -99));
-            screen.balls.add(ball);
-
-            availableBalls--;
+            availableBalls -= ballsToDrop;
         }
     }
 
