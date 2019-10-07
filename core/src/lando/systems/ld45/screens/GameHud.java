@@ -41,7 +41,7 @@ public class GameHud {
 
         scoreBox = new HudBox(10, 10, 160, 40);
         timeBox = new HudBox(viewWidth - 120, 10, 110, 40);
-        timeButton = new Button(screen, screen.hudCamera,viewWidth - 215, 10, 80, 40);
+        timeButton = new Button(screen, screen.hudCamera,viewWidth - 230, 10, 100, 40);
         timeButton.addClickHandler(() -> setSpeed());
         screen.addUIElement(timeButton);
         resetSpeed();

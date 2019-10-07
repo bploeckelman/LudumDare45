@@ -88,9 +88,11 @@ public class HudBox  {
         }
 
         if (text != null) {
+            // this is making a padding on the right for right aligned - if left aligned, will need to move x position
+            float offset = (align != Align.center) ? 10 : 0;
             font.setColor(textColor);
             GlyphLayout layout = Game.getAssets().layout;
-            layout.setText(font, text, Color.BLACK, bounds.width - 10f, align, true);
+            layout.setText(font, text, Color.BLACK, bounds.width - offset, align, true);
             font.draw(batch, layout, bounds.x, bounds.y + layout.height / 2f + bounds.height / 2f);
             font.setColor(Color.WHITE);
         }
