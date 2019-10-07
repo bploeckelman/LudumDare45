@@ -30,6 +30,8 @@ public class Ball {
     public BallPath path;
     private float accum;
 
+    public float lastExposion =0;
+
     public Ball(BaseScreen screen, float radius) {
         this(screen, radius, Utils.getRandomHSVColor());
     }
@@ -69,6 +71,7 @@ public class Ball {
     }
 
     public void update(float dt) {
+        lastExposion = Math.max(0, lastExposion-dt);
         accum += dt;
         vel.y -= Config.gravity * dt;
         vel.scl(.999f);
@@ -108,4 +111,11 @@ public class Ball {
         return bounds.y < -bounds.radius * 10;
     }
 
+    public void causeExplosion(int size){
+        if (lastExposion <= 0){
+            GameScreen gameScreen = (GameScreen)screen;
+            gameScreen.background.addCollision(bounds.x, bounds.y, size, .9f, path.color);
+            lastExposion = .5f;
+        }
+    }
 }

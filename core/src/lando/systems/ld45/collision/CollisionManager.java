@@ -132,8 +132,8 @@ public class CollisionManager {
                             otherBall.bounds.x = tempStart2.x;
                             otherBall.bounds.y = tempStart2.y;
 
-                            screen.background.addCollision(tempEnd1.x, tempEnd1.y, 3, 1f, b.path.color);
-                            screen.background.addCollision(tempStart2.x, tempStart2.y, 3, 1f, otherBall.path.color);
+                            b.causeExplosion(5);
+                            otherBall.causeExplosion(5);
                             screen.addShake(.1f);
 
                             float mass1 = b.bounds.radius;
@@ -179,7 +179,7 @@ public class CollisionManager {
                                 b.bounds.x = frameEndPos.x;
                                 b.bounds.y = frameEndPos.y;
 
-                                screen.background.addCollision(frameEndPos.x, frameEndPos.y, 5, 2, b.path.color);
+                                b.causeExplosion(5);
                                 screen.addShake(.2f);
 
                                 float mass1 = b.bounds.radius;
@@ -231,10 +231,11 @@ public class CollisionManager {
                                     float x = frameEndPos.x - backupDist * (normal.x);
                                     float y = frameEndPos.y - backupDist * (normal.y);
                                     frameEndPos.set(x, y);
-                                    screen.background.addCollision(frameEndPos.x, frameEndPos.y, 4, 2, b.path.color);
 
                                     b.bounds.x = frameEndPos.x;
                                     b.bounds.y = frameEndPos.y;
+                                    b.causeExplosion(5);
+
 
                                     b.vel.scl(.8f);
                                     if (nearest2.epsilonEquals(segment.start) || nearest2.epsilonEquals(segment.end)){
@@ -269,7 +270,10 @@ public class CollisionManager {
                             float y = frameEndPos.y - backupDist * (normal.y);
                             frameEndPos.set(x, y);
 
-                            screen.background.addCollision(frameEndPos.x, frameEndPos.y, 4, 2, b.path.color);
+                            b.bounds.x = frameEndPos.x;
+                            b.bounds.y = frameEndPos.y;
+
+                            b.causeExplosion(5);
 
                             screen.addShake(.1f);
                             b.vel.scl(.8f);

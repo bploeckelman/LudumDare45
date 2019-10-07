@@ -10,11 +10,12 @@ import lando.systems.ld45.screens.GameScreen;
 
 public class HexBackground extends Background {
 
-    float[] explosionArray = new float[40 * 4];
-    float[] explosionOwnerArray = new float[40 * 3];
+
+    float[] explosionArray = new float[explosionSize * 4];
+    float[] explosionOwnerArray = new float[explosionSize * 3];
 
 
-    Color gridColor = new Color(.5f, .5f, .5f, .3f);
+    Color gridColor = new Color(.1f, .1f, .1f, .3f);
 
     public HexBackground(GameScreen gameScreen){
         super(gameScreen);
@@ -24,7 +25,7 @@ public class HexBackground extends Background {
     @Override
     public void render(SpriteBatch batch) {
         ShaderProgram shader = gameScreen.assets.hexGridShader;
-        for (int i = 0; i < 40; i++){
+        for (int i = 0; i < explosionSize; i++){
             int index = i * 4;
             int ownerIndex = i * 3;
 

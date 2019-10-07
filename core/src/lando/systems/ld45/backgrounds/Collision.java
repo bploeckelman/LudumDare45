@@ -12,7 +12,7 @@ public class Collision {
     public boolean finished;
 
     public float explosionSize;
-    Interpolation interpolation = Interpolation.exp5Out;
+    Interpolation interpolation = Interpolation.pow2Out;
     float ttl;
     public float maxTTL;
     public Color color;

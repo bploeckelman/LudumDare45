@@ -7,6 +7,10 @@ import lando.systems.ld45.screens.GameScreen;
 
 public class Background {
 
+
+    // IF YOU CHANGE THIS YOU MUCH CHANGE IN SHADER TO
+    protected int explosionSize = 200;
+
     GameScreen gameScreen;
     Array<Collision> collisions;
 
@@ -17,7 +21,7 @@ public class Background {
     }
 
     public void addCollision(float x, float y, float size, float ttl, Color color) {
-        if (collisions.size < 40) {
+        if (collisions.size < explosionSize) {
             collisions.add(new Collision(x, y, size, ttl, color));
         }
     }

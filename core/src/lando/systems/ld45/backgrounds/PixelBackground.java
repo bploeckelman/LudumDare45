@@ -15,8 +15,8 @@ public class PixelBackground extends Background {
 
     @Override
     public void addCollision(float x, float y, float size, float ttl, Color color) {
-        if (collisions.size < 40) {
-            collisions.add(new Collision(x, y, size, ttl/3f, color));
+        if (collisions.size < explosionSize) {
+            collisions.add(new Collision(x, y, size, ttl, color));
         }
     }
 

@@ -189,9 +189,9 @@ public class BallPath {
             vertices[verticesIndex++] = p1.y + perp.y;
             vertices[verticesIndex++] = interp1;
             vertices[verticesIndex++] = 1f;
-            vertices[verticesIndex++] = color.r;
-            vertices[verticesIndex++] = color.g;
-            vertices[verticesIndex++] = color.b;
+            vertices[verticesIndex++] = color.r * .5f;
+            vertices[verticesIndex++] = color.g * .5f;
+            vertices[verticesIndex++] = color.b * .5f;
             vertices[verticesIndex++] = alpha;
 
             // vertex 2
@@ -199,9 +199,9 @@ public class BallPath {
             vertices[verticesIndex++] = p1.y - perp.y;
             vertices[verticesIndex++] = interp1;
             vertices[verticesIndex++] = 0f;
-            vertices[verticesIndex++] = color.r;
-            vertices[verticesIndex++] = color.g;
-            vertices[verticesIndex++] = color.b;
+            vertices[verticesIndex++] = color.r * .5f;
+            vertices[verticesIndex++] = color.g * .5f;
+            vertices[verticesIndex++] = color.b * .5f;
             vertices[verticesIndex++] = alpha;
 
             // NOTE: these are duplicated (which was needed when it was a closed loop)

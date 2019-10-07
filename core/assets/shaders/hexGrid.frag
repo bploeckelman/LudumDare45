@@ -7,8 +7,8 @@ uniform vec2 u_screenResolution;
 uniform vec4 u_lineColor;
 uniform vec4 u_leftColor;
 uniform vec4 u_rightColor;
-uniform vec4 explosions[40];
-uniform vec3 explostionOwners[40];
+uniform vec4 explosions[200];
+uniform vec3 explostionOwners[200];
 uniform float u_hexScale;
 
 
