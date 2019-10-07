@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Align;
 import lando.systems.ld45.screens.BaseScreen;
 import lando.systems.ld45.screens.GameScreen;
+import lando.systems.ld45.screens.WinnerScreen;
 import lando.systems.ld45.ui.typinglabel.TypingLabel;
 import lando.systems.ld45.utils.ArtPack;
 import lando.systems.ld45.utils.UIAssetType;
@@ -22,8 +23,6 @@ public class UpgradePanel extends Panel {
         + "{GRADIENT=goldenrod;dark_gray}    Click to upgrade (if you can afford it)!{ENDGRADIENT} \n"
         + "{GRADIENT=forest;olive}    Press 'Start Game' to go back to the game.{ENDGRADIENT} ";
 
-    private Button startGameButton;
-
     private Rectangle descriptionBounds;
     private Rectangle buttonGridBounds;
     private HudBox descriptionBox;
@@ -38,6 +37,10 @@ public class UpgradePanel extends Panel {
     private UpgradeButton buyAudioButton;
     private UpgradeButton buyArtPackButton;
 
+    private Button startPlayingButton;
+    private Button startEditingButton;
+    private UpgradeButton buyWinGameUpgradeButton;
+
     private Vector3 mousePos;
     private UpgradeButton hoveredButton;
     private String descriptionText;
@@ -51,14 +54,6 @@ public class UpgradePanel extends Panel {
         this.buttonGridBounds = new Rectangle();
         this.descriptionBox = new HudBox(0f, 0f, 0f, 0f);
 
-        this.startGameButton = new Button(screen, screen.worldCamera, 0f, 0f, 300f, 50f);
-        this.startGameButton.setText("Start Game");
-        this.startGameButton.addClickHandler(() -> {
-            if (isVisible() && !isAnimating()) {
-                hide(screen.worldCamera, 0.5f, (params) -> screen.game.setScreen(new GameScreen(screen.game, false)));
-            }
-        });
-
         this.buyEffectsButton            = new UpgradeButton(this, UpgradeProps.special_effects);
         this.buyPegGizmosButton          = new UpgradeButton(this, UpgradeProps.pegs);
         this.buyBumperGizmosButton       = new UpgradeButton(this, UpgradeProps.bumpers);
@@ -68,6 +63,24 @@ public class UpgradePanel extends Panel {
         this.buyBallMultiplierButton     = new UpgradeButton(this, UpgradeProps.ball_multipliers);
         this.buyAudioButton              = new UpgradeButton(this, UpgradeProps.audio_packs);
         this.buyArtPackButton            = new UpgradeButton(this, UpgradeProps.art_packs);
+
+        this.startPlayingButton = new Button(screen, screen.worldCamera, 0f, 0f, 300f, 50f);
+        this.startPlayingButton.setText("Start Playing");
+        this.startPlayingButton.addClickHandler(() -> {
+            if (isVisible() && !isAnimating()) {
+                hide(screen.worldCamera, 0.5f, (params) -> screen.game.setScreen(new GameScreen(screen.game, false)));
+            }
+        });
+
+        this.startEditingButton = new Button(screen, screen.worldCamera, 0f, 0f, 300f, 50f);
+        this.startEditingButton.setText("Start Editing");
+        this.startEditingButton.addClickHandler(() -> {
+            if (isVisible() && !isAnimating()) {
+                hide(screen.worldCamera, 0.5f, (params) -> screen.game.setScreen(new GameScreen(screen.game, true)));
+            }
+        });
+
+        this.buyWinGameUpgradeButton = new UpgradeButton(this, UpgradeProps.win_game);
 
         this.mousePos = new Vector3();
         this.hoveredButton = null;
@@ -102,7 +115,7 @@ public class UpgradePanel extends Panel {
                 (2f / 3f) * contentHeight);
 
         float rowWidth = buttonGridBounds.width;
-        float rowHeight = buttonGridBounds.height / 3f;
+        float rowHeight = buttonGridBounds.height / 4f;
         float buttonWidth = rowWidth / 3f;
         float x = buttonGridBounds.x;
         float y = buttonGridBounds.y + buttonGridBounds.height - rowHeight;
@@ -119,18 +132,26 @@ public class UpgradePanel extends Panel {
         buyPegGizmosButton            .setHudBox(x, y, buttonWidth, rowHeight); x += buttonWidth;
         buyAudioButton                .setHudBox(x, y, buttonWidth, rowHeight); x += buttonWidth;
 
-        // third (bottom) row
+        // third (bottom-ish) row
         y -= rowHeight;
         x = buttonGridBounds.x;
         buyLeftSpinnerGizmosButton    .setHudBox(x, y, buttonWidth, rowHeight); x += buttonWidth;
         buyBumperGizmosButton         .setHudBox(x, y, buttonWidth, rowHeight); x += buttonWidth;
         buyRightSpinnerGizmosButton   .setHudBox(x, y, buttonWidth, rowHeight); x += buttonWidth;
 
+        // fourth (bottom) row
+        y -= rowHeight;
+        x = buttonGridBounds.x;
+        buyWinGameUpgradeButton       .setHudBox(x, y, buttonWidth, rowHeight); x += buttonWidth;
+        startEditingButton            .setHudBox(x, y, buttonWidth, rowHeight); x += buttonWidth;
+        startPlayingButton            .setHudBox(x, y, buttonWidth, rowHeight); x += buttonWidth;
+
         descriptionBox               .update(dt);
 
         // TODO: determine what to disable based on already purchased stuff and current cash money
         // TODO: if we've already purchased everything for one upgrade type, set to 'sold out' status
         buyAudioButton.isDisabled                = true;
+        buyWinGameUpgradeButton.isDisabled       = true;
 
         buyEffectsButton             .update(dt);
         buyCashMultiplierButton      .update(dt);
@@ -141,6 +162,10 @@ public class UpgradePanel extends Panel {
         buyLeftSpinnerGizmosButton   .update(dt);
         buyBumperGizmosButton        .update(dt);
         buyRightSpinnerGizmosButton  .update(dt);
+
+        buyWinGameUpgradeButton      .update(dt);
+        startEditingButton           .update(dt);
+        startPlayingButton           .update(dt);
 
         // Figure out which button is hovered (if any)
         float mouseX = Gdx.input.getX();
@@ -156,6 +181,7 @@ public class UpgradePanel extends Panel {
         else if (buyLeftSpinnerGizmosButton  .collisionBounds.contains(mousePos.x, mousePos.y)) hoveredButton = buyLeftSpinnerGizmosButton;
         else if (buyBumperGizmosButton       .collisionBounds.contains(mousePos.x, mousePos.y)) hoveredButton = buyBumperGizmosButton;
         else if (buyRightSpinnerGizmosButton .collisionBounds.contains(mousePos.x, mousePos.y)) hoveredButton = buyRightSpinnerGizmosButton;
+        else if (buyWinGameUpgradeButton     .collisionBounds.contains(mousePos.x, mousePos.y)) hoveredButton = buyWinGameUpgradeButton;
 
         descriptionLabel.setX(descriptionBounds.x + INSET_MARGIN);
         descriptionLabel.setY(descriptionBounds.y + descriptionBounds.height - INSET_MARGIN);
@@ -167,9 +193,9 @@ public class UpgradePanel extends Panel {
         }
         descriptionLabel.update(dt);
 
-        startGameButton.setHudBox(bounds.x + bounds.width / 2f - startGameButton.bounds.width / 2f,
-                                  bounds.y + 10f, startGameButton.bounds.width, startGameButton.bounds.height);
-        startGameButton.update(dt);
+//        startPlayingButton.setHudBox(bounds.x + bounds.width / 2f - startPlayingButton.bounds.width / 2f,
+//                                     bounds.y + 10f, startPlayingButton.bounds.width, startPlayingButton.bounds.height);
+//        startPlayingButton.update(dt);
     }
 
     @Override
@@ -189,7 +215,9 @@ public class UpgradePanel extends Panel {
         buyBumperGizmosButton        .render(batch);
         buyRightSpinnerGizmosButton  .render(batch);
 
-        startGameButton.render(batch);
+       buyWinGameUpgradeButton.render(batch);
+       startEditingButton.render(batch);
+       startPlayingButton.render(batch);
     }
 
     private void initializeButtons() {
@@ -410,6 +438,12 @@ public class UpgradePanel extends Panel {
                 // TODO: subtract cost
                 button.isDisabled = true;
             }
+        });
+
+        buyWinGameUpgradeButton.addClickHandler(() -> {
+            UpgradeButton button = buyWinGameUpgradeButton;
+            button.addClickParticles();
+            screen.game.setScreen(new WinnerScreen(screen.game));
         });
     }
 
