@@ -214,6 +214,7 @@ public class UpgradePanel extends Panel {
                 button.props.nextDescription();
                 // TODO: subtract cost
                 // TODO: disable as 'sold out'
+                button.isDisabled = true;
             }
         });
 
@@ -261,6 +262,7 @@ public class UpgradePanel extends Panel {
                 button.props.nextDescription();
                 // TODO: subtract cost
                 // TODO: disable as 'sold out'
+                button.isDisabled = true;
             }
         });
     }
