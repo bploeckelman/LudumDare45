@@ -35,7 +35,7 @@ public class GraphPaperBackground extends Background {
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.setColor(.7f, .7f, .7f, 1f);
+        batch.setColor(.8f, .8f, .8f, 1f);
         batch.draw(gameScreen.assets.gridPaper, 0, 0, gameScreen.worldCamera.viewportWidth, gameScreen.worldCamera.viewportHeight);
         batch.setColor(1f, 1f, 1f, .2f);
         for (int i = 0; i < equationPositions.size; i++){
