@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import lando.systems.ld45.Assets;
 import lando.systems.ld45.Game;
 import lando.systems.ld45.collision.Segment2D;
+import lando.systems.ld45.utils.ArtPack;
 import lando.systems.ld45.utils.AssetType;
 
 public class HudBox  {
@@ -49,10 +50,11 @@ public class HudBox  {
     public void render(SpriteBatch batch) {
         batch.draw(assets.whitePixel, bounds.x, bounds.y, bounds.width, bounds.height);
 
-        for (Segment2D segment : boxSegments) {
-            batch.draw(Game.getAsset(AssetType.boundary_line, time), segment.start.x - width / 2f,
-                    segment.start.y - width / 2f, width / 2f, width / 2f,
-                    segment.delta.len() + width, width, 1, 1, segment.getRotation());
+        if (Game.game.player.artPack == ArtPack.a) {
+            renderSimple(batch, AssetType.boundary_line);
+        }
+        else {
+            renderComplex(batch);
         }
 
         if (text != null) {
@@ -60,6 +62,38 @@ public class HudBox  {
             font.draw(batch, text, bounds.x, textY, bounds.width - 10, align, wrap);
             font.setColor(Color.WHITE);
         }
+    }
+
+    private void renderSimple(SpriteBatch batch, AssetType assetType) {
+        for (Segment2D segment : boxSegments) {
+            batch.draw(Game.getAsset(assetType, time), segment.start.x - width / 2f,
+                    segment.start.y - width / 2f, width / 2f, width / 2f,
+                    segment.delta.len() + width, width, 1, 1, segment.getRotation());
+        }
+    }
+
+    private void renderComplex(SpriteBatch batch) {
+
+        float half = width/2;
+
+        batch.draw(Game.getAsset(AssetType.boundary_line_short_bottom, time), bounds.x + half, bounds.y - half, bounds.width - width, width);
+        batch.draw(Game.getAsset(AssetType.boundary_line_short_left, time), bounds.x - half, bounds.y + half, width, bounds.height - width);
+        batch.draw(Game.getAsset(AssetType.boundary_line_short_top, time), bounds.x + half, bounds.y + bounds.height - half, bounds.width - width, width);
+        batch.draw(Game.getAsset(AssetType.boundary_line_short_right, time), bounds.x + bounds.width - half, bounds.y + half, width, bounds.height - width);
+
+        float capSize = width * 3 / 2;
+        half = capSize / 2;
+
+        // corners
+        batch.draw(Game.getAsset(AssetType.boundary_line_corner, time), bounds.x - half, bounds.y - half, capSize, capSize);
+        batch.draw(Game.getAsset(AssetType.boundary_line_corner, time), bounds.x - half, bounds.y + bounds.height - half, capSize, capSize);
+        batch.draw(Game.getAsset(AssetType.boundary_line_corner, time), bounds.x + bounds.width - half, bounds.y - half, capSize, capSize);
+        batch.draw(Game.getAsset(AssetType.boundary_line_corner, time), bounds.x + bounds.width - half, bounds.y + bounds.height - half, capSize, capSize);
+
+
+
+
+
     }
 
     public void setText(String text) {
