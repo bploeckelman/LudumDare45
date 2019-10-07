@@ -64,10 +64,10 @@ public class Button extends UIElement {
     public void update(float dt) {
         if (!isVisible) return;
 
-        super.update(dt);
         if (box != null) {
             box.update(dt);
         }
+        super.update(dt);
 
         if (isHover && (Gdx.input.justTouched() || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT))) {
             onClick();

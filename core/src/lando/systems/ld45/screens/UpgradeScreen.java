@@ -33,6 +33,7 @@ public class UpgradeScreen extends  BaseScreen {
             batch.setColor(Color.GRAY);
             batch.draw(assets.whitePixel, 0f, 0f, worldCamera.viewportWidth, worldCamera.viewportHeight);
             batch.setColor(Color.WHITE);
+
             upgradePanel.render(batch);
             renderUIElements(batch);
         }

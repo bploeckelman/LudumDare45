@@ -58,15 +58,15 @@ public class UpgradePanel extends Panel {
             }
         });
 
-        this.buyEffectsButton            = new UpgradeButton(this, "Buy Special Effects", "{SPEED=5}{GRADIENT=black;gray}Purchase special effects:\n\nParticles, Ball trails, Screenshake{ENDGRADIENT}");
-        this.buyPegGizmosButton          = new UpgradeButton(this, "Buy Pegs",            "{SPEED=5}{GRADIENT=black;gray}Purchase pegs:\n\nUnlock first, then purchase additional pegs up to X{ENDGRADIENT}");
-        this.buyBumperGizmosButton       = new UpgradeButton(this, "Buy Bumpers",         "{SPEED=5}{GRADIENT=black;gray}Purchase bumpers:\n\nUnlock first, then purchase additional bumpers up to X{ENDGRADIENT}");
-        this.buyLeftSpinnerGizmosButton  = new UpgradeButton(this, "Buy Left Spinner",    "{SPEED=5}{GRADIENT=black;gray}Purchase spinners (rotating left):\n\nUnlock first, then purchase additional spinners up to X{ENDGRADIENT}");
-        this.buyRightSpinnerGizmosButton = new UpgradeButton(this, "Buy Right Spinner",   "{SPEED=5}{GRADIENT=black;gray}Purchase spinners (rotating right):\n\nUnlock first, then purchase additional spinners up to X{ENDGRADIENT}");
-        this.buyCashMultiplierButton     = new UpgradeButton(this, "Buy Cash Multiplier", "{SPEED=5}{GRADIENT=black;gray}Purchase cash multiplier:\n\nIncrease the amount of money you get for everything;\n2x, 4x, 8x, and 16x{ENDGRADIENT}");
-        this.buyBallMultiplierButton     = new UpgradeButton(this, "Buy Ball Multiplier", "{SPEED=5}{GRADIENT=black;gray}Purchase ball multiplier:\n\nDrop more balls each playthrough;\n3x, 10x, 50x, 100x{ENDGRADIENT}");
-        this.buyAudioButton              = new UpgradeButton(this, "Buy Audio",           "{SPEED=5}{GRADIENT=black;gray}Purchase audio:\n\nIt's like graphics, but for your ears!\nUnlock placeholder pack, then final version{ENDGRADIENT}");
-        this.buyArtPackButton            = new UpgradeButton(this, "Buy Art Packs",       "{SPEED=5}{GRADIENT=black;gray}Purchase art:\n\nIt's like audio, but for your eyes!\nHire and artist and move through four distinct art packs!{ENDGRADIENT}");
+        this.buyEffectsButton            = new UpgradeButton(this, UpgradeProps.special_effects);
+        this.buyPegGizmosButton          = new UpgradeButton(this, UpgradeProps.pegs);
+        this.buyBumperGizmosButton       = new UpgradeButton(this, UpgradeProps.bumpers);
+        this.buyLeftSpinnerGizmosButton  = new UpgradeButton(this, UpgradeProps.spinners_left);
+        this.buyRightSpinnerGizmosButton = new UpgradeButton(this, UpgradeProps.spinners_right);
+        this.buyCashMultiplierButton     = new UpgradeButton(this, UpgradeProps.cash_multipliers);
+        this.buyBallMultiplierButton     = new UpgradeButton(this, UpgradeProps.ball_multipliers);
+        this.buyAudioButton              = new UpgradeButton(this, UpgradeProps.audio_packs);
+        this.buyArtPackButton            = new UpgradeButton(this, UpgradeProps.art_packs);
 
         this.mousePos = new Vector3();
         this.hoveredButton = null;
@@ -126,6 +126,7 @@ public class UpgradePanel extends Panel {
         buyRightSpinnerGizmosButton   .setHudBox(x, y, buttonWidth, rowHeight); x += buttonWidth;
 
         descriptionBox               .update(dt);
+
         buyEffectsButton             .update(dt);
         buyCashMultiplierButton      .update(dt);
         buyBallMultiplierButton      .update(dt);
@@ -141,21 +142,21 @@ public class UpgradePanel extends Panel {
         float mouseY = Gdx.input.getY();
         screen.worldCamera.unproject(mousePos.set(mouseX, mouseY, 0f));
         hoveredButton = null;
-        if      (buyEffectsButton            .bounds.contains(mousePos.x, mousePos.y)) hoveredButton = buyEffectsButton;
-        else if (buyCashMultiplierButton     .bounds.contains(mousePos.x, mousePos.y)) hoveredButton = buyCashMultiplierButton;
-        else if (buyBallMultiplierButton     .bounds.contains(mousePos.x, mousePos.y)) hoveredButton = buyBallMultiplierButton;
-        else if (buyArtPackButton            .bounds.contains(mousePos.x, mousePos.y)) hoveredButton = buyArtPackButton;
-        else if (buyPegGizmosButton          .bounds.contains(mousePos.x, mousePos.y)) hoveredButton = buyPegGizmosButton;
-        else if (buyAudioButton              .bounds.contains(mousePos.x, mousePos.y)) hoveredButton = buyAudioButton;
-        else if (buyLeftSpinnerGizmosButton  .bounds.contains(mousePos.x, mousePos.y)) hoveredButton = buyLeftSpinnerGizmosButton;
-        else if (buyBumperGizmosButton       .bounds.contains(mousePos.x, mousePos.y)) hoveredButton = buyBumperGizmosButton;
-        else if (buyRightSpinnerGizmosButton .bounds.contains(mousePos.x, mousePos.y)) hoveredButton = buyRightSpinnerGizmosButton;
+        if      (buyEffectsButton            .collisionBounds.contains(mousePos.x, mousePos.y)) hoveredButton = buyEffectsButton;
+        else if (buyCashMultiplierButton     .collisionBounds.contains(mousePos.x, mousePos.y)) hoveredButton = buyCashMultiplierButton;
+        else if (buyBallMultiplierButton     .collisionBounds.contains(mousePos.x, mousePos.y)) hoveredButton = buyBallMultiplierButton;
+        else if (buyArtPackButton            .collisionBounds.contains(mousePos.x, mousePos.y)) hoveredButton = buyArtPackButton;
+        else if (buyPegGizmosButton          .collisionBounds.contains(mousePos.x, mousePos.y)) hoveredButton = buyPegGizmosButton;
+        else if (buyAudioButton              .collisionBounds.contains(mousePos.x, mousePos.y)) hoveredButton = buyAudioButton;
+        else if (buyLeftSpinnerGizmosButton  .collisionBounds.contains(mousePos.x, mousePos.y)) hoveredButton = buyLeftSpinnerGizmosButton;
+        else if (buyBumperGizmosButton       .collisionBounds.contains(mousePos.x, mousePos.y)) hoveredButton = buyBumperGizmosButton;
+        else if (buyRightSpinnerGizmosButton .collisionBounds.contains(mousePos.x, mousePos.y)) hoveredButton = buyRightSpinnerGizmosButton;
 
         descriptionLabel.setX(descriptionBounds.x + INSET_MARGIN);
         descriptionLabel.setY(descriptionBounds.y + descriptionBounds.height - INSET_MARGIN);
 
         String prevDescriptionText = descriptionText;
-        descriptionText = (hoveredButton != null) ? hoveredButton.description : DEFAULT_DESCRIPTION;
+        descriptionText = (hoveredButton != null) ? hoveredButton.getDescription() : DEFAULT_DESCRIPTION;
         if (!prevDescriptionText.equals(descriptionText)) {
             descriptionLabel.restart(descriptionText);
         }
@@ -188,16 +189,33 @@ public class UpgradePanel extends Panel {
     }
 
     private void initializeButtons() {
-//        screen.game.player.
-//        buyEffectsButton            .set(screen.game.player);
-//        buyPegGizmosButton          ;
-//        buyBumperGizmosButton       ;
-//        buyLeftSpinnerGizmosButton  ;
-//        buyRightSpinnerGizmosButton ;
-//        buyCashMultiplierButton     ;
-//        buyBallMultiplierButton     ;
-//        buyAudioButton              ;
-//        buyArtPackButton            ;
+        buyEffectsButton.addClickHandler(() -> {
+            Gdx.app.log("CLICK", "'" + buyEffectsButton.props.text + "' button clicked");
+        });
+        buyPegGizmosButton.addClickHandler(() -> {
+            Gdx.app.log("CLICK", "'" + buyPegGizmosButton.props.text + "' button clicked");
+        });
+        buyBumperGizmosButton.addClickHandler(() -> {
+            Gdx.app.log("CLICK", "'" + buyBumperGizmosButton.props.text + "' button clicked");
+        });
+        buyLeftSpinnerGizmosButton.addClickHandler(() -> {
+            Gdx.app.log("CLICK", "'" + buyLeftSpinnerGizmosButton.props.text + "' button clicked");
+        });
+        buyRightSpinnerGizmosButton.addClickHandler(() -> {
+            Gdx.app.log("CLICK", "'" + buyRightSpinnerGizmosButton.props.text + "' button clicked");
+        });
+        buyCashMultiplierButton.addClickHandler(() -> {
+            Gdx.app.log("CLICK", "'" + buyCashMultiplierButton.props.text + "' button clicked");
+        });
+        buyBallMultiplierButton.addClickHandler(() -> {
+            Gdx.app.log("CLICK", "'" + buyBallMultiplierButton.props.text + "' button clicked");
+        });
+        buyAudioButton.addClickHandler(() -> {
+            Gdx.app.log("CLICK", "'" + buyAudioButton.props.text + "' button clicked");
+        });
+        buyArtPackButton.addClickHandler(() -> {
+            Gdx.app.log("CLICK", "'" + buyArtPackButton.props.text + "' button clicked");
+        });
     }
 
 }
