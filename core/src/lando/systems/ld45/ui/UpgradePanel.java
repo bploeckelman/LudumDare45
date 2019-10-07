@@ -174,10 +174,7 @@ public class UpgradePanel extends Panel {
         descriptionBox.update(dt);
         costTextBox.update(dt);
 
-        // TODO: determine what to disable based on already purchased stuff and current cash money
-        // TODO: if we've already purchased everything for one upgrade type, set to 'sold out' status
-        buyWinGameUpgradeButton.isDisabled = true;
-        buyWinGameUpgradeButton.isDisabled       = true;
+        buyWinGameUpgradeButton.isDisabled = buyWinGameUpgradeButton.props.getCurrentCost() > screen.player.score;
         buyEffectsButton.isDisabled = buyEffectsButton.props.getCurrentCost() > screen.player.score;
         buyCashMultiplierButton.isDisabled = buyCashMultiplierButton.props.getCurrentCost() > screen.player.score;
         buyBallMultiplierButton.isDisabled = buyBallMultiplierButton.props.getCurrentCost() > screen.player.score;
@@ -187,8 +184,6 @@ public class UpgradePanel extends Panel {
         buyLeftSpinnerGizmosButton.isDisabled = buyLeftSpinnerGizmosButton.props.getCurrentCost() > screen.player.score;
         buyBumperGizmosButton.isDisabled = buyBumperGizmosButton.props.getCurrentCost() > screen.player.score;
         buyRightSpinnerGizmosButton.isDisabled = buyRightSpinnerGizmosButton.props.getCurrentCost() > screen.player.score;
-
-
 
         buyEffectsButton             .update(dt);
         buyCashMultiplierButton      .update(dt);
