@@ -15,6 +15,7 @@ import lando.systems.ld45.objects.Peg;
 import lando.systems.ld45.objects.Spinner;
 import lando.systems.ld45.screens.BaseScreen;
 import lando.systems.ld45.screens.GameScreen;
+import lando.systems.ld45.state.PlayerState;
 import lando.systems.ld45.utils.ArtPack;
 import lando.systems.ld45.utils.AssetType;
 import lando.systems.ld45.utils.UIAssetType;
@@ -22,10 +23,10 @@ import lando.systems.ld45.utils.UIAssetType;
 
 public class ToyChestPanel extends Panel {
 
-    private Rectangle pegRect;
-    private Rectangle bumperRect;
-    private Rectangle leftSpinnerRect;
-    private Rectangle rightSpinnerRect;
+    private HudBox pegRect;
+    private HudBox bumperRect;
+    private HudBox leftSpinnerRect;
+    private HudBox rightSpinnerRect;
 
     private ArtPack artPack;
     private Assets assets;
@@ -35,31 +36,41 @@ public class ToyChestPanel extends Panel {
     private GameObject selectedObject;
     private GameScreen gameScreen;
 
-
     public ToyChestPanel(BaseScreen screen, UIAssetType uiAssetTypePanel, UIAssetType uiAssetTypePanelInset) {
         super(screen, uiAssetTypePanel, uiAssetTypePanelInset);
         this.assets = screen.assets;
         this.artPack = screen.game.player.artPack;
 
         this.gameScreen = (GameScreen)screen;
-        pegRect = new Rectangle(-100, -100, 1, 1);
-        bumperRect = new Rectangle(-100, -100, 1, 1);
-        leftSpinnerRect = new Rectangle(-100, -100, 1, 1);
-        rightSpinnerRect = new Rectangle(-100, -100, 1, 1);
+        pegRect = new HudBox(-100, 1, 1, 1);
+        bumperRect = new HudBox(-100, 1, 1, 1);
+        leftSpinnerRect = new HudBox(-100, 1, 1, 1);
+        rightSpinnerRect = new HudBox(-100, 1, 1, 1);
         projection = new Vector3();
     }
-
 
     @Override
     public void update(float dt) {
         super.update(dt);
         accum += dt;
 
-        float hSpacing = bounds.height / 7f;
-        pegRect.set(bounds.x + bounds.width/2 - 8, bounds.y + bounds.height - hSpacing*2f, 16, 16);
-        bumperRect.set(bounds.x + bounds.width/2 - 16, bounds.y + bounds.height - hSpacing*3f, 32, 32);
-        leftSpinnerRect.set(bounds.x + bounds.width/2 - 16, bounds.y + bounds.height - hSpacing*4f, 32, 32);
-        rightSpinnerRect.set(bounds.x + bounds.width/2 - 16, bounds.y + bounds.height - hSpacing*5f, 32, 32);
+        float gap = 40;
+        float width = bounds.width - (gap*2);
+        float height = (bounds.height - (gap*5)) / 4;
+        float x = bounds.x + gap;
+        float y = bounds.y + bounds.height - height - 28;
+
+        pegRect.reset(x, y, width, height);
+        pegRect.update(dt);
+        y -= height + gap;
+        bumperRect.reset(x, y, width, height);
+        bumperRect.update(dt);
+        y -= height + gap;
+        leftSpinnerRect.reset(x, y, width, height);
+        leftSpinnerRect.update(dt);
+        y -= height + gap;
+        rightSpinnerRect.reset(x, y, width, height);
+        rightSpinnerRect.update(dt);
 
         projection.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         projection = screen.worldCamera.unproject(projection);
@@ -102,54 +113,39 @@ public class ToyChestPanel extends Panel {
     public void render(SpriteBatch batch) {
         super.render(batch);
 
-        BitmapFont font = Game.getCurrentFont();
+        pegRect.render(batch);
+        bumperRect.render(batch);
+        leftSpinnerRect.render(batch);
+        rightSpinnerRect.render(batch);
 
-        // Pegs
-        if (screen.game.player.canBuildPeg()) batch.setColor(Color.WHITE);
-        else {
-            batch.setColor(Color.GRAY);
-            batch.draw(assets.whitePixel, pegRect.x-10, pegRect.y-10, pegRect.width+20, pegRect.height+20);
-        }
-        batch.draw(assets.assetMap.get(artPack).get(AssetType.peg).getKeyFrame(accum), pegRect.x, pegRect.y, pegRect.width, pegRect.height);
-        assets.layout.setText(font, "Pegs: " + gameScreen.game.player.getCurrentPegs() +"/"+ gameScreen.game.player.pegs, Color.BLACK, bounds.width, Align.center, true);
-        font.draw(batch, assets.layout, bounds.x, pegRect.y - 12);
+        PlayerState state = gameScreen.game.player;
 
-        // Bumpers
-        if (screen.game.player.canBuildBumper()) batch.setColor(Color.WHITE);
-        else {
-            batch.setColor(Color.GRAY);
-            batch.draw(assets.whitePixel, bumperRect.x- 10, bumperRect.y-10, bumperRect.width+20, bumperRect.height+20);
-        }
-        batch.draw(assets.assetMap.get(artPack).get(AssetType.bumper).getKeyFrame(accum), bumperRect.x, bumperRect.y, bumperRect.width, bumperRect.height);
-        assets.layout.setText(font, "Bumpers: " + gameScreen.game.player.getCurrentBumpers() +"/"+ gameScreen.game.player.bumpers, Color.BLACK, bounds.width, Align.center, true);
-        font.draw(batch, assets.layout, bounds.x, bumperRect.y - 12);
-
-        // Left Spinners
-        if (screen.game.player.canBuildLeftSpinner()) batch.setColor(Color.WHITE);
-        else {
-            batch.setColor(Color.GRAY);
-            batch.draw(assets.whitePixel, leftSpinnerRect.x-10, leftSpinnerRect.y-10, leftSpinnerRect.width+20, leftSpinnerRect.height+20);
-        }
-        batch.draw(assets.assetMap.get(artPack).get(AssetType.spinner).getKeyFrame(accum), leftSpinnerRect.x, leftSpinnerRect.y, leftSpinnerRect.width, leftSpinnerRect.height);
-        assets.layout.setText(font, "Spinner(L): " + gameScreen.game.player.getCurrentLeftSpinner() +"/"+ gameScreen.game.player.leftSpinners, Color.BLACK, bounds.width, Align.center, true);
-        font.draw(batch, assets.layout, bounds.x, leftSpinnerRect.y - 12);
-
-        // Right Spinners
-        if (screen.game.player.canBuildRightSpinner()) batch.setColor(Color.WHITE);
-        else {
-            batch.setColor(Color.GRAY);
-            batch.draw(assets.whitePixel, rightSpinnerRect.x-10, rightSpinnerRect.y-10, rightSpinnerRect.width+20, rightSpinnerRect.height+20);
-        }
-        batch.draw(assets.assetMap.get(artPack).get(AssetType.spinner).getKeyFrame(accum), rightSpinnerRect.x + 32, rightSpinnerRect.y, -rightSpinnerRect.width, rightSpinnerRect.height);
-        assets.layout.setText(font, "Spinner(R): " + gameScreen.game.player.getCurrentRightSpinner() +"/"+ gameScreen.game.player.rightSpinners, Color.BLACK, bounds.width, Align.center, true);
-        font.draw(batch, assets.layout, bounds.x, rightSpinnerRect.y - 12);
-
+        draw(batch, AssetType.peg, pegRect.bounds, 16, 1, "Pegs",state.getCurrentPegs(), state.pegs);
+        draw(batch, AssetType.bumper, bumperRect.bounds, 32, 1,"Bumpers", state.getCurrentBumpers(), state.bumpers);
+        draw(batch, AssetType.spinner, leftSpinnerRect.bounds, 32, 1, "Spinner(L)", state.getCurrentLeftSpinner(), state.leftSpinners);
+        draw(batch, AssetType.spinner, rightSpinnerRect.bounds, 32, -1, "Spinner(R)", state.getCurrentRightSpinner(), state.rightSpinners);
 
         batch.setColor(Color.WHITE);
 
         if (selectedObject != null){
             selectedObject.render(batch);
         }
+    }
+
+    private void draw(SpriteBatch batch, AssetType assetType, Rectangle boxBounds, float size, float scale, String type, int count, int total) {
+        String text = type + ": " + (total - count) + "/" + total;
+
+        batch.draw(Game.getAsset(assetType, accum), boxBounds.x + (boxBounds.width - size)/2,
+                boxBounds.y + (boxBounds.height - size)/2, size, size);
+        assets.layout.setText(Game.getCurrentFont(), text, Color.BLACK, bounds.width, Align.center, true);
+        Game.getCurrentFont().draw(batch, assets.layout, bounds.x, boxBounds.y - 7);
+
+        if (count == total) {
+            batch.setColor(0.4f, 0.4f, 0.4f, 0.4f);
+            batch.draw(gameScreen.assets.whitePixel, boxBounds.x, boxBounds.y, boxBounds.width / 2, boxBounds.height / 2,
+                    boxBounds.width, boxBounds.height, scale, 1, 0);
+        }
+        batch.setColor(Color.WHITE);
     }
 
 }

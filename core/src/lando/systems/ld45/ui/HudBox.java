@@ -21,7 +21,7 @@ public class HudBox  {
 
     private Assets assets = Game.getAssets();
 
-    private Rectangle bounds;
+    public Rectangle bounds;
     private Array<Segment2D> boxSegments = new Array<>();
     private float time = 0;
 
@@ -150,5 +150,9 @@ public class HudBox  {
             this.text = text;
             textY = bounds.y + bounds.height - ((bounds.height - font.getCapHeight())/2);
         }
+    }
+
+    public boolean contains(float x, float y) {
+        return bounds.contains(x, y);
     }
 }
