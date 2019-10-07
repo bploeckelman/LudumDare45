@@ -25,7 +25,7 @@ public class Panel {
     protected NinePatch inset;
     protected BaseScreen screen;
 
-    private final float insetMargin = 20f;
+    protected final float insetMargin = 20f;
 
     public boolean horizontal = true;
 

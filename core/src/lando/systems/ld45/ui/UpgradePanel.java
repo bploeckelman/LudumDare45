@@ -13,10 +13,8 @@ public class UpgradePanel extends Panel {
         super(screen, uiAssetTypePanel, uiAssetTypePanelInset);
         horizontal = false;
 
-        this.startGameButton = new Button(screen.assets.whitePixel, 0f, 0f, 200f, 50f);
+        this.startGameButton = new Button(screen, screen.worldCamera, screen.assets.whitePixel, 0f, 0f, 200f, 50f);
         this.startGameButton.setText("Start Game");
-        this.startGameButton.screen = screen;
-        this.startGameButton.camera = screen.worldCamera;
         this.startGameButton.addClickHandler(() -> {
             if (isVisible() && !isAnimating()) {
                 hide(screen.worldCamera, 0.5f, (params) -> screen.game.setScreen(new GameScreen(screen.game)));
@@ -30,7 +28,7 @@ public class UpgradePanel extends Panel {
         // Since the panel moves with show/hide/toggle, have to continously reset the button pos... IMGUI ftw
         startGameButton.bounds.setPosition(
                 bounds.x + bounds.width  / 2f - startGameButton.bounds.width  / 2f,
-                bounds.y + bounds.height / 2f - startGameButton.bounds.height / 2f);
+                bounds.y + insetMargin + 10f);
         startGameButton.update(dt);
     }
 

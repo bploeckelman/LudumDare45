@@ -3,9 +3,11 @@ package lando.systems.ld45.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import lando.systems.ld45.Config;
+import lando.systems.ld45.screens.BaseScreen;
 import lando.systems.ld45.ui.typinglabel.TypingLabel;
 
 public class Button extends UIElement {
@@ -17,13 +19,15 @@ public class Button extends UIElement {
 
     private ClickHandler clickHandler;
 
-    public Button(TextureRegion texture, float x, float y) {
-        this(texture, x, y, texture.getRegionWidth(), texture.getRegionHeight());
+    public Button(BaseScreen screen, OrthographicCamera camera, TextureRegion texture, float x, float y) {
+        this(screen, camera, texture, x, y, texture.getRegionWidth(), texture.getRegionHeight());
     }
 
-    public Button(TextureRegion texture, float x, float y, float width, float height) {
+    public Button(BaseScreen screen, OrthographicCamera camera, TextureRegion texture, float x, float y, float width, float height) {
         super(x, y, width, height);
         this.texture = texture;
+        this.screen = screen;
+        this.camera = camera;
     }
 
     public void setText(String text) {
