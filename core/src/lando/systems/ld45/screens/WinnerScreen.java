@@ -11,35 +11,62 @@ import com.badlogic.gdx.utils.Align;
 import lando.systems.ld45.Config;
 import lando.systems.ld45.Game;
 import lando.systems.ld45.ui.typinglabel.TypingLabel;
+import lando.systems.ld45.utils.ArtPack;
 
 public class WinnerScreen extends BaseScreen {
 
     private TypingLabel titleLabel;
     private TypingLabel themeLabel;
+    private TypingLabel leftCreditLabel;
+    private TypingLabel rightCreditLabel;
+    private TypingLabel thanksLabel;
+    private TypingLabel disclaimerLabel;
 
-    static String title = "B a l l  o f  D u t y : P a c h i n k o   E d i t i o n";
+
+    static String title = "{SICK}Ball of Duty{ENDSICK}: Pachinko Edition";
     static String theme = "Made for Ludum Dare 45:\nTheme: Start with nothing";
     static String thanks = "Thanks for playing our game!";
     static String developers = "Developed by:\nDoug Graham\nBrian Ploeckelman\nBrian Rossman\nJeffrey Hwang\nJake";
     static String artists = "Art by:\nSomeone";
     static String emotionalSupport = "Emotional Support:\nAsuka the Shiba\n" + "Romeo the Poodle";
     static String music = "Sound by:\nSomeone";
-    static String libgdx = "Made with <3 and LibGDX";
+    static String libgdx = "Made with {COLOR=red}<3{COLOR=white} and LibGDX";
     static String disclaimer = "Disclaimer!!!\nNo balls were harmed in making of this game.";
     Color textColor = new Color(Color.WHITE);
     Color textBorderColor = new Color(Color.GRAY);
 
     public WinnerScreen(Game game) {
         super(game);
-        titleLabel = new TypingLabel(Game.getCurrentFont(), title, 0f, 0f);
+        titleLabel = new TypingLabel(assets.fontMap.get(ArtPack.a), title, 0f, 0f);
         titleLabel.setWidth(Config.gameWidth);
         titleLabel.setFontScale(2f);
         titleLabel.setY(Config.gameHeight / 2f + 280f);
 
-        themeLabel = new TypingLabel(Game.getCurrentFont(), theme, 0f, 0f);
+        themeLabel = new TypingLabel(assets.fontMap.get(ArtPack.b), theme, 0f, 0f);
         themeLabel.setWidth(Config.gameWidth);
         themeLabel.setFontScale(1.5f);
         themeLabel.setY(Config.gameHeight / 2f + 230f);
+
+        leftCreditLabel = new TypingLabel(assets.fontMap.get(ArtPack.c), developers + "\n\n" + emotionalSupport + "\n\n", 75f, Config.gameHeight / 2f + 130f);
+        leftCreditLabel.setWidth(Config.gameWidth / 2 - 150f);
+        leftCreditLabel.setLineAlign(Align.left);
+        leftCreditLabel.setFontScale(1f);
+
+        rightCreditLabel = new TypingLabel(assets.fontMap.get(ArtPack.c), artists + "\n\n" + music + "\n\n" + libgdx, Config.gameWidth / 2 + 75f, Config.gameHeight / 2f + 130f);
+        rightCreditLabel.setWidth(Config.gameWidth / 2 - 150f);
+        rightCreditLabel.setLineAlign(Align.left);
+        rightCreditLabel.setFontScale(1f);
+
+        thanksLabel = new TypingLabel(assets.fontMap.get(ArtPack.d), thanks, 0f, 100f);
+        thanksLabel.setWidth(Config.gameWidth);
+        thanksLabel.setLineAlign(Align.center);
+        thanksLabel.setFontScale(1f);
+
+        disclaimerLabel = new TypingLabel(assets.fontMap.get(ArtPack.d), "{JUMP=.2}{WAVE=0.9;1.2;1.75}{RAINBOW}" + disclaimer + "{ENDRAINBOW}{ENDWAVE}{ENDJUMP}", 0f, 50f);
+        disclaimerLabel.setWidth(Config.gameWidth);
+        thanksLabel.setLineAlign(Align.center);
+        disclaimerLabel.setFontScale(1f);
+
 
     }
 
@@ -47,6 +74,10 @@ public class WinnerScreen extends BaseScreen {
     public void update(float dt) {
         titleLabel.update(dt);
         themeLabel.update(dt);
+        leftCreditLabel.update(dt);
+        rightCreditLabel.update(dt);
+        thanksLabel.update(dt);
+        disclaimerLabel.update(dt);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
             game.setScreen(new TitleScreen(game));
@@ -59,10 +90,15 @@ public class WinnerScreen extends BaseScreen {
         batch.setProjectionMatrix(worldCamera.combined);
         titleLabel.render(batch);
         themeLabel.render(batch);
-        renderTextWithBorder(developers + "\n\n" + emotionalSupport, 2f, Config.gameWidth / 2 - 50f, 25f, Config.gameHeight / 2f + 150f);
-        renderTextWithBorder(artists + "\n\n" + music + "\n\n" + libgdx, 2f, Config.gameWidth / 2 - 50f, Config.gameWidth / 2 + 25f, Config.gameHeight / 2f + 150f);
-        renderTextWithBorder(thanks, 2f, Config.gameWidth, 0f,  100f);
-        renderTextWithBorder(disclaimer, 1f, Config.gameWidth, 0f,  50f);
+        leftCreditLabel.render(batch);
+        rightCreditLabel.render(batch);
+        thanksLabel.render(batch);
+        disclaimerLabel.render(batch);
+
+//        renderTextWithBorder(developers + "\n\n" + emotionalSupport, 2f, Config.gameWidth / 2 - 50f, 25f, Config.gameHeight / 2f + 150f);
+//        renderTextWithBorder(artists + "\n\n" + music + "\n\n" + libgdx, 2f, Config.gameWidth / 2 - 50f, Config.gameWidth / 2 + 25f, Config.gameHeight / 2f + 150f);
+//        renderTextWithBorder(thanks, 2f, Config.gameWidth, 0f,  100f);
+//        renderTextWithBorder(disclaimer, 1f, Config.gameWidth, 0f,  50f);
         batch.end();
     }
 

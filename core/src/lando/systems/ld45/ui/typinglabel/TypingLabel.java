@@ -602,6 +602,8 @@ public class TypingLabel {
         return lineAlign;
     }
 
+    public void setLineAlign (int lineAlign) { this.lineAlign = lineAlign; }
+
     public void layout() {
         // --- SUPERCLASS IMPLEMENTATION (but with accessible getters instead) ---
         BitmapFontCache cache = getBitmapFontCache();
