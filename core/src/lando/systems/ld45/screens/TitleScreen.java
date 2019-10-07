@@ -16,11 +16,11 @@ public class TitleScreen extends BaseScreen {
         super(game);
 
         this.label = new TypingLabel(Game.getCurrentFont(),
-                "{JUMP=.2}{WAVE=0.9;1.2;1.75}{GRADIENT=red;blue}{RAINBOW}CLICK TO START{ENDRAINBOW}{ENDGRADIENT}{ENDWAVE}{ENDJUMP}",
+                "{JUMP=.2}{WAVE=0.9;1.2;1.75}{GRADIENT=gold;white}{RAINBOW}CLICK TO START{ENDRAINBOW}{ENDGRADIENT}{ENDWAVE}{ENDJUMP}",
                 0f, 0f);
         this.label.setWidth(Config.gameWidth);
         this.label.setFontScale(2f);
-        this.label.setY(Config.gameHeight / 2f + 100f);
+        this.label.setY(Config.gameHeight / 2f - 200f);
     }
 
     @Override

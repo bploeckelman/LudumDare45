@@ -133,7 +133,7 @@ public class AudioManager implements Disposable {
     public void playMusic(Musics musicOption) {
         if (game.player.soundPack == 0) return;
         // Stop currently running music
-        if (currentMusic != null && eCurrentMusic != musicOption) {
+        if (currentMusic != null) {// && eCurrentMusic != musicOption) {
             setMusicVolume(0f, 1f);
             oldCurrentMusic = currentMusic;
             //currentMusic.stop();

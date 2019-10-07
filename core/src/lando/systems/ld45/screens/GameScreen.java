@@ -46,7 +46,6 @@ public class GameScreen extends BaseScreen {
 
     public GameScreen(Game game, boolean editMode) {
         super(game);
-        game.audio.playMusic(AudioManager.Musics.mainTheme);
         this.editMode = editMode;
         game.particle.clearAll();
         gameObjects = game.player.gameObjects;

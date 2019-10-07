@@ -10,7 +10,7 @@ import lando.systems.ld45.utils.ArtPack;
 public class PlayerState {
 
     // Points used for buying shit
-    public long score = 0;
+    public long score = 10000;
 
     // For the credits screen, to show how many points you gathered overall
     private long totalScore = 0;
