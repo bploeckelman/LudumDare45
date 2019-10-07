@@ -76,11 +76,6 @@ public class Game extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-	    // TODO: REMOVE ME
-		if (Gdx.input.isKeyJustPressed(Input.Keys.ALT_RIGHT)) {
-			artPack = artPack.getNext();
-		}
-
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
