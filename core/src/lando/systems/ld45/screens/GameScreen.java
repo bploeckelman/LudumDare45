@@ -18,12 +18,14 @@ import lando.systems.ld45.state.PlayerState;
 import lando.systems.ld45.ui.Panel;
 import lando.systems.ld45.utils.ArtPack;
 import lando.systems.ld45.utils.UIAssetType;
+import lando.systems.ld45.utils.screenshake.ScreenShakeCameraController;
 
 public class GameScreen extends BaseScreen {
 
     public Background background;
     public Array<GameObject> gameObjects = new Array<>();
     public Array<Ball> balls = new Array<>();
+
 
     public Hopper hopper;
 
@@ -147,14 +149,14 @@ public class GameScreen extends BaseScreen {
     @Override
     public void render(SpriteBatch batch) {
 
-        batch.setProjectionMatrix(worldCamera.combined);
+        batch.setProjectionMatrix(shaker.getCombinedMatrix());
         batch.begin();
         background.render(batch);
         batch.end();
         // NOTE: this has to be outside of batch begin/end because reasons
         renderBallTrails();
 
-        batch.setProjectionMatrix(worldCamera.combined);
+        batch.setProjectionMatrix(shaker.getCombinedMatrix());
         batch.begin();
         {
             if (editMode) boundary.renderEditMode(batch);
@@ -206,7 +208,7 @@ public class GameScreen extends BaseScreen {
             }
 
 
-            assets.ballTrailShader.setUniformMatrix("u_projTrans", game.getScreen().worldCamera.combined);
+            assets.ballTrailShader.setUniformMatrix("u_projTrans", game.getScreen().shaker.getCombinedMatrix());
             assets.ballTrailShader.setUniformi("u_texture", 0);
             assets.ballTrailShader.setUniformf("u_time", pathShaderTimer);
 

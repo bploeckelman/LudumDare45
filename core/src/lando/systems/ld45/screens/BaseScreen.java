@@ -12,6 +12,7 @@ import lando.systems.ld45.particles.ParticleManager;
 import lando.systems.ld45.state.PlayerState;
 import lando.systems.ld45.ui.UIElement;
 import lando.systems.ld45.utils.ArtPack;
+import lando.systems.ld45.utils.screenshake.ScreenShakeCameraController;
 
 public abstract class BaseScreen extends InputAdapter {
     public final Game game;
@@ -22,6 +23,8 @@ public abstract class BaseScreen extends InputAdapter {
 
     public OrthographicCamera worldCamera;
     public OrthographicCamera hudCamera;
+    public ScreenShakeCameraController shaker;
+
 
 //    public ArtPack artPack = ArtPack.a;
 
@@ -44,6 +47,8 @@ public abstract class BaseScreen extends InputAdapter {
         this.hudCamera = new OrthographicCamera();
         this.hudCamera.setToOrtho(false, Config.gameWidth, Config.gameHeight);
         this.hudCamera.update();
+        this.shaker = new ScreenShakeCameraController(worldCamera);
+
     }
 
     public void addUIElement(UIElement element) {
@@ -52,6 +57,7 @@ public abstract class BaseScreen extends InputAdapter {
 
     public void update(float dt) {
         uiElements.forEach(x -> x.update(dt));
+        shaker.update(dt);
     }
 
     public abstract void render(SpriteBatch batch);
