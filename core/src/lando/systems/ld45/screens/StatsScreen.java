@@ -3,43 +3,33 @@ package lando.systems.ld45.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Align;
 import lando.systems.ld45.Config;
 import lando.systems.ld45.Game;
-import lando.systems.ld45.ui.Button;
+import lando.systems.ld45.state.PlayerState;
 import lando.systems.ld45.ui.typinglabel.TypingLabel;
 import lando.systems.ld45.utils.ArtPack;
 
-public class WinnerScreen extends BaseScreen {
+public class StatsScreen extends BaseScreen {
 
     private TypingLabel titleLabel;
     private TypingLabel themeLabel;
     private TypingLabel leftCreditLabel;
-    private TypingLabel rightCreditLabel;
     private TypingLabel thanksLabel;
-    private TypingLabel disclaimerLabel;
 
+    static PlayerState state = Game.game.player;
 
-    static String title = "Ball of Duty: {SICK}Pachinko Edition{ENDSICK}";
-    static String theme = "Made for Ludum Dare 45:\nTheme: Start with nothing";
-    static String thanks = "Thanks for playing our game!";
-    static String developers = "Developed by:\nDoug Graham\nBrian Ploeckelman\nBrian Rossman\nJeffrey Hwang\nJake Shropshire";
-    static String artists = "Art by:\nMatt Neumann\nTroy Sullivan";
-    static String otherDuties = "Other Duties as Assigned:\nLuke Bain";
-    static String emotionalSupport = "Emotional Support:\nAsuka the Shiba\n" + "Romeo the Poodle";
-    static String music = "Sound by:\nSomeone";
-    static String libgdx = "Made with {COLOR=red}<3{COLOR=white} and LibGDX";
-    static String disclaimer = "Disclaimer!!!\nNo balls were harmed in making of this game.";
+    static String title = "{SICK}STATS{ENDSICK}";
+    static String theme = "Total Score: " + state.getTotalScore();
+    static String thanks = "Balls dropped: " + state.ballsDropped;
+    static String developers = "Total time: " + state.totalTime;
     Color textColor = new Color(Color.WHITE);
     Color textBorderColor = new Color(Color.GRAY);
 
-    private Button statButton;
-
-    public WinnerScreen(Game game) {
+    public StatsScreen(Game game) {
         super(game);
         titleLabel = new TypingLabel(assets.fontMap.get(ArtPack.a), title, 0f, 0f);
         titleLabel.setWidth(Config.gameWidth);
@@ -51,42 +41,23 @@ public class WinnerScreen extends BaseScreen {
         themeLabel.setFontScale(1.5f);
         themeLabel.setY(Config.gameHeight / 2f + 230f);
 
-        leftCreditLabel = new TypingLabel(assets.fontMap.get(ArtPack.c), developers + "\n\n" + emotionalSupport + "\n\n", 75f, Config.gameHeight / 2f + 130f);
+        leftCreditLabel = new TypingLabel(assets.fontMap.get(ArtPack.c), developers, 75f, Config.gameHeight / 2f + 130f);
         leftCreditLabel.setWidth(Config.gameWidth / 2 - 150f);
         leftCreditLabel.setLineAlign(Align.left);
         leftCreditLabel.setFontScale(1f);
-
-        rightCreditLabel = new TypingLabel(assets.fontMap.get(ArtPack.c), artists + "\n\n" + music + "\n\n" + otherDuties + "\n\n" + libgdx, Config.gameWidth / 2 + 75f, Config.gameHeight / 2f + 130f);
-        rightCreditLabel.setWidth(Config.gameWidth / 2 - 150f);
-        rightCreditLabel.setLineAlign(Align.left);
-        rightCreditLabel.setFontScale(1f);
 
         thanksLabel = new TypingLabel(assets.fontMap.get(ArtPack.d), thanks, 0f, 100f);
         thanksLabel.setWidth(Config.gameWidth);
         thanksLabel.setLineAlign(Align.center);
         thanksLabel.setFontScale(1f);
-
-        disclaimerLabel = new TypingLabel(assets.fontMap.get(ArtPack.d), "{JUMP=.2}{WAVE=0.9;1.2;1.75}{RAINBOW}" + disclaimer + "{ENDRAINBOW}{ENDWAVE}{ENDJUMP}", 0f, 50f);
-        disclaimerLabel.setWidth(Config.gameWidth);
-        thanksLabel.setLineAlign(Align.center);
-        disclaimerLabel.setFontScale(1f);
-
-        statButton = new Button(this, worldCamera, Config.gameWidth / 2 + 25f, Config.gameHeight / 2f + 170f, Config.gameWidth / 2 - 50f, 40f);
-        statButton.setText("Statistics");
-        statButton.addClickHandler(() -> game.setScreen(new StatsScreen(game)));
-        addUIElement(statButton);
-
     }
 
     @Override
     public void update(float dt) {
-        super.update(dt);
         titleLabel.update(dt);
         themeLabel.update(dt);
         leftCreditLabel.update(dt);
-        rightCreditLabel.update(dt);
         thanksLabel.update(dt);
-        disclaimerLabel.update(dt);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
             game.setScreen(new TitleScreen(game));
@@ -103,13 +74,10 @@ public class WinnerScreen extends BaseScreen {
         batch.draw(assets.whitePixel, 25f, 110f, Config.gameWidth / 2 - 50f, 350f);
         batch.draw(assets.whitePixel, Config.gameWidth / 2 + 25f, 110f, Config.gameWidth / 2 - 50f, 350f);
         batch.setColor(Color.WHITE);
-        renderUIElements(batch);
         titleLabel.render(batch);
         themeLabel.render(batch);
         leftCreditLabel.render(batch);
-        rightCreditLabel.render(batch);
         thanksLabel.render(batch);
-        disclaimerLabel.render(batch);
         batch.end();
     }
 
