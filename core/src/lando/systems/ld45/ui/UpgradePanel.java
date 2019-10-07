@@ -529,11 +529,15 @@ public class UpgradePanel extends Panel {
     }
 
     private String getCostTextForButton(UpgradeButton button) {
-        int cost = button.props.getCurrentCost();
         long cash = screen.player.score;
-        return "{SPEED=10}{GRADIENT=goldenrod;dark_gray}Upgrade Cost: $" + cost + " {ENDGRADIENT}   "
-             + ((cash < cost) ? "{GRADIENT=red;pink}" : "{GRADIENT=forest;olive}")
-             + "Available Cash: $ " + cash + " {ENDGRADIENT} ";
+        int cost = button.props.getCurrentCost();
+        if (cost == Integer.MAX_VALUE) {
+            return "{SPEED=10}{GRADIENT=goldenrod;dark_gray}SOLD OUT!     {GRADIENT=forest;olive}Available Cash: $" + cash + " {ENDGRADIENT} ";
+        } else {
+            return "{SPEED=10}{GRADIENT=goldenrod;dark_gray}Upgrade Cost: $" + cost + " {ENDGRADIENT}   "
+                    + ((cash < cost) ? "{GRADIENT=red;pink}" : "{GRADIENT=forest;olive}")
+                    + "Available Cash: $ " + cash + " {ENDGRADIENT} ";
+        }
     }
 
 }
