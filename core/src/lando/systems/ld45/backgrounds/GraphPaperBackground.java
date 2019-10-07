@@ -26,6 +26,14 @@ public class GraphPaperBackground extends Background {
     }
 
     @Override
+    public void addCollision(float x, float y, float size, float ttl, Color color) {
+        if (collisions.size < 40) {
+            collisions.add(new Collision(x, y, size, ttl/2f, color));
+        }
+    }
+
+
+    @Override
     public void render(SpriteBatch batch) {
         batch.draw(gameScreen.assets.gridPaper, 0, 0, gameScreen.worldCamera.viewportWidth, gameScreen.worldCamera.viewportHeight, 0, 0, gameScreen.worldCamera.viewportWidth/200, gameScreen.worldCamera.viewportHeight/200);
         batch.setColor(1f, 1f, 1f, .2f);
