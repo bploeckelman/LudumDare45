@@ -79,7 +79,10 @@ public class HudBox  {
 
     public void render(SpriteBatch batch) {
         batch.draw(assets.whitePixel, bounds.x, bounds.y, bounds.width, bounds.height);
+        renderBox(batch, textColor);
+    }
 
+    public void renderBox(SpriteBatch batch, Color textColor) {
         if (Game.game.player.artPack == ArtPack.a) {
             renderSimple(batch, AssetType.boundary_line);
         }
@@ -90,11 +93,9 @@ public class HudBox  {
         if (text != null) {
             // this is making a padding on the right for right aligned - if left aligned, will need to move x position
             float offset = (align != Align.center) ? 10 : 0;
-            font.setColor(textColor);
             GlyphLayout layout = Game.getAssets().layout;
-            layout.setText(font, text, Color.BLACK, bounds.width - offset, align, true);
+            layout.setText(font, text, textColor, bounds.width - offset, align, true);
             font.draw(batch, layout, bounds.x, bounds.y + layout.height / 2f + bounds.height / 2f);
-            font.setColor(Color.WHITE);
         }
     }
 

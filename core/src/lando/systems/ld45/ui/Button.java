@@ -25,6 +25,16 @@ public class Button extends UIElement {
 
     private ClickHandler clickHandler;
 
+    public boolean isDisabled = false;
+
+    public Color backgroundColor = Color.WHITE;
+    public Color backgroundHoverColor = Color.SALMON;
+    public Color backgroundDisabledColor = Color.LIGHT_GRAY;
+
+    public Color textColor = Color.BLACK;
+    public Color textHoverColor = Color.WHITE;
+    public Color textDisabledColor = Color.GRAY;
+
     public Button(BaseScreen screen, OrthographicCamera camera, TextureRegion texture, float x, float y) {
         this(screen, camera, texture, x, y, texture.getRegionWidth(), texture.getRegionHeight());
     }
@@ -73,7 +83,7 @@ public class Button extends UIElement {
         }
         super.update(dt);
 
-        if (isHover && (Gdx.input.justTouched() || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT))) {
+        if (isHover && !isDisabled && (Gdx.input.justTouched() || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT))) {
             onClick();
         }
     }
@@ -86,25 +96,48 @@ public class Button extends UIElement {
 
     @Override
     protected void renderElement(SpriteBatch batch) {
+        Color textColor = getTextColor();
+        batch.setColor(getBackgroundColor());
+
         if (box != null) {
-            box.render(batch);
+            batch.draw(screen.assets.whitePixel, bounds.x, bounds.y, bounds.width, bounds.height);
+            box.renderBox(batch, textColor);
         }
 
         if (texture != null) {
-            drawShittyButton(batch);
-        }
-    }
-
-    private void drawShittyButton(SpriteBatch batch) {
-        batch.setColor((isHover) ? Color.RED : Color.BLUE);
-        batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
-
-        if (text != null) {
-            BitmapFont font = Game.getCurrentFont();
-            float textY = bounds.y + bounds.height - ((bounds.height - font.getCapHeight())/2);
-            font.draw(batch, text, bounds.x, textY, bounds.width - 10, Align.center, false);
+            drawShittyButton(batch, textColor);
         }
 
         batch.setColor(Color.WHITE);
     }
+
+    private void drawShittyButton(SpriteBatch batch, Color textColor) {
+        batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
+
+        if (text != null) {
+            BitmapFont font = Game.getCurrentFont();
+            font.setColor(textColor);
+            float textY = bounds.y + bounds.height - ((bounds.height - font.getCapHeight())/2);
+            font.draw(batch, text, bounds.x, textY, bounds.width - 10, Align.center, false);
+            font.setColor(Color.WHITE);
+        }
+    }
+
+    private Color getBackgroundColor() {
+        Color background = (isHover) ? backgroundHoverColor : backgroundColor;
+        if (isDisabled) {
+            background = backgroundDisabledColor;
+        }
+        return background;
+    }
+
+    private Color getTextColor() {
+        Color text = (isHover) ? textHoverColor : textColor;
+        if (isDisabled) {
+            text = textDisabledColor;
+        }
+        return text;
+    }
+
+
 }
