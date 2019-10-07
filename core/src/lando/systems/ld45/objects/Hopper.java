@@ -45,7 +45,7 @@ public class Hopper {
         inputDelay -= dt;
 
         dropTime -= dt;
-        if (inputDelay <= 0 && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+        if (inputDelay <= 0 && Gdx.input.justTouched()) {
             droppingBalls = true;
         }
 
