@@ -41,10 +41,10 @@ public class GameHud {
 
         scoreBox = new HudBox(10, 10, 160, 40);
         timeBox = new HudBox(viewWidth - 120, 10, 110, 40);
-        timeButton = new Button(screen, screen.hudCamera,viewWidth - 170, 10, 40, 40);
-        timeButton.setText(timeText[timeTextIndex]);
+        timeButton = new Button(screen, screen.hudCamera,viewWidth - 215, 10, 80, 40);
         timeButton.addClickHandler(() -> setSpeed());
         screen.addUIElement(timeButton);
+        resetSpeed();
 
         playAgainButton = new Button(screen, screen.hudCamera, 250, 210, 300f, 50f);
         playAgainButton.setText("PLAY AGAIN");
@@ -77,12 +77,28 @@ public class GameHud {
         screen.addUIElement(toyBoxButton);
     }
 
+    private void resetSpeed() {
+        timeTextIndex = -1;
+        setSpeed();
+    }
+
     private void setSpeed() {
         if (++timeTextIndex == timeText.length) {
             timeTextIndex = 0;
         }
+
         timeButton.setText(timeText[timeTextIndex]);
-        // set speed
+
+        // should probably use a fancy enum, but oh well
+        float speedModifier = 1;
+        switch (timeTextIndex) {
+            case 1: speedModifier = 5; break;
+            case 2: speedModifier = 10; break;
+            case 3: speedModifier = 0.2f; break;
+            case 4: speedModifier = 0.1f; break;
+            default: speedModifier = 1; break;
+        }
+        screen.game.setSpeedModifier(speedModifier);
     }
 
     private void restart() {
@@ -96,7 +112,10 @@ public class GameHud {
         if (!screen.gameOver) {
             timeBox.setText(toTimeString(time));
             timeBox.update(dt);
-            timeButton.update(dt);
+        }
+
+        if ((screen.gameOver || screen.editMode) && timeTextIndex != 0) {
+            resetSpeed();
         }
 
         timeButton.isVisible = !(screen.gameOver || screen.editMode);

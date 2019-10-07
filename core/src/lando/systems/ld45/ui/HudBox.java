@@ -84,7 +84,7 @@ public class HudBox  {
             renderSimple(batch, AssetType.boundary_line);
         }
         else {
-            renderComplex(batch);
+            renderComplex(batch, width * 0.7f);
         }
 
         if (text != null) {
@@ -104,7 +104,7 @@ public class HudBox  {
         }
     }
 
-    private void renderComplex(SpriteBatch batch) {
+    private void renderComplex(SpriteBatch batch, float width) {
 
         float half = width/2;
 

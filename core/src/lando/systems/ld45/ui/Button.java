@@ -13,6 +13,10 @@ import lando.systems.ld45.screens.BaseScreen;
 
 public class Button extends UIElement {
 
+    private static int id = 0;
+
+    private int curId = id++;
+
     private TextureRegion texture;
 
     protected HudBox box;

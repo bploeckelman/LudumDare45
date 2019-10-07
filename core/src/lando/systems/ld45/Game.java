@@ -49,6 +49,7 @@ public class Game extends ApplicationAdapter {
 	ShaderProgram transitionShader;
 	boolean transitioning;
 
+	private float speedModifier = 1;
 
 	public Game() {
 		this.game = this;
@@ -96,14 +97,17 @@ public class Game extends ApplicationAdapter {
 		setScreen(new TitleScreen(this));
 	}
 
+	public void setSpeedModifier(float speedModifier) {
+		this.speedModifier = speedModifier;
+	}
+
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		float dt = Math.min(Gdx.graphics.getDeltaTime(), 1f / 30f);
-		if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) dt *= 10f;
-		if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) dt /= 10f;
+		float dt = Math.min(Gdx.graphics.getDeltaTime(), 1f / 30f) * speedModifier;
+
 		audio.update(dt);
 		tween.update(dt);
 		currentScreen.update(dt);
