@@ -14,7 +14,7 @@ public class DemoScreen extends BaseScreen {
 
     private Ball ball;
 
-    private boolean showUpgrade = false;
+    private float waitTime = 0;
 
     public DemoScreen(Game game) {
         super(game);
@@ -25,10 +25,13 @@ public class DemoScreen extends BaseScreen {
 
         float width = 500f;
         float height = 50f;
-        upgradeButton = new Button(this, hudCamera,hudCamera.viewportWidth / 2f - width / 2f, hudCamera.viewportHeight / 2f - height / 2f, width, height);
+
+        upgradeButton = new Button(this, hudCamera,
+                (hudCamera.viewportWidth - width) / 2f, (hudCamera.viewportHeight - height) / 2, width, height);
         upgradeButton.setText("Buy Upgrade Menu: $1");
-        upgradeButton.set(this);
         upgradeButton.addClickHandler(() -> game.setScreen(new UpgradeScreen(game), game.assets.pizelizeShader, 1f) );
+        upgradeButton.isVisible = false;
+        addUIElement(upgradeButton);
     }
 
     @Override
@@ -45,8 +48,11 @@ public class DemoScreen extends BaseScreen {
                 game.player.addScore(points);
                 particle.addPointsParticles(points, ball.bounds.x, 10f, 75f);
                 ball = null;
-                showUpgrade = true;
+                waitTime = 2;
             }
+        } else {
+            waitTime -= dt;
+            upgradeButton.isVisible = (waitTime < 0);
         }
 
         particle.update(dt);
@@ -67,10 +73,8 @@ public class DemoScreen extends BaseScreen {
             ball.render(batch);
         }
 
-        if (showUpgrade) {
-            renderUIElements(batch);
-        }
-
+        renderUIElements(batch);
+        
         particle.renderForegroundParticles(batch);
         batch.end();
     }
