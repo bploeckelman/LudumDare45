@@ -14,13 +14,6 @@ public class PixelBackground extends Background {
     }
 
     @Override
-    public void addCollision(float x, float y, float size, float ttl, Color color) {
-        if (collisions.size < explosionSize) {
-            collisions.add(new Collision(x, y, size, ttl, color));
-        }
-    }
-
-    @Override
     public void render(SpriteBatch batch) {
         for (int x = 0; x <= gameScreen.worldCamera.viewportWidth; x+= 50){
             for (int y = 0; y <= gameScreen.worldCamera.viewportHeight; y+= 50){

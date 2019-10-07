@@ -21,9 +21,7 @@ public class Background {
     }
 
     public void addCollision(float x, float y, float size, float ttl, Color color) {
-        if (collisions.size < explosionSize) {
-            collisions.add(new Collision(x, y, size, ttl, color));
-        }
+        collisions.insert(0, new Collision(x, y, size, ttl, color));
     }
 
     public void update(float dt) {

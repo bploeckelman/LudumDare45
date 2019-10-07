@@ -115,7 +115,7 @@ public class Ball {
         if (lastExposion <= 0){
             GameScreen gameScreen = (GameScreen)screen;
             gameScreen.background.addCollision(bounds.x, bounds.y, size, .9f, path.color);
-            lastExposion = .5f;
+            lastExposion = .1f;
         }
     }
 }

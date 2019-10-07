@@ -25,13 +25,6 @@ public class GraphPaperBackground extends Background {
         }
     }
 
-    @Override
-    public void addCollision(float x, float y, float size, float ttl, Color color) {
-        if (collisions.size < explosionSize) {
-            collisions.add(new Collision(x, y, size, ttl, color));
-        }
-    }
-
 
     @Override
     public void render(SpriteBatch batch) {
