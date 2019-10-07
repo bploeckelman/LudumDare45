@@ -20,6 +20,10 @@ public class UpgradeButton extends Button {
         return props.getCurrentDescription();
     }
 
+    public void addClickParticles() {
+        panel.screen.particle.addFireworkExplosion(collisionBounds.x + collisionBounds.width / 2f, collisionBounds.y + collisionBounds.height / 2f);
+    }
+
     @Override
     public void update(float dt) {
         super.update(dt);

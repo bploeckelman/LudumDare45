@@ -23,6 +23,7 @@ public class UpgradeScreen extends  BaseScreen {
     public void update(float dt) {
         super.update(dt);
         upgradePanel.update(dt);
+        particle.update(dt);
     }
 
     @Override
@@ -36,6 +37,8 @@ public class UpgradeScreen extends  BaseScreen {
 
             upgradePanel.render(batch);
             renderUIElements(batch);
+
+            particle.renderForegroundParticles(batch);
         }
         batch.end();
     }

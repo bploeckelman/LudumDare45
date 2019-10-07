@@ -204,14 +204,17 @@ public class UpgradePanel extends Panel {
             if (!screen.player.hasEffectParticles) {
                 screen.player.hasEffectParticles = true;
                 button.props.nextDescription();
+                button.addClickParticles();
                 // TODO: subtract cost
             } else if (!screen.player.hasEffectTrails) {
                 screen.player.hasEffectTrails = true;
                 button.props.nextDescription();
+                button.addClickParticles();
                 // TODO: subtract cost
             } else if (!screen.player.hasEffectScreenshake) {
                 screen.player.hasEffectScreenshake = true;
                 button.props.nextDescription();
+                button.addClickParticles();
                 // TODO: subtract cost
                 // TODO: disable as 'sold out'
                 button.isDisabled = true;
@@ -224,18 +227,22 @@ public class UpgradePanel extends Panel {
             if (screen.player.pegs == 0) {
                 screen.player.pegs = 1;
                 button.props.nextDescription();
+                button.addClickParticles();
                 // TODO: subtract cost
             } else if (screen.player.pegs == 1) {
                 screen.player.pegs = 4;
                 button.props.nextDescription();
+                button.addClickParticles();
                 // TODO: subtract cost
             } else if (screen.player.pegs == 4) {
                 screen.player.pegs = 8;
                 button.props.nextDescription();
+                button.addClickParticles();
                 // TODO: subtract cost
             } else if (screen.player.pegs == 8) {
                 screen.player.pegs = 10;
                 button.props.nextDescription();
+                button.addClickParticles();
                 // TODO: subtract cost
                 // TODO: disable as 'sold out'
                 button.isDisabled = true;
@@ -268,22 +275,27 @@ public class UpgradePanel extends Panel {
             if (screen.player.balls == 5) {
                 screen.player.balls += 10;
                 button.props.nextDescription();
+                button.addClickParticles();
                 // TODO: subtract cost
             } else if (screen.player.balls == 15) {
                 screen.player.balls += 25;
                 button.props.nextDescription();
+                button.addClickParticles();
                 // TODO: subtract cost
             } else if (screen.player.balls == 40) {
                 screen.player.balls += 50;
                 button.props.nextDescription();
+                button.addClickParticles();
                 // TODO: subtract cost
             } else if (screen.player.balls == 90) {
                 screen.player.balls += 100;
                 button.props.nextDescription();
+                button.addClickParticles();
                 // TODO: subtract cost
             } else if (screen.player.balls == 190) {
                 screen.player.balls += 200;
                 button.props.nextDescription();
+                button.addClickParticles();
                 // TODO: subtract cost
                 // TODO: disable as 'sold out'
                 button.isDisabled = true;
@@ -305,6 +317,7 @@ public class UpgradePanel extends Panel {
                 descriptionLabel.setLineAlign(Align.left);
                 descriptionLabel.setWidth(screen.worldCamera.viewportWidth - 4f * INSET_MARGIN);
                 descriptionLabel.setText(descriptionText);
+                button.addClickParticles();
                 // TODO: subtract cost
             } else if (screen.player.artPack == ArtPack.b) {
                 screen.player.artPack = ArtPack.c;
@@ -313,6 +326,7 @@ public class UpgradePanel extends Panel {
                 descriptionLabel.setLineAlign(Align.left);
                 descriptionLabel.setWidth(screen.worldCamera.viewportWidth - 4f * INSET_MARGIN);
                 descriptionLabel.setText(descriptionText);
+                button.addClickParticles();
                 // TODO: subtract cost
             } else if (screen.player.artPack == ArtPack.c) {
                 screen.player.artPack = ArtPack.d;
@@ -321,6 +335,7 @@ public class UpgradePanel extends Panel {
                 descriptionLabel.setLineAlign(Align.left);
                 descriptionLabel.setWidth(screen.worldCamera.viewportWidth - 4f * INSET_MARGIN);
                 descriptionLabel.setText(descriptionText);
+                button.addClickParticles();
                 // TODO: subtract cost
                 // TODO: disable as 'sold out'
                 button.isDisabled = true;
