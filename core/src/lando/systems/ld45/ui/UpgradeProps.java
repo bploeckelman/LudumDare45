@@ -15,7 +15,11 @@ public enum UpgradeProps {
            , "{SPEED=7}{GRADIENT=black;gray}Purchase pegs: {ENDGRADIENT} {RAINBOW} COMPLETE {ENDRAINBOW} \n\n{GRADIENT=black;gray}Pegs are simple obstacles to bounce off of.\nBuy more of them to place! {ENDGRADIENT} \n    {GRADIENT=forest;olive}1x, 4x, 8x, 10x{ENDGRADIENT}"
     )
     , bumpers(3, "Buy Bumpers",
-              "{SPEED=7}{GRADIENT=black;gray}Purchase bumpers:\n\nUnlock first, then purchase additional bumpers up to X{ENDGRADIENT}"
+              "{SPEED=7}{GRADIENT=black;gray}Purchase bumpers:\n\nBumpers are obstacles that balls bounce off of.\nBuy more of them to place!\n    1x, 4x, 8x, 10x{ENDGRADIENT}"
+            , "{SPEED=7}{GRADIENT=black;gray}Purchase bumpers:\n\nBumpers are obstacles that balls bounce off of.\nBuy more of them to place! {ENDGRADIENT} \n {GRADIENT=forest;olive}   1x, {ENDGRADIENT} {GRADIENT=black;gray} 4x, 8x, 10x{ENDGRADIENT}"
+            , "{SPEED=7}{GRADIENT=black;gray}Purchase bumpers:\n\nBumpers are obstacles that balls bounce off of.\nBuy more of them to place! {ENDGRADIENT} \n {GRADIENT=forest;olive}   1x, 4x, {ENDGRADIENT} {GRADIENT=black;gray} 8x, 10x{ENDGRADIENT}"
+            , "{SPEED=7}{GRADIENT=black;gray}Purchase bumpers:\n\nBumpers are obstacles that balls bounce off of.\nBuy more of them to place! {ENDGRADIENT} \n {GRADIENT=forest;olive}   1x, 4x, 8x, {ENDGRADIENT} {GRADIENT=black;gray} 10x{ENDGRADIENT}"
+            , "{SPEED=7}{GRADIENT=black;gray}Purchase bumpers: {ENDGRADIENT} {RAINBOW} COMPLETE {ENDRAINBOW} \n\n{GRADIENT=black;gray}Bumpers are obstacles that balls bounce off of.\nBuy more of them to place! {ENDGRADIENT} \n    {GRADIENT=forest;olive}1x, 4x, 8x, 10x{ENDGRADIENT}"
     )
     , spinners_left(4, "Buy Left Spinner",
                     "{SPEED=7}{GRADIENT=black;gray}Purchase spinners (rotating left):\n\nUnlock first, then purchase additional spinners up to X{ENDGRADIENT}"

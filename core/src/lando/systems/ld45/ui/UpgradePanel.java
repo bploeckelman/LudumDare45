@@ -134,7 +134,6 @@ public class UpgradePanel extends Panel {
         buyAudioButton.isDisabled                = true;
         buyLeftSpinnerGizmosButton.isDisabled    = true;
         buyRightSpinnerGizmosButton.isDisabled   = true;
-        buyBumperGizmosButton.isDisabled         = true;
 
         buyEffectsButton             .update(dt);
         buyCashMultiplierButton      .update(dt);
@@ -200,7 +199,6 @@ public class UpgradePanel extends Panel {
     private void initializeButtons() {
         buyEffectsButton.addClickHandler(() -> {
             UpgradeButton button = buyEffectsButton;
-            Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
             if (!screen.player.hasEffectParticles) {
                 screen.player.hasEffectParticles = true;
                 button.props.nextDescription();
@@ -223,7 +221,6 @@ public class UpgradePanel extends Panel {
 
         buyPegGizmosButton.addClickHandler(() -> {
             UpgradeButton button = buyPegGizmosButton;
-            Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
             if (screen.player.pegs == 0) {
                 screen.player.pegs = 1;
                 button.props.nextDescription();
@@ -251,27 +248,45 @@ public class UpgradePanel extends Panel {
 
         buyBumperGizmosButton.addClickHandler(() -> {
             UpgradeButton button = buyBumperGizmosButton;
-            Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
+            if (screen.player.bumpers == 0) {
+                screen.player.bumpers = 1;
+                button.props.nextDescription();
+                button.addClickParticles();
+                // TODO: subtract cost
+            } else if (screen.player.bumpers == 1) {
+                screen.player.bumpers = 4;
+                button.props.nextDescription();
+                button.addClickParticles();
+                // TODO: subtract cost
+            } else if (screen.player.bumpers == 4) {
+                screen.player.bumpers = 8;
+                button.props.nextDescription();
+                button.addClickParticles();
+                // TODO: subtract cost
+            } else if (screen.player.bumpers == 8) {
+                screen.player.bumpers = 10;
+                button.props.nextDescription();
+                button.addClickParticles();
+                // TODO: subtract cost
+                // TODO: disable as 'sold out'
+                button.isDisabled = true;
+            }
         });
 
         buyLeftSpinnerGizmosButton.addClickHandler(() -> {
             UpgradeButton button = buyLeftSpinnerGizmosButton;
-            Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
         });
 
         buyRightSpinnerGizmosButton.addClickHandler(() -> {
             UpgradeButton button = buyRightSpinnerGizmosButton;
-            Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
         });
 
         buyCashMultiplierButton.addClickHandler(() -> {
             UpgradeButton button = buyCashMultiplierButton;
-            Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
         });
 
         buyBallMultiplierButton.addClickHandler(() -> {
             UpgradeButton button = buyBallMultiplierButton;
-            Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
             if (screen.player.balls == 5) {
                 screen.player.balls += 10;
                 button.props.nextDescription();
@@ -304,12 +319,10 @@ public class UpgradePanel extends Panel {
 
         buyAudioButton.addClickHandler(() -> {
             UpgradeButton button = buyAudioButton;
-            Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
         });
 
         buyArtPackButton.addClickHandler(() -> {
             UpgradeButton button = buyArtPackButton;
-            Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
             if (screen.player.artPack == ArtPack.a) {
                 screen.player.artPack= ArtPack.b;
                 descriptionText = button.props.nextDescription();
