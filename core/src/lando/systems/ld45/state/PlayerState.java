@@ -94,4 +94,12 @@ public class PlayerState {
     public boolean canBuildRightSpinner() {
         return getCurrentRightSpinner() < rightSpinners;
     }
+
+    public boolean canBuildSomething() {
+        return canBuildPeg() || canBuildBumper() || canBuildRightSpinner() || canBuildLeftSpinner();
+    }
+
+    public boolean canUpgradeSomething() {
+        return true;
+    }
 }
