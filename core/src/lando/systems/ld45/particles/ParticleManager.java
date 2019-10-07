@@ -211,4 +211,13 @@ public class ParticleManager {
         }
     }
 
+    public void clearAll() {
+        activeBackgroundParticles.forEach(particlePool::free);
+        activeForegroundParticles.forEach(particlePool::free);
+        activeTextParticles.forEach(particlePool::free);
+        activeForegroundParticles.clear();
+        activeBackgroundParticles.clear();
+        activeTextParticles.clear();
+    }
+
 }

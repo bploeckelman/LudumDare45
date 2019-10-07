@@ -40,6 +40,8 @@ public class GameScreen extends BaseScreen {
 
     public GameScreen(Game game) {
         super(game);
+        game.particle.clearAll();
+
         background = new GraphPaperBackground(this);
         hopper = new Hopper(this);
 
