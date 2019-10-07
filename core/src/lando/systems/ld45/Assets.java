@@ -75,6 +75,10 @@ public class Assets {
     public ObjectMap<ArtPack, ObjectMap<UIAssetType, NinePatch>> uiAssetNinepatchMap;
     public ObjectMap<ArtPack, BitmapFont> fontMap;
 
+    public Animation<TextureRegion> hopper;
+    public TextureRegion hopperDoorOpen;
+    public TextureRegion hopperDoorClosed;
+
     public Animation<TextureRegion> scribble;
 
     public ShaderProgram ballTrailShader;
@@ -223,6 +227,10 @@ public class Assets {
         fontMap.put(ArtPack.b, mgr.get(fontArtPackAssetB));
         fontMap.put(ArtPack.c, mgr.get(fontArtPackAssetC));
         fontMap.put(ArtPack.d, mgr.get(fontArtPackAssetD));
+
+        hopper = new Animation<>(0.1f, atlas.findRegions("hopper"), Animation.PlayMode.LOOP_PINGPONG);
+        hopperDoorClosed = atlas.findRegion("hopper-door-closed");
+        hopperDoorOpen = atlas.findRegion("hopper-door-open");
 
         scribble = new Animation<>(0.1f, atlas.findRegions("scribble-a"));
 

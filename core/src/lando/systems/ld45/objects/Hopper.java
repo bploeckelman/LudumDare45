@@ -2,6 +2,7 @@ package lando.systems.ld45.objects;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld45.Config;
@@ -15,10 +16,13 @@ public class Hopper {
 
     private GameScreen screen;
 
-    private float length = 100;
+    private float length = 96;
     private float dropTime = 0;
     private boolean droppingBalls;
     private float inputDelay;
+
+    private float time = 0;
+    private boolean isOpen = false;
 
     public Hopper(GameScreen screen) {
         this.screen = screen;
@@ -43,12 +47,13 @@ public class Hopper {
     }
 
     public void update(float dt) {
+        time += dt;
         if (availableBalls == 0) return;
         inputDelay -= dt;
 
         dropTime -= dt;
 
-        if (droppingBalls){
+        if (droppingBalls) {
             timeDrop();
         }
         move(dt);
@@ -57,6 +62,8 @@ public class Hopper {
 
     Vector2 tempVector2 = new Vector2();
     public void timeDrop() {
+        isOpen = true;
+
         if (dropTime < 0) {
             dropTime = 0.5f;
             int ballsToDrop = (screen.game.player.balls / 5) + 1;
@@ -71,6 +78,7 @@ public class Hopper {
             }
 
             availableBalls -= ballsToDrop;
+            isOpen = availableBalls != 0;
         }
     }
 
@@ -93,10 +101,19 @@ public class Hopper {
     }
 
     public void render(SpriteBatch batch) {
-        if (availableBalls > 0) {
-            batch.setColor(Color.BLUE);
-            batch.draw(screen.assets.whitePixel, position.x - length / 2, position.y, length, 10);
-            batch.setColor(Color.WHITE);
-        }
+        //if (availableBalls > 0) {
+//            batch.setColor(Color.BLUE);
+//            batch.draw(screen.assets.whitePixel, position.x - length / 2, position.y, length, 10);
+//            batch.setColor(Color.WHITE);
+            TextureRegion texture = screen.assets.hopper.getKeyFrame(time);
+            float y = position.y - 18;
+            batch.draw(texture, position.x - 48, y, 48, 18, 96, 36, 1, 1, 0);
+
+            if (isOpen) {
+                batch.draw(screen.assets.hopperDoorOpen, position.x - 48, y, 48, 18, 96, 36, 1, 1, 0);
+            } else {
+                batch.draw(screen.assets.hopperDoorClosed, position.x - 48, y, 48, 18, 96, 36, 1, 1, 0);
+            }
+        //}
     }
 }

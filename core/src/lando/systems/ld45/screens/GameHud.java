@@ -132,9 +132,8 @@ public class GameHud {
 
         if (!screen.gameOver) {
             timeBox.setText(toTimeString(time));
-            ballBox.setText(screen.balls.size + " B");
         }
-
+        ballBox.setText(screen.balls.size + " B");
         scoreBox.setText("$" + (long)scoreValue);
         scoreBox.update(dt);
 
@@ -153,7 +152,9 @@ public class GameHud {
         if (!screen.editMode) {
             scoreBox.render(batch);
             timeBox.render(batch);
-            ballBox.render(batch);
+            if (!screen.gameOver) {
+                ballBox.render(batch);
+            }
         }
         screen.renderUIElements(batch);
     }
