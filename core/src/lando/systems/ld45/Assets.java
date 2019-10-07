@@ -68,6 +68,18 @@ public class Assets {
     public ShaderProgram ballTrailShader;
     public ShaderProgram hexGridShader;
 
+    public Array<ShaderProgram> randomTransitions;
+    public ShaderProgram blindsShader;
+    public ShaderProgram fadeShader;
+    public ShaderProgram radialShader;
+    public ShaderProgram doomShader;
+    public ShaderProgram pizelizeShader;
+    public ShaderProgram doorwayShader;
+    public ShaderProgram crosshatchShader;
+    public ShaderProgram rippleShader;
+    public ShaderProgram heartShader;
+    public ShaderProgram stereoShader;
+    public ShaderProgram circleCropShader;
 
     public boolean initialized;
 
@@ -168,6 +180,27 @@ public class Assets {
 
         ballTrailShader = loadShader("shaders/standardMesh.vert", "shaders/ballTrailMesh.frag");
         hexGridShader = loadShader("shaders/standard.vert", "shaders/hexGrid.frag");
+
+        randomTransitions = new Array<>();
+        blindsShader = loadShader("shaders/default.vert", "shaders/blinds.frag");
+        fadeShader = loadShader("shaders/default.vert", "shaders/dissolve.frag");
+        radialShader = loadShader("shaders/default.vert", "shaders/radial.frag");
+        doomShader = loadShader("shaders/default.vert", "shaders/doomdrip.frag");
+        pizelizeShader = loadShader("shaders/default.vert", "shaders/pixelize.frag");
+        doorwayShader = loadShader("shaders/default.vert", "shaders/doorway.frag");
+        crosshatchShader = loadShader("shaders/default.vert", "shaders/crosshatch.frag");
+        rippleShader = loadShader("shaders/default.vert", "shaders/ripple.frag");
+        heartShader = loadShader("shaders/default.vert", "shaders/heart.frag");
+        stereoShader = loadShader("shaders/default.vert", "shaders/stereo.frag");
+        circleCropShader = loadShader("shaders/default.vert", "shaders/circlecrop.frag");
+
+
+
+//        randomTransitions.add(blindsShader);
+//        randomTransitions.add(fadeShader);
+        randomTransitions.add(radialShader);
+//        randomTransitions.add(rippleShader);
+//        randomTransitions.add(pizelizeShader);
 
         return 1;
     }

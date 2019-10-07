@@ -2,6 +2,7 @@ package lando.systems.ld45.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import lando.systems.ld45.Config;
 import lando.systems.ld45.Game;
@@ -27,7 +28,7 @@ public class TitleScreen extends BaseScreen {
         label.update(dt);
 
         if (Gdx.input.justTouched()) {
-            game.setScreen(new DemoScreen(game));
+            game.setScreen(new DemoScreen(game), assets.doorwayShader, 1f);
         }
     }
 
@@ -35,8 +36,11 @@ public class TitleScreen extends BaseScreen {
     public void render(SpriteBatch batch) {
         batch.begin();
         batch.setProjectionMatrix(worldCamera.combined);
+        batch.setColor(Color.BLACK);
+        batch.draw(assets.whitePixel, 0,0, worldCamera.viewportWidth, worldCamera.viewportHeight);
+        batch.setColor(Color.WHITE);
 
-       label.render(batch);
+        label.render(batch);
 
         batch.end();
     }

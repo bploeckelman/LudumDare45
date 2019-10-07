@@ -21,19 +21,20 @@ public class DemoScreen extends BaseScreen {
 
         ball = new Ball(this, Config.ballRadius);
         ball.color.set(Color.WHITE);
-        ball.initialize(Config.gameWidth / 2, Config.initialBallY, 0, -99);
+        ball.initialize(Config.gameWidth / 2, 620, 0, -99);
 
         float width = 500f;
         float height = 50f;
         upgradeButton = new Button(this, hudCamera,hudCamera.viewportWidth / 2f - width / 2f, height, width, height);
         upgradeButton.setText("Buy Upgrade Menu: $1");
         upgradeButton.set(this);
-        upgradeButton.addClickHandler(() -> game.setScreen(new UpgradeScreen(game)) );
+        upgradeButton.addClickHandler(() -> game.setScreen(new UpgradeScreen(game), game.assets.pizelizeShader, 1f) );
     }
 
     @Override
     public void update(float dt) {
         super.update(dt);
+        if (transitionDelay > 0) return;
 
         if (ball != null) {
             ball.update(dt);

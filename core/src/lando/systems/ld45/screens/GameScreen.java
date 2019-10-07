@@ -117,7 +117,9 @@ public class GameScreen extends BaseScreen {
     @Override
     public void update(float dt) {
         super.update(dt);
+        hud.update(dt);
 
+        if (transitionDelay>0) return;
         shitCommands();
 
         background.update(dt);
@@ -176,7 +178,6 @@ public class GameScreen extends BaseScreen {
             endGame();
         }
 
-        hud.update(dt);
     }
 
     public void toggleToyBox() {

@@ -24,6 +24,10 @@ public class HexBackground extends Background {
 
     @Override
     public void render(SpriteBatch batch) {
+        batch.setColor(Color.BLACK);
+        batch.draw(gameScreen.assets.whitePixel, 0,0, gameScreen.worldCamera.viewportWidth, gameScreen.worldCamera.viewportHeight);
+        batch.setColor(Color.WHITE);
+
         ShaderProgram shader = gameScreen.assets.hexGridShader;
         for (int i = 0; i < explosionSize; i++){
             int index = i * 4;

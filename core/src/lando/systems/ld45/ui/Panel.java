@@ -13,7 +13,7 @@ import lando.systems.ld45.utils.UIAssetType;
 
 public class Panel {
 
-    private static final float DEFAULT_SHOW_DURATION = 0.33f;
+    private static final float DEFAULT_SHOW_DURATION = .63f;
     private static final float DEFAULT_HIDE_DURATION = 0.2f;
 
     protected boolean visible;

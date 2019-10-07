@@ -29,6 +29,7 @@ public abstract class BaseScreen extends InputAdapter {
 //    public ArtPack artPack = ArtPack.a;
 
     public PlayerState player;
+    protected float transitionDelay;
 
     public Array<UIElement> uiElements = new Array<>();
 
@@ -48,6 +49,7 @@ public abstract class BaseScreen extends InputAdapter {
         this.hudCamera.setToOrtho(false, Config.gameWidth, Config.gameHeight);
         this.hudCamera.update();
         this.shaker = new ScreenShakeCameraController(worldCamera);
+        transitionDelay = 1f;
 
     }
 
@@ -56,6 +58,7 @@ public abstract class BaseScreen extends InputAdapter {
     }
 
     public void update(float dt) {
+        transitionDelay -= dt;
         uiElements.forEach(x -> x.update(dt));
         shaker.update(dt);
     }
