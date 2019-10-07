@@ -64,7 +64,7 @@ public enum UpgradeProps {
            , "{SPEED=7}{GRADIENT=black;gray}Purchase art:\n\nIt's like audio, but for your eyes... Hire an artist\nUpgrade through four distinct art packs!{ENDGRADIENT}\n {GRADIENT=forest;olive}   Pencil sketch, Flat colors, Simple pixels, {ENDGRADIENT}{GRADIENT=black;gray} HD pixels {ENDGRADIENT} "
            , "{SPEED=7}{GRADIENT=black;gray}Purchase art: {ENDGRADIENT} {RAINBOW} COMPLETE {ENDRAINBOW} \n\n{GRADIENT=black;gray}It's like audio, but for your eyes... Hire an artist!\nUpgrade through four distinct art packs!{ENDGRADIENT}\n {GRADIENT=forest;olive}   Pencil sketch, Flat colors, Simple pixels, HD pixels {ENDGRADIENT} "
     )
-    , win_game(1, "Win the game", new Integer[]{0, 100000}
+    , win_game(1, "Win the game", new Integer[]{100000, Integer.MAX_VALUE}
             , "{SPEED=7}{GRADIENT=gold;tan}Pay to win the game!{ENDGRADIENT} \n\n{GRADIENT=black;gray}Some people say paying to win is bad...\n\nbut this is the ultimate {ENDGRADIENT}{WAVE}{RAINBOW}BALL OF DUTY{ENDRAINBOW}{ENDWAVE} "
             , "{SPEED=10}{RAINBOW}YOU DID IT!{ENDRAINBOW} \n\n{GRADIENT=black;gray}Some people say paying to win is bad...\n\nbut this is the ultimate {ENDGRADIENT}{WAVE}{RAINBOW}BALL OF DUTY{ENDRAINBOW}{ENDWAVE} "
     )
