@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld45.Game;
 import lando.systems.ld45.backgrounds.Background;
+import lando.systems.ld45.backgrounds.FlatBackground;
 import lando.systems.ld45.backgrounds.GraphPaperBackground;
 import lando.systems.ld45.collision.CollisionManager;
 import lando.systems.ld45.objects.*;
@@ -181,7 +182,7 @@ public class GameScreen extends BaseScreen {
 
     private void renderBallTrails() {
         Gdx.gl.glEnable(GL20.GL_BLEND);
-        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         // normal blendy
 //        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
         // vector-ish blendy
@@ -211,7 +212,7 @@ public class GameScreen extends BaseScreen {
 
             balls.forEach(Ball::renderTrailMesh);
         }
-        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         assets.ballTrailShader.end();
     }
 

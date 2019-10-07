@@ -30,9 +30,9 @@ public class Spinner extends GameObject {
 
         image = screen.assets.assetMap.get(screen.game.artPack).get(AssetType.spinner).getKeyFrames()[0];
 
-        float dr = 30 * dt;
+        float dr = 200 * dt;
         if (currentHitTime > 0) {
-            dr = 360*dt;
+            dr = 460*dt;
             if (currentHitTime < (hitTime/2)) {
                 dr = Interpolation.pow2Out.apply(1 - (currentHitTime / hitTime / 2));
             }

@@ -45,7 +45,7 @@ public class BallPath {
 
     public BallPath(Game game, Color color, int maxPathLength) {
         this.game = game;
-        this.color = color;
+        this.color = new Color(color);
 
         this.ballPosSamples = new FixedList<>(maxPathLength, Vector2.class);
         this.ballPosSamplesSimplified = new Array<>(true, maxPathLength, Vector2.class);
@@ -72,6 +72,10 @@ public class BallPath {
         addBallPositionSamples(ball);
         simplifyAndSmoothPath();
         populateVertexArrayFromSamples(ball.bounds.radius);
+    }
+
+    public void setColor(Color color){
+        this.color.set(color);
     }
 
     public void renderIsolated(float time) {

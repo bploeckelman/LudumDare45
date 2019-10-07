@@ -99,7 +99,6 @@ public class Assets {
 
         pixel = mgr.get(pixelTextureAsset);
         gridPaper = mgr.get(gridpaperTextureAsset);
-        gridPaper.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         gridPaper.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         pathGradientTexture = mgr.get(pathGradientTextureAsset);
         crossHatchGradientTexture = mgr.get(crosshatchGradientTextureAsset);

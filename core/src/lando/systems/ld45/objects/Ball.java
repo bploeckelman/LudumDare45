@@ -22,7 +22,7 @@ public class Ball {
     public Circle bounds = new Circle();
     public Vector2 vel = new Vector2();
     public Vector2 pos = new Vector2();
-    public Color color;
+    public Color color = new Color();
     public TextureRegion keyframe;
     public BaseScreen screen;
     public float dtLeft;
@@ -40,10 +40,8 @@ public class Ball {
             color = Color.SALMON;
         }
 
-        this.color = color;
-        if (screen.game.artPack == ArtPack.a){
-            this.color = new Color(Color.BLACK);
-        }
+        this.color.set(color);
+
         this.bounds.set(0, 0, radius);
         this.screen = screen;
 
@@ -51,6 +49,10 @@ public class Ball {
         this.dtLeft = 0;
 
         this.path = new BallPath(screen.game, this.color);
+        if (screen.game.artPack == ArtPack.a){
+            this.color.set(Color.GRAY);
+            this.path.setColor(Color.GRAY);
+        }
     }
 
     public void initialize(float positionX, float positionY, float velocityX, float velocityY) {
