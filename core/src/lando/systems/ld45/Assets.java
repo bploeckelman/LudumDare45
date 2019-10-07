@@ -46,6 +46,8 @@ public class Assets {
 
     public TextureRegion whitePixel;
     public TextureRegion whiteCircle;
+    public TextureRegion romeo;
+    public TextureRegion asuka;
 
     public TextureRegion uiCursorHand;
     public Array<TextureRegion> equations;
@@ -113,6 +115,8 @@ public class Assets {
         atlas = mgr.get(atlasAsset);
         whitePixel = atlas.findRegion("white-pixel");
         whiteCircle = atlas.findRegion("white-circle");
+        romeo = atlas.findRegion("romeo");
+        asuka = atlas.findRegion("asuka");
         equations = new Array<>();
         for (int i = 0; i < 7; i++){
             equations.add(atlas.findRegion("equation"+i));

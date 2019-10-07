@@ -26,8 +26,9 @@ public class WinnerScreen extends BaseScreen {
     static String title = "Ball of Duty: {SICK}Pachinko Edition{ENDSICK}";
     static String theme = "Made for Ludum Dare 45:\nTheme: Start with nothing";
     static String thanks = "Thanks for playing our game!";
-    static String developers = "Developed by:\nDoug Graham\nBrian Ploeckelman\nBrian Rossman\nJeffrey Hwang\nJake";
-    static String artists = "Art by:\nSomeone";
+    static String developers = "Developed by:\nDoug Graham\nBrian Ploeckelman\nBrian Rossman\nJeffrey Hwang\nJake Shropshire";
+    static String artists = "Art by:\nMatt Neumann\nTroy Sullivan";
+    static String otherDuties = "Other Duties as Assigned:\nLuke Bain";
     static String emotionalSupport = "Emotional Support:\nAsuka the Shiba\n" + "Romeo the Poodle";
     static String music = "Sound by:\nSomeone";
     static String libgdx = "Made with {COLOR=red}<3{COLOR=white} and LibGDX";
@@ -42,8 +43,8 @@ public class WinnerScreen extends BaseScreen {
         titleLabel.setFontScale(2f);
         titleLabel.setY(Config.gameHeight / 2f + 280f);
 
-        themeLabel = new TypingLabel(assets.fontMap.get(ArtPack.b), theme, 0f, 0f);
-        themeLabel.setWidth(Config.gameWidth);
+        themeLabel = new TypingLabel(assets.fontMap.get(ArtPack.b), theme, 25f, 0f);
+        themeLabel.setWidth(Config.gameWidth / 2 - 50f);
         themeLabel.setFontScale(1.5f);
         themeLabel.setY(Config.gameHeight / 2f + 230f);
 
@@ -88,17 +89,20 @@ public class WinnerScreen extends BaseScreen {
     public void render(SpriteBatch batch) {
         batch.begin();
         batch.setProjectionMatrix(worldCamera.combined);
+        batch.draw(assets.asuka, 25f, 110f, Config.gameWidth / 2 - 50f, 350f);
+        batch.draw(assets.romeo, Config.gameWidth / 2 + 25f, 110f, Config.gameWidth / 2 - 50f, 350f);
+        batch.setColor(0f, 0f, 0f, 0.6f);
+        batch.draw(assets.whitePixel, 25f, 110f, Config.gameWidth / 2 - 50f, 350f);
+        batch.draw(assets.whitePixel, Config.gameWidth / 2 + 25f, 110f, Config.gameWidth / 2 - 50f, 350f);
+        batch.setColor(Color.WHITE);
+        // TODO: button for stat goes here
+        batch.draw(assets.whitePixel, Config.gameWidth / 2 + 25f, Config.gameHeight / 2f + 170f, Config.gameWidth / 2 - 50f, 40f);
         titleLabel.render(batch);
         themeLabel.render(batch);
         leftCreditLabel.render(batch);
         rightCreditLabel.render(batch);
         thanksLabel.render(batch);
         disclaimerLabel.render(batch);
-
-//        renderTextWithBorder(developers + "\n\n" + emotionalSupport, 2f, Config.gameWidth / 2 - 50f, 25f, Config.gameHeight / 2f + 150f);
-//        renderTextWithBorder(artists + "\n\n" + music + "\n\n" + libgdx, 2f, Config.gameWidth / 2 - 50f, Config.gameWidth / 2 + 25f, Config.gameHeight / 2f + 150f);
-//        renderTextWithBorder(thanks, 2f, Config.gameWidth, 0f,  100f);
-//        renderTextWithBorder(disclaimer, 1f, Config.gameWidth, 0f,  50f);
         batch.end();
     }
 
