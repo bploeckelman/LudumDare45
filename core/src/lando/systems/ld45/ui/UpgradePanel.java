@@ -125,6 +125,7 @@ public class UpgradePanel extends Panel {
         buyBumperGizmosButton         .setHudBox(x, y, buttonWidth, rowHeight); x += buttonWidth;
         buyRightSpinnerGizmosButton   .setHudBox(x, y, buttonWidth, rowHeight); x += buttonWidth;
 
+        descriptionBox               .update(dt);
         buyEffectsButton             .update(dt);
         buyCashMultiplierButton      .update(dt);
         buyBallMultiplierButton      .update(dt);

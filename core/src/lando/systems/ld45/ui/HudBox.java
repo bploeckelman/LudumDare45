@@ -108,10 +108,27 @@ public class HudBox  {
 
         float half = width/2;
 
-        batch.draw(Game.getAsset(AssetType.boundary_line_short_bottom, time), bounds.x + half, bounds.y - half, bounds.width - width, width);
-        batch.draw(Game.getAsset(AssetType.boundary_line_short_left, time), bounds.x - half, bounds.y + half, width, bounds.height - width);
-        batch.draw(Game.getAsset(AssetType.boundary_line_short_top, time), bounds.x + half, bounds.y + bounds.height - half, bounds.width - width, width);
-        batch.draw(Game.getAsset(AssetType.boundary_line_short_right, time), bounds.x + bounds.width - half, bounds.y + half, width, bounds.height - width);
+        AssetType[] types = new AssetType[] {
+                AssetType.boundary_line_short_bottom,
+                AssetType.boundary_line_short_left,
+                AssetType.boundary_line_short_top,
+                AssetType.boundary_line_short_right
+        };
+
+        if (bounds.width > 400) {
+            types[0] = AssetType.boundary_line_long_bottom;
+            types[2] = AssetType.boundary_line_long_top;
+        }
+
+        if (bounds.height > 200) {
+            types[1] = AssetType.boundary_line_long_left;
+            types[3] = AssetType.boundary_line_long_right;
+        }
+
+        batch.draw(Game.getAsset(types[0], time), bounds.x + half, bounds.y - half, bounds.width - width, width);
+        batch.draw(Game.getAsset(types[1], time), bounds.x - half, bounds.y + half, width, bounds.height - width);
+        batch.draw(Game.getAsset(types[2], time), bounds.x + half, bounds.y + bounds.height - half, bounds.width - width, width);
+        batch.draw(Game.getAsset(types[3], time), bounds.x + bounds.width - half, bounds.y + half, width, bounds.height - width);
 
         float capSize = width * 3 / 2;
         half = capSize / 2;
