@@ -529,8 +529,11 @@ public class UpgradePanel extends Panel {
     }
 
     private String getCostTextForButton(UpgradeButton button) {
-        return "{GRADIENT=red;blue}Upgrade Cost: $" + button.props.getCurrentCost() + " {ENDGRADIENT}   "
-             + "{GRADIENT=forest;olive}Available Cash: $ " + screen.player.score + " {ENDGRADIENT} ";
+        int cost = button.props.getCurrentCost();
+        long cash = screen.player.score;
+        return "{SPEED=10}{GRADIENT=goldenrod;dark_gray}Upgrade Cost: $" + cost + " {ENDGRADIENT}   "
+             + ((cash < cost) ? "{GRADIENT=red;pink}" : "{GRADIENT=forest;olive}")
+             + "Available Cash: $ " + cash + " {ENDGRADIENT} ";
     }
 
 }

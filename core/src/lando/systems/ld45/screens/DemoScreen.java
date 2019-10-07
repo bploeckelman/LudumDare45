@@ -31,7 +31,10 @@ public class DemoScreen extends BaseScreen {
         upgradeButton = new Button(this, hudCamera,
                 (hudCamera.viewportWidth - width) / 2f, (hudCamera.viewportHeight - height) / 2, width, height);
         upgradeButton.setText("Buy Upgrade Menu: $1");
-        upgradeButton.addClickHandler(() -> game.setScreen(new UpgradeScreen(game), game.assets.pizelizeShader, 1f) );
+        upgradeButton.addClickHandler(() -> {
+            player.score -= 1;
+            game.setScreen(new UpgradeScreen(game), game.assets.pizelizeShader, 1f);
+        } );
         upgradeButton.isVisible = false;
         upgradeButton.setHighlight(true);
         addUIElement(upgradeButton);

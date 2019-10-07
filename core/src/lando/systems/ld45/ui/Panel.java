@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import lando.systems.ld45.Game;
 import lando.systems.ld45.accessors.RectangleAccessor;
 import lando.systems.ld45.screens.BaseScreen;
 import lando.systems.ld45.utils.Callback;
@@ -45,16 +46,17 @@ public class Panel {
     }
 
     public void update(float dt) {
-        panel = screen.assets.uiAssetNinepatchMap.get(screen.game.player.artPack).get(uiAssetTypePanel);
-        inset = screen.assets.uiAssetNinepatchMap.get(screen.game.player.artPack).get(uiAssetTypePanelInset);
+//        panel = screen.assets.uiAssetNinepatchMap.get(screen.game.player.artPack).get(uiAssetTypePanel);
+//        inset = screen.assets.uiAssetNinepatchMap.get(screen.game.player.artPack).get(uiAssetTypePanelInset);
     }
 
     public void render(SpriteBatch batch) {
         if (!visible) return;
-        panel.draw(batch, bounds.x, bounds.y, bounds.width, bounds.height);
-        inset.draw(batch, bounds.x + INSET_MARGIN, bounds.y + INSET_MARGIN,
-                   bounds.width - 2f * INSET_MARGIN,
-                   bounds.height - 2f * INSET_MARGIN);
+        batch.draw(Game.getAssets().whitePixel, bounds.x, bounds.y, bounds.width, bounds.height);
+//        panel.draw(batch, bounds.x, bounds.y, bounds.width, bounds.height);
+//        inset.draw(batch, bounds.x + INSET_MARGIN, bounds.y + INSET_MARGIN,
+//                   bounds.width - 2f * INSET_MARGIN,
+//                   bounds.height - 2f * INSET_MARGIN);
     }
 
     public void show(OrthographicCamera camera) {
