@@ -19,6 +19,8 @@ public class Hopper {
 
     private float length = 100;
     private float dropTime = 0;
+    private boolean droppingBalls;
+    private float inputDelay;
 
     public Hopper(GameScreen screen) {
         this.screen = screen;
@@ -34,13 +36,20 @@ public class Hopper {
     public void reset() {
         position = new Vector2(Config.gameWidth / 2, Config.gameHeight - 20);
         availableBalls = screen.game.player.balls;
+        droppingBalls = false;
+        inputDelay = .2f;
     }
 
     public void update(float dt) {
         if (availableBalls == 0) return;
+        inputDelay -= dt;
 
         dropTime -= dt;
-        if (Gdx.input.isTouched() || Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+        if (inputDelay <= 0 && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+            droppingBalls = true;
+        }
+
+        if (droppingBalls){
             dropBall(dt);
         }
         move(dt);

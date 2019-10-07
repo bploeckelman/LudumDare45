@@ -40,8 +40,8 @@ public class HexBackground extends Background {
                 explosionOwnerArray[ownerIndex+2] = e.color.b;
 
             } else {
-                explosionArray[index] = 0;
-                explosionArray[index+1] = 0;
+                explosionArray[index] = -100;
+                explosionArray[index+1] = -100;
                 explosionArray[index+2] = 0;
                 explosionArray[index+3] = 0;
                 explosionOwnerArray[ownerIndex] = 0;

@@ -42,10 +42,10 @@ public class ToyChestPanel extends Panel {
         this.artPack = screen.game.player.artPack;
 
         this.gameScreen = (GameScreen)screen;
-        pegRect = new Rectangle();
-        bumperRect = new Rectangle();
-        leftSpinnerRect = new Rectangle();
-        rightSpinnerRect = new Rectangle();
+        pegRect = new Rectangle(-100, -100, 1, 1);
+        bumperRect = new Rectangle(-100, -100, 1, 1);
+        leftSpinnerRect = new Rectangle(-100, -100, 1, 1);
+        rightSpinnerRect = new Rectangle(-100, -100, 1, 1);
         projection = new Vector3();
     }
 
