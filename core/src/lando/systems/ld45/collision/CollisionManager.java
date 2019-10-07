@@ -192,7 +192,7 @@ public class CollisionManager {
                                 if (obj instanceof Bumper) {
                                     b.vel.add(normal.x * 100, normal.y * 100);
 
-                                    long points = Bumper.SCORE_VALUE;
+                                    long points = Bumper.SCORE_VALUE * screen.player.cashMultiplier;
                                     screen.player.addScore(points);
                                     screen.particle.addPointsParticles(points, b.bounds.x, b.bounds.y + 5f);
                                 }
@@ -201,12 +201,12 @@ public class CollisionManager {
                                     normal.rotate90(spin.left ? 1 : -1);
                                     b.vel.add(normal.x * 400, normal.y * 400);
 
-                                    long points = Spinner.SCORE_VALUE;
+                                    long points = Spinner.SCORE_VALUE * screen.player.cashMultiplier;
                                     screen.player.addScore(points);
                                     screen.particle.addPointsParticles(points, b.bounds.x, b.bounds.y + 5f);
                                 }
                                 if (obj instanceof Peg){
-                                    long points = Peg.SCORE_VALUE;
+                                    long points = Peg.SCORE_VALUE * screen.player.cashMultiplier;
                                     screen.player.addScore(points);
                                     screen.particle.addPointsParticles(points, b.bounds.x, b.bounds.y + 5f);
                                 }

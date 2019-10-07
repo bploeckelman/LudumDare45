@@ -44,7 +44,7 @@ public class DemoScreen extends BaseScreen {
             ball.bounds.y += (ball.vel.y*dt);
 
             if (ball.isOffscreen()) {
-                long points = 1;
+                long points = 1 * player.cashMultiplier;
                 game.player.addScore(points);
                 particle.addPointsParticles(points, ball.bounds.x, 10f, 75f);
                 ball = null;
@@ -74,7 +74,7 @@ public class DemoScreen extends BaseScreen {
         }
 
         renderUIElements(batch);
-        
+
         particle.renderForegroundParticles(batch);
         batch.end();
     }

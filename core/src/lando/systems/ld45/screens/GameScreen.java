@@ -136,7 +136,7 @@ public class GameScreen extends BaseScreen {
             if (b.isOffscreen()) {
                 balls.removeIndex(i);
 
-                long points = 1;
+                long points = 1 * player.cashMultiplier;
                 player.addScore(points);
                 particle.addPointsParticles(points, b.bounds.x, 10f);
             }

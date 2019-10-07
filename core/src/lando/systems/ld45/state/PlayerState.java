@@ -28,6 +28,7 @@ public class PlayerState {
     public boolean hasEffectTrails      = false;
     public boolean hasEffectScreenshake = false;
 
+    public int cashMultiplier = 1;
 
 
     public Array<GameObject> gameObjects;
@@ -38,6 +39,7 @@ public class PlayerState {
     }
 
     public void addScore(long value) {
+        // NOTE: cashMultiplier is added outside here so that the score particle number is updated too
         score += value;
         totalScore += value;
     }

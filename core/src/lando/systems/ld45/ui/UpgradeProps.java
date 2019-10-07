@@ -36,7 +36,11 @@ public enum UpgradeProps {
             , "{SPEED=7}{GRADIENT=black;gray}Purchase spinners (rotating right): {ENDGRADIENT} {RAINBOW} COMPLETE {ENDRAINBOW} \n\n{GRADIENT=black;gray}Spinners send balls flying in their rotation direction.\nBuy more of them to place! {ENDGRADIENT} \n    {GRADIENT=forest;olive}     1x, 4x, 8x, 10x{ENDGRADIENT}"
     )
     , cash_multipliers(4,"Buy Cash Multiplier",
-                       "{SPEED=7}{GRADIENT=black;gray}Purchase cash multiplier:\n\nIncrease the amount of money you get for everything;\n2x, 4x, 8x, and 16x{ENDGRADIENT}"
+            "{SPEED=7}{GRADIENT=black;gray}Purchase cash multiplier:\n\nIncrease the amount of money you earn for everything; {ENDGRADIENT} \n {GRADIENT=forest;olive}         1x, {ENDGRADIENT} {GRADIENT=black;gray} 2x, 4x, 8x, 16x{ENDGRADIENT}"
+            , "{SPEED=7}{GRADIENT=black;gray}Purchase cash multiplier:\n\nIncrease the amount of money you earn for everything; {ENDGRADIENT} \n {GRADIENT=forest;olive}         1x, 2x, {ENDGRADIENT} {GRADIENT=black;gray} 4x, 8x, 16x{ENDGRADIENT}"
+            , "{SPEED=7}{GRADIENT=black;gray}Purchase cash multiplier:\n\nIncrease the amount of money you earn for everything; {ENDGRADIENT} \n {GRADIENT=forest;olive}         1x, 2x, 4x, {ENDGRADIENT} {GRADIENT=black;gray} 8x, 16x{ENDGRADIENT}"
+            , "{SPEED=7}{GRADIENT=black;gray}Purchase cash multiplier:\n\nIncrease the amount of money you earn for everything; {ENDGRADIENT} \n {GRADIENT=forest;olive}         1x, 2x, 4x, 8x, {ENDGRADIENT} {GRADIENT=black;gray} 16x{ENDGRADIENT}"
+            , "{SPEED=7}{GRADIENT=black;gray}Purchase cash multiplier: {ENDGRADIENT} {RAINBOW} COMPLETE {ENDRAINBOW} \n\n{GRADIENT=black;gray}Increase the amount of money you earn for everything; {ENDGRADIENT} \n {GRADIENT=forest;olive}         1x, 2x, 4x, 8x, 16x{ENDGRADIENT}"
     )
     , ball_multipliers(5, "Buy More Balls",
            "{SPEED=7}{GRADIENT=black;gray}Purchase more balls:\n\nDrop more balls each playthrough...{ENDGRADIENT} \n    {GRADIENT=forest;olive}+5, {ENDGRADIENT} {GRADIENT=black;gray}+10, +25, +50, +100, +200{ENDGRADIENT}"

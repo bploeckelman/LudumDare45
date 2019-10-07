@@ -130,7 +130,6 @@ public class UpgradePanel extends Panel {
 
         // TODO: determine what to disable based on already purchased stuff and current cash money
         // TODO: if we've already purchased everything for one upgrade type, set to 'sold out' status
-        buyCashMultiplierButton.isDisabled       = true;
         buyAudioButton.isDisabled                = true;
 
         buyEffectsButton             .update(dt);
@@ -321,6 +320,28 @@ public class UpgradePanel extends Panel {
 
         buyCashMultiplierButton.addClickHandler(() -> {
             UpgradeButton button = buyCashMultiplierButton;
+            if (screen.player.cashMultiplier == 1) {
+                screen.player.cashMultiplier = 2;
+                button.props.nextDescription();
+                button.addClickParticles();
+                // TODO: subtract cost
+            } else if (screen.player.cashMultiplier == 2) {
+                screen.player.cashMultiplier = 4;
+                button.props.nextDescription();
+                button.addClickParticles();
+                // TODO: subtract cost
+            } else if (screen.player.cashMultiplier == 4) {
+                screen.player.cashMultiplier = 8;
+                button.props.nextDescription();
+                button.addClickParticles();
+                // TODO: subtract cost
+            } else if (screen.player.cashMultiplier == 8) {
+                screen.player.cashMultiplier = 16;
+                button.props.nextDescription();
+                button.addClickParticles();
+                // TODO: subtract cost
+                button.isDisabled = true;
+            }
         });
 
         buyBallMultiplierButton.addClickHandler(() -> {
