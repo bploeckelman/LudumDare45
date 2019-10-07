@@ -53,7 +53,7 @@ public class WinnerScreen extends BaseScreen {
         leftCreditLabel.setLineAlign(Align.left);
         leftCreditLabel.setFontScale(1f);
 
-        rightCreditLabel = new TypingLabel(assets.fontMap.get(ArtPack.c), artists + "\n\n" + music + "\n\n" + libgdx, Config.gameWidth / 2 + 75f, Config.gameHeight / 2f + 130f);
+        rightCreditLabel = new TypingLabel(assets.fontMap.get(ArtPack.c), artists + "\n\n" + music + "\n\n" + otherDuties + "\n\n" + libgdx, Config.gameWidth / 2 + 75f, Config.gameHeight / 2f + 130f);
         rightCreditLabel.setWidth(Config.gameWidth / 2 - 150f);
         rightCreditLabel.setLineAlign(Align.left);
         rightCreditLabel.setFontScale(1f);
