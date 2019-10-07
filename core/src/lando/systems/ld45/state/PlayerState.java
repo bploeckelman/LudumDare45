@@ -15,7 +15,7 @@ public class PlayerState {
     // For the credits screen, to show how many points you gathered overall
     private long totalScore = 0;
     public long ballsDropped = 0;
-    public long totalTime = 0;
+    public double totalTime = 0;
 
     public int pegs = 0;
     public int leftSpinners = 0;
