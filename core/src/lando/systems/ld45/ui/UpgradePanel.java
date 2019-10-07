@@ -128,8 +128,9 @@ public class UpgradePanel extends Panel {
 
         descriptionBox               .update(dt);
 
+        // TODO: determine what to disable based on already purchased stuff and current cash money
+        // TODO: if we've already purchased everything for one upgrade type, set to 'sold out' status
         buyCashMultiplierButton.isDisabled       = true;
-        buyBallMultiplierButton.isDisabled       = true;
         buyPegGizmosButton.isDisabled            = true;
         buyAudioButton.isDisabled                = true;
         buyLeftSpinnerGizmosButton.isDisabled    = true;
@@ -238,14 +239,40 @@ public class UpgradePanel extends Panel {
             UpgradeButton button = buyCashMultiplierButton;
             Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
         });
+
         buyBallMultiplierButton.addClickHandler(() -> {
             UpgradeButton button = buyBallMultiplierButton;
             Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
+            if (screen.player.balls == 5) {
+                screen.player.balls += 10;
+                button.props.nextDescription();
+                // TODO: subtract cost
+            } else if (screen.player.balls == 15) {
+                screen.player.balls += 25;
+                button.props.nextDescription();
+                // TODO: subtract cost
+            } else if (screen.player.balls == 40) {
+                screen.player.balls += 50;
+                button.props.nextDescription();
+                // TODO: subtract cost
+            } else if (screen.player.balls == 90) {
+                screen.player.balls += 100;
+                button.props.nextDescription();
+                // TODO: subtract cost
+            } else if (screen.player.balls == 190) {
+                screen.player.balls += 200;
+                button.props.nextDescription();
+                // TODO: subtract cost
+                // TODO: disable as 'sold out'
+                button.isDisabled = true;
+            }
         });
+
         buyAudioButton.addClickHandler(() -> {
             UpgradeButton button = buyAudioButton;
             Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
         });
+
         buyArtPackButton.addClickHandler(() -> {
             UpgradeButton button = buyArtPackButton;
             Gdx.app.log("CLICK", "'" + button.props.text + "' button clicked");
