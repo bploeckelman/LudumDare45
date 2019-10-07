@@ -132,8 +132,6 @@ public class UpgradePanel extends Panel {
         // TODO: if we've already purchased everything for one upgrade type, set to 'sold out' status
         buyCashMultiplierButton.isDisabled       = true;
         buyAudioButton.isDisabled                = true;
-        buyLeftSpinnerGizmosButton.isDisabled    = true;
-        buyRightSpinnerGizmosButton.isDisabled   = true;
 
         buyEffectsButton             .update(dt);
         buyCashMultiplierButton      .update(dt);
@@ -178,7 +176,6 @@ public class UpgradePanel extends Panel {
     @Override
     public void render(SpriteBatch batch) {
         if (!isVisible()) return;
-//        panel.draw(batch, bounds.x, bounds.y, bounds.width, bounds.height);
 
         descriptionBox.render(batch);
         descriptionLabel.render(batch);
@@ -214,7 +211,6 @@ public class UpgradePanel extends Panel {
                 button.props.nextDescription();
                 button.addClickParticles();
                 // TODO: subtract cost
-                // TODO: disable as 'sold out'
                 button.isDisabled = true;
             }
         });
@@ -241,7 +237,6 @@ public class UpgradePanel extends Panel {
                 button.props.nextDescription();
                 button.addClickParticles();
                 // TODO: subtract cost
-                // TODO: disable as 'sold out'
                 button.isDisabled = true;
             }
         });
@@ -268,17 +263,60 @@ public class UpgradePanel extends Panel {
                 button.props.nextDescription();
                 button.addClickParticles();
                 // TODO: subtract cost
-                // TODO: disable as 'sold out'
                 button.isDisabled = true;
             }
         });
 
         buyLeftSpinnerGizmosButton.addClickHandler(() -> {
             UpgradeButton button = buyLeftSpinnerGizmosButton;
+            if (screen.player.leftSpinners == 0) {
+                screen.player.leftSpinners = 1;
+                button.props.nextDescription();
+                button.addClickParticles();
+                // TODO: subtract cost
+            } else if (screen.player.leftSpinners == 1) {
+                screen.player.leftSpinners = 4;
+                button.props.nextDescription();
+                button.addClickParticles();
+                // TODO: subtract cost
+            } else if (screen.player.leftSpinners == 4) {
+                screen.player.leftSpinners = 8;
+                button.props.nextDescription();
+                button.addClickParticles();
+                // TODO: subtract cost
+            } else if (screen.player.leftSpinners == 8) {
+                screen.player.leftSpinners = 10;
+                button.props.nextDescription();
+                button.addClickParticles();
+                // TODO: subtract cost
+                button.isDisabled = true;
+            }
         });
 
         buyRightSpinnerGizmosButton.addClickHandler(() -> {
             UpgradeButton button = buyRightSpinnerGizmosButton;
+            if (screen.player.rightSpinners == 0) {
+                screen.player.rightSpinners = 1;
+                button.props.nextDescription();
+                button.addClickParticles();
+                // TODO: subtract cost
+            } else if (screen.player.rightSpinners == 1) {
+                screen.player.rightSpinners = 4;
+                button.props.nextDescription();
+                button.addClickParticles();
+                // TODO: subtract cost
+            } else if (screen.player.rightSpinners == 4) {
+                screen.player.rightSpinners = 8;
+                button.props.nextDescription();
+                button.addClickParticles();
+                // TODO: subtract cost
+            } else if (screen.player.rightSpinners == 8) {
+                screen.player.rightSpinners = 10;
+                button.props.nextDescription();
+                button.addClickParticles();
+                // TODO: subtract cost
+                button.isDisabled = true;
+            }
         });
 
         buyCashMultiplierButton.addClickHandler(() -> {
@@ -312,7 +350,6 @@ public class UpgradePanel extends Panel {
                 button.props.nextDescription();
                 button.addClickParticles();
                 // TODO: subtract cost
-                // TODO: disable as 'sold out'
                 button.isDisabled = true;
             }
         });
@@ -350,7 +387,6 @@ public class UpgradePanel extends Panel {
                 descriptionLabel.setText(descriptionText);
                 button.addClickParticles();
                 // TODO: subtract cost
-                // TODO: disable as 'sold out'
                 button.isDisabled = true;
             }
         });
