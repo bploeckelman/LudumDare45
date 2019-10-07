@@ -106,7 +106,9 @@ public class GameScreen extends BaseScreen {
         hud.update(dt);
 
         if (transitionDelay>0) return;
-        shitCommands();
+
+        // NOTE: shit commands are for debug only
+//        shitCommands();
 
         background.update(dt);
         boundary.update(dt);

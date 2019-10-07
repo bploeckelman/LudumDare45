@@ -47,9 +47,9 @@ public class StatsScreen extends BaseScreen {
         titleLabel.update(dt);
         leftCreditLabel.update(dt);
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
-            game.setScreen(new TitleScreen(game));
-        }
+//        if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+//            game.setScreen(new TitleScreen(game));
+//        }
     }
 
     @Override
