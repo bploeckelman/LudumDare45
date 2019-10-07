@@ -44,6 +44,8 @@ public class Assets {
     public Texture crossHatchGradientTexture;
     public Texture gridPaper;
 
+    public TextureRegion spinnerCover;
+
     public TextureRegion whitePixel;
     public TextureRegion whiteCircle;
     public TextureRegion romeo;
@@ -113,6 +115,9 @@ public class Assets {
         debugTexture = mgr.get("images/badlogic.jpg", Texture.class);
 
         atlas = mgr.get(atlasAsset);
+
+        spinnerCover = atlas.findRegion("spinner-d-cap");
+
         whitePixel = atlas.findRegion("white-pixel");
         whiteCircle = atlas.findRegion("white-circle");
         romeo = atlas.findRegion("romeo");

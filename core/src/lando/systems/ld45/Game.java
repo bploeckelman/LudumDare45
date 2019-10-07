@@ -111,4 +111,8 @@ public class Game extends ApplicationAdapter {
 	public static BitmapFont getCurrentFont() {
 		return game.assets.fontMap.get(game.player.artPack);
 	}
+
+	public static boolean isFancyPantsPack() {
+		return game.player.artPack == ArtPack.d;
+	}
 }

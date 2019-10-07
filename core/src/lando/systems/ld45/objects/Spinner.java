@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
+import lando.systems.ld45.Game;
 import lando.systems.ld45.screens.GameScreen;
 import lando.systems.ld45.utils.AssetType;
 
@@ -38,11 +39,10 @@ public class Spinner extends GameObject {
             }
         }
         rotation += (left) ? dr : -dr;
-        setCircleBounds(pos.x, pos.y, size.x/2f);
 
+        setCircleBounds(pos.x, pos.y, size.x/2f);
     }
 
-    int hitCount = 0;
     @Override
     public void hit() {
         super.hit();
@@ -53,5 +53,10 @@ public class Spinner extends GameObject {
         float half = size.x / 2;
         batch.draw(image, pos.x - half, pos.y - half, half, half,
                 size.x, size.y, (left) ? 1 : -1, 1, rotation);
+
+        if (Game.isFancyPantsPack()) {
+            batch.draw(screen.assets.spinnerCover, pos.x - half, pos.y - half, half, half,
+                    size.x, size.y, (left) ? 1 : -1, 1, 0);
+        }
     }
 }
