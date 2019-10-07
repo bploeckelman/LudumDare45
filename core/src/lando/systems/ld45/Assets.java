@@ -38,6 +38,7 @@ public class Assets {
     public Sound ballHitsPeg;
     public Sound ballHitsSpinner;
     public Sound ballHitsArena;
+    public Sound click;
 
     public SpriteBatch batch;
     public GlyphLayout layout;
@@ -125,6 +126,7 @@ public class Assets {
         mgr.load("audio/ball-hits-peg.wav", Sound.class);
         mgr.load("audio/ball-hits-spinner.wav", Sound.class);
         mgr.load("audio/ball-hits-arena.wav", Sound.class);
+        mgr.load("audio/click.mp3", Sound.class);
 
         mgr.load("images/badlogic.jpg", Texture.class);
         mgr.load("images/line-a_1.png", Texture.class);
@@ -151,6 +153,7 @@ public class Assets {
         ballHitsPeg = mgr.get("audio/ball-hits-peg.wav", Sound.class);
         ballHitsSpinner = mgr.get("audio/ball-hits-spinner.wav", Sound.class);
         ballHitsArena = mgr.get("audio/ball-hits-arena.wav", Sound.class);
+        click = mgr.get("audio/click.mp3", Sound.class);
 
         pixel = mgr.get(pixelTextureAsset);
         gridPaper = mgr.get(gridpaperTextureAsset);

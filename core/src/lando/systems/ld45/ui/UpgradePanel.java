@@ -151,6 +151,18 @@ public class UpgradePanel extends Panel {
         // TODO: determine what to disable based on already purchased stuff and current cash money
         // TODO: if we've already purchased everything for one upgrade type, set to 'sold out' status
         buyWinGameUpgradeButton.isDisabled = true;
+        buyWinGameUpgradeButton.isDisabled       = true;
+        buyEffectsButton.isDisabled = buyEffectsButton.props.getCurrentCost() > screen.player.score;
+        buyCashMultiplierButton.isDisabled = buyCashMultiplierButton.props.getCurrentCost() > screen.player.score;
+        buyBallMultiplierButton.isDisabled = buyBallMultiplierButton.props.getCurrentCost() > screen.player.score;
+        buyArtPackButton.isDisabled = buyArtPackButton.props.getCurrentCost() > screen.player.score;
+        buyPegGizmosButton.isDisabled = buyPegGizmosButton.props.getCurrentCost() > screen.player.score;
+        buyAudioButton.isDisabled = buyAudioButton.props.getCurrentCost() > screen.player.score;
+        buyLeftSpinnerGizmosButton.isDisabled = buyLeftSpinnerGizmosButton.props.getCurrentCost() > screen.player.score;
+        buyBumperGizmosButton.isDisabled = buyBumperGizmosButton.props.getCurrentCost() > screen.player.score;
+        buyRightSpinnerGizmosButton.isDisabled = buyRightSpinnerGizmosButton.props.getCurrentCost() > screen.player.score;
+
+
 
         buyEffectsButton             .update(dt);
         buyCashMultiplierButton      .update(dt);
@@ -222,6 +234,7 @@ public class UpgradePanel extends Panel {
     private void initializeButtons() {
         buyEffectsButton.addClickHandler(() -> {
             UpgradeButton button = buyEffectsButton;
+            screen.player.score -= button.props.getCurrentCost();
             if (!screen.player.hasEffectParticles) {
                 screen.player.hasEffectParticles = true;
                 button.props.nextDescription();
@@ -243,6 +256,7 @@ public class UpgradePanel extends Panel {
 
         buyPegGizmosButton.addClickHandler(() -> {
             UpgradeButton button = buyPegGizmosButton;
+            screen.player.score -= button.props.getCurrentCost();
             if (screen.player.pegs == 0) {
                 screen.player.pegs = 1;
                 button.props.nextDescription();
@@ -269,6 +283,7 @@ public class UpgradePanel extends Panel {
 
         buyBumperGizmosButton.addClickHandler(() -> {
             UpgradeButton button = buyBumperGizmosButton;
+            screen.player.score -= button.props.getCurrentCost();
             if (screen.player.bumpers == 0) {
                 screen.player.bumpers = 1;
                 button.props.nextDescription();
@@ -295,6 +310,7 @@ public class UpgradePanel extends Panel {
 
         buyLeftSpinnerGizmosButton.addClickHandler(() -> {
             UpgradeButton button = buyLeftSpinnerGizmosButton;
+            screen.player.score -= button.props.getCurrentCost();
             if (screen.player.leftSpinners == 0) {
                 screen.player.leftSpinners = 1;
                 button.props.nextDescription();
@@ -321,6 +337,7 @@ public class UpgradePanel extends Panel {
 
         buyRightSpinnerGizmosButton.addClickHandler(() -> {
             UpgradeButton button = buyRightSpinnerGizmosButton;
+            screen.player.score -= button.props.getCurrentCost();
             if (screen.player.rightSpinners == 0) {
                 screen.player.rightSpinners = 1;
                 button.props.nextDescription();
@@ -347,6 +364,7 @@ public class UpgradePanel extends Panel {
 
         buyCashMultiplierButton.addClickHandler(() -> {
             UpgradeButton button = buyCashMultiplierButton;
+            screen.player.score -= button.props.getCurrentCost();
             if (screen.player.cashMultiplier == 1) {
                 screen.player.cashMultiplier = 2;
                 button.props.nextDescription();
@@ -373,6 +391,7 @@ public class UpgradePanel extends Panel {
 
         buyBallMultiplierButton.addClickHandler(() -> {
             UpgradeButton button = buyBallMultiplierButton;
+            screen.player.score -= button.props.getCurrentCost();
             if (screen.player.balls == 5) {
                 screen.player.balls += 10;
                 button.props.nextDescription();
@@ -404,6 +423,7 @@ public class UpgradePanel extends Panel {
 
         buyAudioButton.addClickHandler(() -> {
             UpgradeButton button = buyAudioButton;
+            screen.player.score -= button.props.getCurrentCost();
             if (screen.player.soundPack == 0) {
                 screen.player.upgradeSound();
                 button.props.nextDescription();
@@ -420,6 +440,7 @@ public class UpgradePanel extends Panel {
 
         buyArtPackButton.addClickHandler(() -> {
             UpgradeButton button = buyArtPackButton;
+            screen.player.score -= button.props.getCurrentCost();
             if (screen.player.artPack == ArtPack.a) {
                 screen.player.artPack= ArtPack.b;
                 descriptionText = button.props.nextDescription();

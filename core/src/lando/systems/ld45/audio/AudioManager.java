@@ -20,7 +20,7 @@ public class AudioManager implements Disposable {
     public static final boolean shutUpYourTunes = false;
 
     public enum Sounds {
-        hit_bumper, hit_peg, hit_spinner, hit_arena
+        hit_bumper, hit_peg, hit_spinner, hit_arena, click
     }
 
     public enum Musics {
@@ -53,6 +53,7 @@ public class AudioManager implements Disposable {
         putSound(Sounds.hit_peg, assets.ballHitsPeg, 2);
         putSound(Sounds.hit_spinner, assets.ballHitsSpinner, 2);
         putSound(Sounds.hit_arena, assets.ballHitsArena, 2);
+        putSound(Sounds.click, assets.click, 2);
 
         musicVolume = new MutableFloat(MUSIC_VOLUME);
 

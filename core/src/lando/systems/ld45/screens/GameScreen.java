@@ -79,6 +79,7 @@ public class GameScreen extends BaseScreen {
 
         if (editMode){
             toyChestPanel.show(worldCamera);
+            gameOver = true;
         }
 //        startGame();
         hopper.reset();
@@ -138,7 +139,7 @@ public class GameScreen extends BaseScreen {
             if (b.isOffscreen()) {
                 balls.removeIndex(i);
 
-                long points = 1 * player.cashMultiplier;
+                long points = player.cashMultiplier;
                 player.addScore(points);
                 particle.addPointsParticles(points, b.bounds.x, 10f);
             }

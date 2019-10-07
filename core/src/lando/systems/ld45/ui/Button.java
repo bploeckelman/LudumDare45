@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Align;
 import lando.systems.ld45.Game;
+import lando.systems.ld45.audio.AudioManager;
 import lando.systems.ld45.screens.BaseScreen;
 
 public class Button extends UIElement {
@@ -90,6 +91,7 @@ public class Button extends UIElement {
 
     private void onClick() {
         if (clickHandler != null) {
+            screen.game.audio.playSound(AudioManager.Sounds.click);
             clickHandler.click();
         }
     }
