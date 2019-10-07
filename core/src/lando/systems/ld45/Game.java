@@ -35,7 +35,6 @@ public class Game extends ApplicationAdapter {
 	public AudioManager audio;
 	public Assets assets;
 	public TweenManager tween;
-	public ArtPack artPack = ArtPack.a;
 
 	BaseScreen currentScreen;
 
@@ -106,10 +105,10 @@ public class Game extends ApplicationAdapter {
 	}
 
 	public static TextureRegion getAsset(AssetType assetType, float time) {
-		return game.assets.assetMap.get(game.artPack).get(assetType).getKeyFrame(time);
+		return game.assets.assetMap.get(game.player.artPack).get(assetType).getKeyFrame(time);
 	}
 
 	public static BitmapFont getCurrentFont() {
-		return game.assets.fontMap.get(game.artPack);
+		return game.assets.fontMap.get(game.player.artPack);
 	}
 }

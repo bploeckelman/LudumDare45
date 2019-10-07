@@ -139,6 +139,8 @@ public class Assets {
             uiAssetNinepatchMap.get(artPack).put(UIAssetType.upgrade_panel_inset, new NinePatch(atlas.findRegion(fileName), 6, 6, 6, 6));
         }
 
+        assetMap.get(ArtPack.d).get(AssetType.bumper).setFrameDuration(.3f);
+
         fontMap = new ObjectMap<>();
         fontMap.put(ArtPack.a, mgr.get(fontArtPackAssetA));
         fontMap.put(ArtPack.b, mgr.get(fontArtPackAssetB));

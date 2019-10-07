@@ -134,7 +134,7 @@ public abstract class GameObject {
 
     public void renderEditModeRadius(SpriteBatch batch) {
         batch.setColor(1, 1, 1, .5f);
-        batch.draw(screen.assets.assetMap.get(screen.game.artPack).get(AssetType.part_boundary).getKeyFrame(0), placementBounds.x - placementBounds.radius, placementBounds.y - placementBounds.radius, placementBounds.radius*2f, placementBounds.radius*2f);
+        batch.draw(screen.assets.assetMap.get(screen.game.player.artPack).get(AssetType.part_boundary).getKeyFrame(0), placementBounds.x - placementBounds.radius, placementBounds.y - placementBounds.radius, placementBounds.radius*2f, placementBounds.radius*2f);
         batch.setColor(Color.WHITE);
     }
 

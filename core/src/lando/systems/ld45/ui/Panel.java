@@ -36,8 +36,8 @@ public class Panel {
         this.bounds = new Rectangle();
         this.uiAssetTypePanel = uiAssetTypePanel;
         this.uiAssetTypePanelInset = uiAssetTypePanelInset;
-        this.panel = screen.assets.uiAssetNinepatchMap.get(screen.game.artPack).get(uiAssetTypePanel);
-        this.inset = screen.assets.uiAssetNinepatchMap.get(screen.game.artPack).get(uiAssetTypePanelInset);
+        this.panel = screen.assets.uiAssetNinepatchMap.get(screen.game.player.artPack).get(uiAssetTypePanel);
+        this.inset = screen.assets.uiAssetNinepatchMap.get(screen.game.player.artPack).get(uiAssetTypePanelInset);
     }
 
     public void setInitialBounds(float x, float y, float w, float h) {
@@ -45,8 +45,8 @@ public class Panel {
     }
 
     public void update(float dt) {
-        panel = screen.assets.uiAssetNinepatchMap.get(screen.game.artPack).get(uiAssetTypePanel);
-        inset = screen.assets.uiAssetNinepatchMap.get(screen.game.artPack).get(uiAssetTypePanelInset);
+        panel = screen.assets.uiAssetNinepatchMap.get(screen.game.player.artPack).get(uiAssetTypePanel);
+        inset = screen.assets.uiAssetNinepatchMap.get(screen.game.player.artPack).get(uiAssetTypePanelInset);
     }
 
     public void render(SpriteBatch batch) {

@@ -9,9 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld45.Game;
-import lando.systems.ld45.backgrounds.Background;
-import lando.systems.ld45.backgrounds.FlatBackground;
-import lando.systems.ld45.backgrounds.GraphPaperBackground;
+import lando.systems.ld45.backgrounds.*;
 import lando.systems.ld45.collision.CollisionManager;
 import lando.systems.ld45.objects.*;
 import lando.systems.ld45.state.PlayerState;
@@ -23,7 +21,7 @@ import lando.systems.ld45.utils.screenshake.ScreenShakeCameraController;
 public class GameScreen extends BaseScreen {
 
     public Background background;
-    public Array<GameObject> gameObjects = new Array<>();
+    public Array<GameObject> gameObjects;
     public Array<Ball> balls = new Array<>();
 
 
@@ -44,8 +42,22 @@ public class GameScreen extends BaseScreen {
     public GameScreen(Game game) {
         super(game);
         game.particle.clearAll();
+        gameObjects = game.player.gameObjects;
 
-        background = new GraphPaperBackground(this);
+        switch(game.player.artPack){
+            case a:
+                background = new GraphPaperBackground(this);
+                break;
+            case b:
+                background = new FlatBackground(this);
+                break;
+            case c:
+                background = new PixelBackground(this);
+                break;
+            case d:
+                background = new HexBackground(this);
+                break;
+        }
         hopper = new Hopper(this);
 
         int x = 150;
@@ -191,7 +203,7 @@ public class GameScreen extends BaseScreen {
 //        Gdx.gl.glBlendFuncSeparate(GL20.GL_SRC_COLOR, GL20.GL_ONE, GL20.GL_SRC_ALPHA, GL20.GL_ZERO);
         assets.ballTrailShader.begin();
         {
-            switch(game.artPack){
+            switch(game.player.artPack){
                 case a:
                     game.assets.crossHatchGradientTexture.bind(0);
                     break;
@@ -224,7 +236,7 @@ public class GameScreen extends BaseScreen {
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
-            game.artPack = game.artPack.getNext();
+            game.player.artPack = game.player.artPack.getNext();
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {

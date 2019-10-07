@@ -21,7 +21,7 @@ public class GraphPaperBackground extends Background {
         equationRotations = new FloatArray();
         for (int i = 0; i < screen.assets.equations.size; i++){
             equationPositions.add(new Vector2(MathUtils.random(10f, screen.worldCamera.viewportWidth - 100), MathUtils.random(90f, screen.worldCamera.viewportHeight - 100)));
-            equationRotations.add(MathUtils.random(-10, 20));
+            equationRotations.add(MathUtils.random(-20, 20));
         }
     }
 

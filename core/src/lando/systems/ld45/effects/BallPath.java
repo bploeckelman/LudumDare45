@@ -84,7 +84,7 @@ public class BallPath {
         shader.begin();
         {
             if (game.getScreen() instanceof GameScreen){
-                if (game.artPack == ArtPack.a){
+                if (game.player.artPack == ArtPack.a){
                     game.assets.crossHatchGradientTexture.bind(0);
                 } else {
                     game.assets.ballTrailTexture.bind(0);
