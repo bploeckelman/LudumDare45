@@ -1,11 +1,16 @@
 package lando.systems.ld45.ui;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld45.Assets;
+import lando.systems.ld45.Config;
 import lando.systems.ld45.Game;
 import lando.systems.ld45.collision.Segment2D;
+import lando.systems.ld45.ui.typinglabel.TypingLabel;
 import lando.systems.ld45.utils.AssetType;
 
 public class HudBox  {
@@ -17,6 +22,11 @@ public class HudBox  {
     private Rectangle bounds;
     private Array<Segment2D> boxSegments = new Array<>();
     private float time = 0;
+
+    public Color textColor = Color.BLACK;
+    private BitmapFont font;
+    private String text;
+    private float textY;
 
     public HudBox(float x, float y, float width, float height) {
         bounds = new Rectangle(x, y, width, height);
@@ -43,6 +53,20 @@ public class HudBox  {
             batch.draw(Game.getAsset(AssetType.boundary_line, time), segment.start.x - width / 2f,
                     segment.start.y - width / 2f, width / 2f, width / 2f,
                     segment.delta.len() + width, width, 1, 1, segment.getRotation());
+        }
+
+        if (text != null) {
+            font.setColor(textColor);
+            font.draw(batch, text, bounds.x, textY, bounds.width - 10, Align.right, false);
+            font.setColor(Color.WHITE);
+        }
+    }
+
+    public void setText(String text) {
+        font = Game.getCurrentFont();
+        if (this.text != text) {
+            this.text = text;
+            textY = bounds.y + bounds.height - ((bounds.height - font.getCapHeight())/2);
         }
     }
 }
