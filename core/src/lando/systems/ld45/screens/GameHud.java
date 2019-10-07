@@ -56,7 +56,9 @@ public class GameHud {
         ballDropButton = new Button(screen, screen.hudCamera, viewWidth - 120, 10, 110, 30);
         ballDropButton.setText("DROP");
         ballDropButton.addClickHandler(() -> dropBalls());
+        ballDropButton.setHighlight(true);
         screen.addUIElement(ballDropButton);
+
 
         ballBox = new HudBox(viewWidth - 230, 10, 100, 30);
 
