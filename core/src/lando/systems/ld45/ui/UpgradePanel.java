@@ -9,6 +9,13 @@ public class UpgradePanel extends Panel {
 
     private Button startGameButton;
 
+    // BUTTONS:
+    /*
+    - Upgrade Art (X/4)
+    - Buy Sounds (X/Y)
+
+     */
+
     public UpgradePanel(BaseScreen screen, UIAssetType uiAssetTypePanel, UIAssetType uiAssetTypePanelInset) {
         super(screen, uiAssetTypePanel, uiAssetTypePanelInset);
         horizontal = false;
