@@ -40,7 +40,7 @@ public class Hopper {
         if (availableBalls == 0) return;
 
         dropTime -= dt;
-        if (Gdx.input.isKeyPressed(Input.Keys.B)) {
+        if (Gdx.input.isTouched() || Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
             dropBall(dt);
         }
         move(dt);
