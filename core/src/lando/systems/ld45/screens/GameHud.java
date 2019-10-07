@@ -16,6 +16,8 @@ public class GameHud {
     private HudBox scoreBox;
     private HudBox timeBox;
 
+    private Button timeButton;
+
     // non edit
     private Button playAgainButton;
     private Button editButton;
@@ -26,14 +28,23 @@ public class GameHud {
     private Button clearButton;
     private Button toyBoxButton;
 
+    private String[] timeText = new String[] { "1X", "5X", "10X", "1/10X", "1/5X" };
+    private int timeTextIndex = 0;
+
     public GameHud(GameScreen gameScreen) {
 
         this.screen = gameScreen;
 
         scoreValue = gameScreen.player.score;
 
+        float viewWidth = screen.hudCamera.viewportWidth;
+
         scoreBox = new HudBox(10, 10, 160, 40);
-        timeBox = new HudBox(Config.gameWidth - 10 - 160, 10, 160, 40);
+        timeBox = new HudBox(viewWidth - 120, 10, 110, 40);
+        timeButton = new Button(screen, screen.hudCamera,viewWidth - 170, 10, 40, 40);
+        timeButton.setText(timeText[timeTextIndex]);
+        timeButton.addClickHandler(() -> setSpeed());
+        screen.addUIElement(timeButton);
 
         playAgainButton = new Button(screen, screen.hudCamera, 250, 210, 300f, 50f);
         playAgainButton.setText("PLAY AGAIN");
@@ -66,6 +77,14 @@ public class GameHud {
         screen.addUIElement(toyBoxButton);
     }
 
+    private void setSpeed() {
+        if (++timeTextIndex == timeText.length) {
+            timeTextIndex = 0;
+        }
+        timeButton.setText(timeText[timeTextIndex]);
+        // set speed
+    }
+
     private void restart() {
         time = 0;
         screen.startGame();
@@ -77,8 +96,10 @@ public class GameHud {
         if (!screen.gameOver) {
             timeBox.setText(toTimeString(time));
             timeBox.update(dt);
+            timeButton.update(dt);
         }
 
+        timeButton.isVisible = !(screen.gameOver || screen.editMode);
         editButton.isVisible = upgradeButton.isVisible = playAgainButton.isVisible = screen.gameOver && !screen.editMode;
         playButton.isVisible = clearButton.isVisible = screen.gameOver && screen.editMode;
         toyBoxButton.isVisible = playButton.isVisible && !(screen.toyChestPanel.isAnimating() || screen.toyChestPanel.isVisible());
@@ -104,7 +125,7 @@ public class GameHud {
         int minutes = (int)time / 60;
         int seconds = (int)time % 60;
         sb.append(minutes);
-        sb.append(" : ");
+        sb.append(":");
         if (seconds < 10) {
             sb.append("0");
         }

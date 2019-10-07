@@ -130,7 +130,7 @@ public class HudBox  {
         batch.draw(Game.getAsset(types[2], time), bounds.x + half, bounds.y + bounds.height - half, bounds.width - width, width);
         batch.draw(Game.getAsset(types[3], time), bounds.x + bounds.width - half, bounds.y + half, width, bounds.height - width);
 
-        float capSize = width * 3 / 2;
+        float capSize = width * 3 / 2.5f;
         half = capSize / 2;
 
         // corners
@@ -138,11 +138,6 @@ public class HudBox  {
         batch.draw(Game.getAsset(AssetType.boundary_line_corner, time), bounds.x - half, bounds.y + bounds.height - half, capSize, capSize);
         batch.draw(Game.getAsset(AssetType.boundary_line_corner, time), bounds.x + bounds.width - half, bounds.y - half, capSize, capSize);
         batch.draw(Game.getAsset(AssetType.boundary_line_corner, time), bounds.x + bounds.width - half, bounds.y + bounds.height - half, capSize, capSize);
-
-
-
-
-
     }
 
     public void setText(String text) {
