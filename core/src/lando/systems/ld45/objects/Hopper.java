@@ -75,6 +75,7 @@ public class Hopper {
                 ball.initialize(tempVector2.set(position).add(MathUtils.cosDeg(dir) * 40 * 2f, MathUtils.sinDeg(dir) * 40 / 2f),
                                 new Vector2(velocity.x / 2 + MathUtils.cosDeg(dir)*10, MathUtils.sinDeg(dir) * 10));
                 screen.balls.add(ball);
+                screen.player.ballsDropped++;
             }
 
             availableBalls -= ballsToDrop;

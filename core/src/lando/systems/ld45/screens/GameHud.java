@@ -131,6 +131,7 @@ public class GameHud {
         }
 
         if (!screen.gameOver) {
+            screen.player.totalTime += dt;
             timeBox.setText(toTimeString(time));
         }
         ballBox.setText(screen.balls.size + " B");
