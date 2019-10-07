@@ -7,6 +7,9 @@ import lando.systems.ld45.utils.AssetType;
 
 public class Peg extends GameObject {
 
+    public static final long SCORE_VALUE = 1;
+
+
     public static Peg getPeg(GameScreen screen) {
         return new Peg(screen,16);
     }

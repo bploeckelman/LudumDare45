@@ -4,10 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld45.Config;
-import lando.systems.ld45.objects.Ball;
-import lando.systems.ld45.objects.Bumper;
-import lando.systems.ld45.objects.GameObject;
-import lando.systems.ld45.objects.Spinner;
+import lando.systems.ld45.objects.*;
 import lando.systems.ld45.screens.GameScreen;
 import lando.systems.ld45.utils.Utils;
 
@@ -205,6 +202,11 @@ public class CollisionManager {
                                     b.vel.add(normal.x * 400, normal.y * 400);
 
                                     long points = Spinner.SCORE_VALUE;
+                                    screen.player.addScore(points);
+                                    screen.particle.addPointsParticles(points, b.bounds.x, b.bounds.y + 5f);
+                                }
+                                if (obj instanceof Peg){
+                                    long points = Peg.SCORE_VALUE;
                                     screen.player.addScore(points);
                                     screen.particle.addPointsParticles(points, b.bounds.x, b.bounds.y + 5f);
                                 }
