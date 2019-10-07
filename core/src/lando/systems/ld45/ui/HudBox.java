@@ -74,7 +74,8 @@ public class HudBox  {
     }
 
     public void update(float dt) {
-        time += dt;
+        // don't speed up animations because of game time
+        time += dt /  Game.game.speedModifier;
     }
 
     public void render(SpriteBatch batch) {

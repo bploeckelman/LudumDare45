@@ -42,12 +42,12 @@ public class GameHud {
 
         scoreBox = new HudBox(10, 10, 110, 40);
         timeBox = new HudBox(viewWidth - 120, 10, 110, 40);
-        timeButton = new Button(screen, screen.hudCamera,viewWidth - 230, 10, 100, 40);
+        timeButton = new Button(screen, screen.hudCamera,viewWidth - 235, 10, 100, 40);
         timeButton.addClickHandler(() -> setSpeed());
         screen.addUIElement(timeButton);
         resetSpeed();
 
-        ballDropButton = new Button(screen, screen.hudCamera, 130, 10, 100, 40);
+        ballDropButton = new Button(screen, screen.hudCamera, 135, 10, 100, 40);
         ballDropButton.setText("DROP");
         ballDropButton.addClickHandler(() -> dropBalls());
         screen.addUIElement(ballDropButton);
@@ -121,14 +121,18 @@ public class GameHud {
     public void update(float dt) {
         time += dt;
 
-        if (!screen.gameOver) {
-            timeBox.setText(toTimeString(time));
-            timeBox.update(dt);
-        }
-
         if ((screen.gameOver || screen.editMode) && timeTextIndex != 0) {
             resetSpeed();
         }
+
+        if (!screen.gameOver) {
+            timeBox.setText(toTimeString(time));
+        }
+
+        scoreBox.setText("$" + (long)scoreValue);
+        scoreBox.update(dt);
+
+        timeBox.update(dt);
 
         timeButton.isVisible = ballDropButton.isVisible = !(screen.gameOver || screen.editMode);
         editButton.isVisible = upgradeButton.isVisible = playAgainButton.isVisible = screen.gameOver && !screen.editMode;
@@ -136,9 +140,6 @@ public class GameHud {
         toyBoxButton.isVisible = playButton.isVisible && !(screen.toyChestPanel.isAnimating() || screen.toyChestPanel.isVisible());
         
         scoreValue = MathUtils.lerp(scoreValue, screen.player.score, dt);
-
-        scoreBox.setText("$" + (long)scoreValue);
-        scoreBox.update(dt);
     }
 
     public void render(SpriteBatch batch) {

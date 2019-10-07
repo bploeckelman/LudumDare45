@@ -49,7 +49,7 @@ public class Game extends ApplicationAdapter {
 	ShaderProgram transitionShader;
 	boolean transitioning;
 
-	private float speedModifier = 1;
+	public float speedModifier = 1;
 
 	public Game() {
 		this.game = this;
