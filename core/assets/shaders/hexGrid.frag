@@ -26,14 +26,14 @@ const float gridSpacing = 20.;
 #define HMAT mat2(HX, HY)
 #define HSCALE 40.
 
-mat2 inverse(mat2 m) {
+mat2 ourInverse(mat2 m) {
     return mat2(m[1][1],-m[0][1],
     -m[1][0], m[0][0]) / (m[0][0]*m[1][1] - m[0][1]*m[1][0]);
 }
 
 float pixelToCubial(vec2 uv, out vec3 cubial, out vec3 grid) {
 
-    vec2 axial = inverse(HMAT) * uv;
+    vec2 axial = ourInverse(HMAT) * uv;
     cubial = vec3(axial, -axial.x - axial.y) / (HSCALE * u_hexScale);
     grid = floor(.5 + cubial);
     vec3 dist = abs(cubial - grid);
