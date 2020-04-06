@@ -3,17 +3,10 @@ pipeline {
     agent any
 
     triggers {
-        pollSCM('H/10 * * * *') //polling for changes, here once a minute
+        pollSCM('H/15 * * * *') //polling for changes, here once a minute
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                node {
-                    checkout scm
-                }
-            }
-        }
         stage("Build") {
             steps {
                 script {
