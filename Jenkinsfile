@@ -16,6 +16,26 @@ pipeline {
                 }
             }
         }
+        stage("UploadSSH") {
+            steps{
+                script {
+                    sshPublisher(
+                            publishers: [
+                                    sshPublisherDesc(
+                                            configName: "wxpick",
+                                            verbose: true,
+                                            transfers: [
+                                                    sshTransfer(
+                                                            sourceFiles: "html/build/dist/**",
+                                                            removePrefix: "html/build/dist/",
+                                                            remoteDirectory: "inthelifeofdoug.com/LudumDareBuilds/LD45",
+                                                            execCommand: "run commands after copy?"
+                                                    )
+                                            ])
+                            ])
+                }
+            }
+        }
 
     }
 }
