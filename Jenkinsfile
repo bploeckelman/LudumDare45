@@ -10,6 +10,7 @@ pipeline {
         stage("Build") {
             steps {
                 script {
+                    env.GIT_REPO_NAME = env.GIT_URL.replaceFirst(/^.*\/([^\/]+?).git$/, '$1')
                     sh './gradlew clean'
                     sh './gradlew desktop:sprites'
                     sh './gradlew html:dist'
@@ -28,7 +29,7 @@ pipeline {
                                                     sshTransfer(
                                                             sourceFiles: "html/build/dist/**",
                                                             removePrefix: "html/build/dist/",
-                                                            remoteDirectory: "inthelifeofdoug.com/LudumDareBuilds/LD45",
+                                                            remoteDirectory: "inthelifeofdoug.com/LudumDareBuilds/${env.GIT_REPO_NAME}",
                                                             execCommand: "run commands after copy?"
                                                     )
                                             ])
