@@ -50,7 +50,7 @@ pipeline {
         always {
             mqttNotification brokerUrl: 'tcp://home.inthelifeofdoug.com:1883',
                     credentialsId: 'mqttcreds',
-                    message: "{\"buildnumber\": \"${BUILD_NUMBER}\", \"status\": \"${currentBuild.currentResult}\", \"title\": \"${env.GIT_REPO_NAME}\", \"message\": \"\" }",
+                    message: "{'buildnumber': '${BUILD_NUMBER}', 'status': '${currentBuild.currentResult}', 'title': '${env.GIT_REPO_NAME}', 'message': '' }",
                     qos: '2',
                     topic: "jenkins/${env.GIT_REPO_NAME}"
         }
