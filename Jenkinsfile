@@ -10,7 +10,7 @@ pipeline {
         stage("Build") {
             steps {
                 script {
-                    mqttNotification brokerUrl: 'https://home.inthelifeofdoug.com:1883', credentialsId: 'mqttcreds', message: 'Starting Build', qos: '2', topic: 'jenkins/LD45'
+                    mqttNotification brokerUrl: 'tcp://home.inthelifeofdoug.com:1883', credentialsId: 'mqttcreds', message: 'Starting Build', qos: '2', topic: 'jenkins/LD45'
 
                     env.GIT_REPO_NAME = env.GIT_URL.replaceFirst(/^.*\/([^\/]+?).git$/, '$1')
                     sh './gradlew clean'
