@@ -10,9 +10,13 @@ pipeline {
         stage("Build") {
             steps {
                 script {
-                    mqttNotification brokerUrl: 'tcp://home.inthelifeofdoug.com:1883', credentialsId: 'mqttcreds', message: 'Starting Build', qos: '2', topic: 'jenkins/LD45'
-
                     env.GIT_REPO_NAME = env.GIT_URL.replaceFirst(/^.*\/([^\/]+?).git$/, '$1')
+                    mqttNotification brokerUrl: 'tcp://home.inthelifeofdoug.com:1883',
+                            credentialsId: 'mqttcreds',
+                            message: "Starting Build $BUILD_NUMBER",
+                            qos: '2',
+                            topic: "jenkins/${env.GIT_REPO_NAME}"
+
                     sh './gradlew clean'
                     sh './gradlew desktop:sprites'
                     sh './gradlew html:dist'
