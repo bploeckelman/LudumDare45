@@ -11,9 +11,10 @@ pipeline {
             steps {
                 script {
                     env.GIT_REPO_NAME = env.GIT_URL.replaceFirst(/^.*\/([^\/]+?).git$/, '$1')
+                    env.REMOTE_DIR =  "inthelifeofdoug.com/LudumDareBuilds/${env.GIT_REPO_NAME}"
                     mqttNotification brokerUrl: 'tcp://home.inthelifeofdoug.com:1883',
                             credentialsId: 'mqttcreds',
-                            message: "Starting Build $BUILD_NUMBER",
+                            message: "{'BuildNumber': '${BUILD_NUMBER}', 'Status': 'Building'}",
                             qos: '2',
                             topic: "jenkins/${env.GIT_REPO_NAME}"
 
@@ -35,7 +36,7 @@ pipeline {
                                                     sshTransfer(
                                                             sourceFiles: "html/build/dist/**",
                                                             removePrefix: "html/build/dist/",
-                                                            remoteDirectory: "inthelifeofdoug.com/LudumDareBuilds/${env.GIT_REPO_NAME}",
+                                                            remoteDirectory: "${env.REMOTE_DIR}",
                                                     )
                                             ])
                             ])
@@ -45,7 +46,11 @@ pipeline {
         stage("Notify"){
             steps{
                 script{
-                    mqttNotification brokerUrl: 'https://home.inthelifeofdoug.com:1883', credentialsId: 'mqttcreds', message: 'A Test', qos: '2', topic: 'jenkins/LD45'
+                    mqttNotification brokerUrl: 'tcp://home.inthelifeofdoug.com:1883',
+                            credentialsId: 'mqttcreds',
+                            message: "{Build # ${BUILD_NUMBER} : ${BUILD_RESULT}  See it here http://${env.REMOTE_DIR}",
+                            qos: '2',
+                            topic: "jenkins/${env.GIT_REPO_NAME}"
                 }
             }
         }
