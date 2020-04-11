@@ -56,13 +56,6 @@ pipeline {
                     qos: '2',
                     topic: "jenkins/${env.GIT_REPO_NAME}"
         }
-        success {
-            mqttNotification brokerUrl: 'tcp://home.inthelifeofdoug.com:1883',
-                    credentialsId: 'mqttcreds',
-                    message: getMessage(),
-                    qos: '2',
-                    topic: "jenkins/${env.GIT_REPO_NAME}"
-        }
     }
 
 
@@ -74,6 +67,11 @@ def getMessage() {
             status: "${currentBuild.currentResult}",
             title: "${env.GIT_REPO_NAME}"
     ]
-
+    if (currentBuild.resultIsBetterOrEqualTo("SUCCESS")) {
+        message.link = "http://${env.REMOTE_DIR}"
+    }
+    if (currentBuild.resultIsWorseOrEqualTo("SUCCESS")) {
+        message.failed = "http://${env.REMOTE_DIR}"
+    }
     return JsonOutput.toJson(message)
 }
