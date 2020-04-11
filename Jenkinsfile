@@ -69,11 +69,11 @@ pipeline {
 }
 
 def getMessage() {
-    def message = []
-    message.buildnumber = BUILD_NUMBER
-    message.status = currentBuild.currentResult
-    message.title = env.GIT_REPO_NAME
+    def message = [
+            buildnumber: "${BUILD_NUMBER}",
+            status: "${currentBuild.currentResult}",
+            title: "${env.GIT_REPO_NAME}"
+    ]
+
     def json = JsonOutput.toJson(message)
-//    "{\"buildnumber\": \"${BUILD_NUMBER}\", " +
-//            "\"status\": \"${currentBuild.currentResult}\", \"title\": \"${env.GIT_REPO_NAME}\", \"message\": \"play it here: http:\\\\\\\\${env.REMOTE_DIR}\"}"
 }
