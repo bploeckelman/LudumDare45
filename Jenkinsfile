@@ -75,5 +75,5 @@ def getMessage() {
             title: "${env.GIT_REPO_NAME}"
     ]
 
-    def json = JsonOutput.toJson(message)
+    return JsonOutput.toJson(message)
 }
