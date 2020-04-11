@@ -43,17 +43,6 @@ pipeline {
                 }
             }
         }
-        stage("Notify"){
-            steps{
-                script{
-                    mqttNotification brokerUrl: 'tcp://home.inthelifeofdoug.com:1883',
-                            credentialsId: 'mqttcreds',
-                            message: "{Build # ${BUILD_NUMBER} : ${BUILD_RESULT}  See it here http://${env.REMOTE_DIR}",
-                            qos: '2',
-                            topic: "jenkins/${env.GIT_REPO_NAME}"
-                }
-            }
-        }
 
     }
 
@@ -61,7 +50,14 @@ pipeline {
         always {
             mqttNotification brokerUrl: 'tcp://home.inthelifeofdoug.com:1883',
                     credentialsId: 'mqttcreds',
-                    message: "{\"buildnumber\": \"${BUILD_NUMBER}\", \"status\": \"${BUILD_RESULT}\", \"title\": \"${env.GIT_REPO_NAME}\"}",
+                    message: "{\"buildnumber\": \"${BUILD_NUMBER}\", \"status\": \"${currentBuild.currentResult}\", \"title\": \"${env.GIT_REPO_NAME}\", \"message\": \"${currentBuild.getBuildCauses}",
+                    qos: '2',
+                    topic: "jenkins/${env.GIT_REPO_NAME}"
+        }
+        success {
+            mqttNotification brokerUrl: 'tcp://home.inthelifeofdoug.com:1883',
+                    credentialsId: 'mqttcreds',
+                    message: "{\"buildnumber\": \"${BUILD_NUMBER}\", \"status\": \"${currentBuild.currentResult}\", \"title\": \"${env.GIT_REPO_NAME}\", \"message\": \"play it here: http:\\\\${env.REMOTE_DIR}",
                     qos: '2',
                     topic: "jenkins/${env.GIT_REPO_NAME}"
         }
