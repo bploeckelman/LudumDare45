@@ -1,4 +1,6 @@
 #!groovy
+import groovy.json.JsonOutput
+
 pipeline {
     agent any
 
@@ -50,16 +52,28 @@ pipeline {
         always {
             mqttNotification brokerUrl: 'tcp://home.inthelifeofdoug.com:1883',
                     credentialsId: 'mqttcreds',
-                    message: "{\"buildnumber\": \"${BUILD_NUMBER}\", \"status\": \"${currentBuild.currentResult}\", \"title\": \"${env.GIT_REPO_NAME}\", \"message\": \"\" }",
+                    message: getMessage(),
                     qos: '2',
                     topic: "jenkins/${env.GIT_REPO_NAME}"
         }
         success {
             mqttNotification brokerUrl: 'tcp://home.inthelifeofdoug.com:1883',
                     credentialsId: 'mqttcreds',
-                    message: "{\"buildnumber\": \"${BUILD_NUMBER}\", \"status\": \"${currentBuild.currentResult}\", \"title\": \"${env.GIT_REPO_NAME}\", \"message\": \"play it here: http:\\\\${env.REMOTE_DIR}\"}",
+                    message: getMessage(),
                     qos: '2',
                     topic: "jenkins/${env.GIT_REPO_NAME}"
         }
     }
+
+
+}
+
+def getMessage() {
+    def message = []
+    message.buildnumber = BUILD_NUMBER
+    message.status = currentBuild.currentResult
+    message.title = env.GIT_REPO_NAME
+    def json = JsonOutput.toJson(message)
+//    "{\"buildnumber\": \"${BUILD_NUMBER}\", " +
+//            "\"status\": \"${currentBuild.currentResult}\", \"title\": \"${env.GIT_REPO_NAME}\", \"message\": \"play it here: http:\\\\\\\\${env.REMOTE_DIR}\"}"
 }
