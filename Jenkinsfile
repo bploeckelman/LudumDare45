@@ -14,7 +14,7 @@ pipeline {
                     env.REMOTE_DIR =  "inthelifeofdoug.com/LudumDareBuilds/${env.GIT_REPO_NAME}"
                     mqttNotification brokerUrl: 'tcp://home.inthelifeofdoug.com:1883',
                             credentialsId: 'mqttcreds',
-                            message: "{\"buildnumber\": \"${BUILD_NUMBER}\", \"status\": \"${BUILD_RESULT}\", \"title\": \"${env.GIT_REPO_NAME}\"}",
+                            message: "{\"buildnumber\": \"${BUILD_NUMBER}\", \"status\": \"Building\", \"title\": \"${env.GIT_REPO_NAME}\"}",
                             qos: '2',
                             topic: "jenkins/${env.GIT_REPO_NAME}"
 
@@ -55,5 +55,15 @@ pipeline {
             }
         }
 
+    }
+
+    post{
+        always {
+            mqttNotification brokerUrl: 'tcp://home.inthelifeofdoug.com:1883',
+                    credentialsId: 'mqttcreds',
+                    message: "{\"buildnumber\": \"${BUILD_NUMBER}\", \"status\": \"${BUILD_RESULT}\", \"title\": \"${env.GIT_REPO_NAME}\"}",
+                    qos: '2',
+                    topic: "jenkins/${env.GIT_REPO_NAME}"
+        }
     }
 }
