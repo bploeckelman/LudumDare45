@@ -17,7 +17,7 @@ pipeline {
                     env.REMOTE_DIR =  "inthelifeofdoug.com/LudumDareBuilds/${env.BRANCH_NAME}/${env.GIT_REPO_NAME}"
                     mqttNotification brokerUrl: 'tcp://home.inthelifeofdoug.com:1883',
                             credentialsId: 'mqttcreds',
-                            message: getMessage(),
+                            message: getBeginMessage(),
                             qos: '2',
                             topic: "jenkins/${env.GIT_REPO_NAME}"
 
@@ -59,6 +59,19 @@ pipeline {
         }
     }
 
+
+}
+
+def getBeginMessage() {
+    def message = [
+            buildnumber: "${BUILD_NUMBER}",
+            status: "Starting",
+            title: "${env.GIT_REPO_NAME}",
+            project: "${currentBuild.projectName}",
+            duration: "${currentBuild.durationString}",
+            commitmessage: "${env.GIT_COMMIT_MSG}"
+    ]
+    return JsonOutput.toJson(message)
 
 }
 
