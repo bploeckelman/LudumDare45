@@ -12,6 +12,7 @@ pipeline {
         stage("Build") {
             steps {
                 script {
+                    env.GIT_COMMIT_MSG = sh (script: 'git log -1 --pretty=%B ${GIT_COMMIT}', returnStdout: true).trim()
                     env.GIT_REPO_NAME = env.GIT_URL.replaceFirst(/^.*\/([^\/]+?).git$/, '$1')
                     env.REMOTE_DIR =  "inthelifeofdoug.com/LudumDareBuilds/${env.BRANCH_NAME}/${env.GIT_REPO_NAME}"
                     mqttNotification brokerUrl: 'tcp://home.inthelifeofdoug.com:1883',
@@ -65,13 +66,14 @@ def getMessage() {
     def message = [
             buildnumber: "${BUILD_NUMBER}",
             status: "${currentBuild.currentResult}",
-            title: "${env.GIT_REPO_NAME}"
+            title: "${env.GIT_REPO_NAME}",
+            project: "${currentBuild.projectName}",
+            duration: "${currentBuild.durationString}",
+            commitmessage: "${env.GIT_COMMIT_MSG}"
     ]
     if (currentBuild.resultIsBetterOrEqualTo("SUCCESS")) {
         message.link = "http://${env.REMOTE_DIR}"
     }
-    if (currentBuild.resultIsWorseOrEqualTo("SUCCESS")) {
-        message.failed = "http://${env.REMOTE_DIR}"
-    }
+
     return JsonOutput.toJson(message)
 }
