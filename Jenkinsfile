@@ -14,7 +14,7 @@ pipeline {
                 script {
                     env.GIT_COMMIT_MSG = sh (script: 'git log -1 --pretty=%B ${GIT_COMMIT}', returnStdout: true).trim()
                     env.GIT_REPO_NAME = env.GIT_URL.replaceFirst(/^.*\/([^\/]+?).git$/, '$1')
-                    env.REMOTE_DIR =  "inthelifeofdoug.com/LudumDareBuilds/${env.BRANCH_NAME}/${env.GIT_REPO_NAME}"
+                    env.REMOTE_DIR =  "inthelifeofdoug.com/LudumDareBuilds/${env.GIT_REPO_NAME}/${env.BRANCH_NAME}/${BUILD_NUMBER}"
                     mqttNotification brokerUrl: 'tcp://home.inthelifeofdoug.com:1883',
                             credentialsId: 'mqttcreds',
                             message: getBeginMessage(),
