@@ -17,7 +17,7 @@ pipeline {
                     env.REMOTE_DIR =  "inthelifeofdoug.com/LudumDareBuilds/${env.BRANCH_NAME}/${env.GIT_REPO_NAME}"
                     mqttNotification brokerUrl: 'tcp://home.inthelifeofdoug.com:1883',
                             credentialsId: 'mqttcreds',
-                            message: "{\"buildnumber\": \"${BUILD_NUMBER}\", \"status\": \"Building\", \"title\": \"${env.GIT_REPO_NAME}\", \"branch\":\"${env.BRANCH_NAME}\"}",
+                            message: getMessage(),
                             qos: '2',
                             topic: "jenkins/${env.GIT_REPO_NAME}"
 
